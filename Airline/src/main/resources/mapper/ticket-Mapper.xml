@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 SQL문을 mapper태그 안에 작성 -->
+<mapper namespace="ticketMapper">
+	<resultMap type="com.kh.airline.ticket.vo.PortInfoVO" id="portInfo">
+		<id 	column="PORT_CODE" property="portCode"/>
+		<result column="PORT_NAME" 		property="portName"/>
+		<result column="CITY_CODE" 		property="cityCode"/>
+		<result column="CITY_NAME" 		property="cityName"/>
+		<result column="COUNTRY_CODE" 		property="countryCode"/>
+		<result column="COUNTRY_NAME" 		property="countryName"/>
+		<result column="ROWNUM" 		property="rownum"/>
+	</resultMap>
+	
+	<resultMap type="com.kh.airline.ticket.vo.AirScheduleVVO" id="airSchedule">
+		<id 	column="AIR_SCHE_CODE" property="airScheCode"/>
+		<result column="DEPARTURE_DATE" 		property="departureDate"/>
+		<result column="BOARDING_DATE" 		property="boardingDate"/>
+		<result column="DEPARTURE_PORT_CODE" 		property="departurePortCode"/>
+		<result column="ARRIVAL_DATE" 		property="arrivalDate"/>
+		<result column="ARRIVAL_PORT_CODE" 		property="arrivalPortCode"/>
+		<result column="DPORT_NAME" 		property="dportName"/>
+		<result column="DCITY_NAME" 		property="dcityName"/>
+		<result column="DCOUNTRY_NAME" 		property="dcountryName"/>
+		<result column="APORT_NAME" 		property="aportName"/>
+		<result column="ACITY_NAME" 		property="acityName"/>
+		<result column="ACOUNTRY_NAME" 		property="acountryName"/>
+		<result column="GATE_NUM" 		property="gateNum"/>
+		<result column="BASE_PRICE" 		property="basePrice"/>
+		<result column="SPARE_SEAT" 		property="spareSeat"/>
+		<result column="DISTANCE" 		property="distance"/>
+		<result column="HIGHEST_SPEED" 		property="highestSpeed"/>
+		<result column="HRS" 		property="hrs"/>
+	</resultMap>
+	 
+    <resultMap type="com.kh.airline.ticket.vo.SeatInfoVO" id="seatInfo">
+		<id 	column="SEAT_CODE" property="seatCode"/>
+		<result column="AIR_SCHE_CODE" 		property="airScheCode"/>
+		<result column="COL_CODE" 		property="colCode"/>
+		<result column="ROW_NUM" 		property="rowNum"/>
+		<result column="SEAT_CLASS" 		property="seatClass"/>
+		<result column="IS_BOOKED" 		property="isBooked"/>
+	</resultMap>
+	
+	<resultMap type="com.kh.airline.ticket.vo.PassengerScheduleVO" id="passengerSchedule">
+		<id 	column="PASS_SCHE_CODE" property="passScheCode"/>
+		<result column="MEM_ID" 		property="memId"/>
+		<result column="PASS_NAME" 		property="passName"/>
+		<result column="GENDER" 		property="gender"/>
+		<result column="BIRTH_DATE" 		property="birthDate"/>
+		<result column="COUNTRY_CODE" 		property="countryCode"/>
+		<result column="PASSPORT_NUM" 		property="passportNum"/>
+		<result column="PASS_EMAIL" 		property="passEmail"/>
+		<result column="PASS_PHONE" 		property="passPhone"/>
+		<result column="PASS_ADDR" 		property="passAddr"/>
+		<result column="AIR_SCHE_CODE" 		property="airScheCode"/>
+		<result column="SEAT_CODE" 		property="seatCode"/>
+		<result column="TICKET_PRICE" 		property="ticketPrice"/>
+		<result column="ORDER_CODE" 		property="orderCode"/>
+		<result column="ORDER_DATE" 		property="orderDate"/>
+		<association property="airScheduleVO" resultMap="airSchedule"/>
+	</resultMap>
+	
+	
+	<resultMap type="com.kh.airline.member.vo.AirMemberVO" id="member">
+		<id 	column="MEM_ID" 		property="memId"/>
+		<result column="MEM_PW" 		property="memPw"/>
+		<result column="MEM_NAME" 		property="memName"/>
+		<result column="GENDER" 		property="gender"/>
+		<result column="BIRTH_DATE" 	property="birthDate"/>
+		<result column="COUNTRY_CODE" 	property="countryCode"/>
+		<result column="MEM_EMAIL" 		property="memEmail"/>
+		<result column="MEM_PHONE" 		property="memPhone"/>
+		<result column="MEM_ADDR" 		property="memAddr"/>
+		<result column="POINTS" 		property="points"/>
+		<result column="EMP_CODE" 		property="empCode"/>
+		<result column="IS_ADMIN" 		property="isAdmin"/>
+		<result column="COUNTRY_NAME" 	property="countryName"/>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
+	<select id="selectPortsInfo" resultMap="portInfo">
+		SELECT ROWNUM
+		    , PORT_CODE
+		    , PORT_NAME
+		    , CITY_CODE
+		    , CITY_NAME
+		    , COUNTRY_CODE
+		    , COUNTRY_NAME
+		FROM
+		(
+		    SELECT PORT_CODE
+		        , PORT_NAME
+		        , CITY_CODE
+		        , CITY_NAME
+		        , COUNTRY_CODE
+		        , COUNTRY_NAME
+		    FROM PORT_INFO
+		    WHERE UPPER(CITY_NAME) LIKE UPPER('%'||#{searchCity}||'%')
+		    ORDER BY PORT_CODE
+		)
+		WHERE ROWNUM &lt; 6
+	</select>
+	
+	<select id="selectAirScheduleList" resultMap="airSchedule">
+		SELECT AIR_SCHE_CODE
+		    , TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS DEPARTURE_DATE
+		    , DEPARTURE_PORT_CODE
+		    , BOARDING_DATE
+		    , ARRIVAL_PORT_CODE
+		    , DPORT_NAME
+		    , DCITY_NAME
+		    , DCOUNTRY_NAME
+		    , APORT_NAME
+		    , ACITY_NAME
+		    , ACOUNTRY_NAME
+		    , GATE_NUM
+		    , BASE_PRICE
+		    , SPARE_SEAT
+		    , DISTANCE
+		    , HIGHEST_SPEED
+		    , HRS
+		    , ARRIVAL_DATE
+		FROM AIR_SCHEDULE_V
+		WHERE DEPARTURE_PORT_CODE = #{departurePortCode}
+		AND ARRIVAL_PORT_CODE = #{arrivalPortCode}
+		AND SPARE_SEAT &gt;= #{count}
+		AND TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD') = #{departureDate}
+	</select>
+
+
+	<select id="selectCountryList" resultMap="portInfo">
+		SELECT COUNTRY_CODE
+			, COUNTRY_NAME
+		FROM COUNTRY
+		ORDER BY COUNTRY_NAME	
+	</select>
+
+	
+	<select id="selectSeatInfoList" resultMap="seatInfo">
+		SELECT SEAT_CODE
+			, AIR_SCHE_CODE
+			, COL_CODE
+			, ROW_NUM
+			, SEAT_CLASS
+			, IS_BOOKED
+		FROM SEAT_INFO
+		WHERE AIR_SCHE_CODE = #{airScheCode}
+		ORDER BY ROW_NUM	
+	</select>
+		
+		
+	<select id="selectSeatMaxRowNum" resultType="int">
+		SELECT MAX(ROW_NUM) AS MAX_ROW_NUM FROM SEAT_INFO
+		WHERE AIR_SCHE_CODE = #{airScheCode}
+	</select>	
+	
+	<select id="selectSeatColCodeList" resultType="String">
+		SELECT DISTINCT COL_CODE AS COL_CODE_LIST FROM SEAT_INFO
+		WHERE AIR_SCHE_CODE = #{airScheCode}
+		ORDER BY COL_CODE
+	</select>
+	
+	
+	<select id="selectBookedSeatList" resultType="String">
+		SELECT SEAT_CODE
+		FROM SEAT_INFO
+		WHERE AIR_SCHE_CODE = #{airScheCode}
+		AND IS_BOOKED IS NOT NULL
+	</select>
+	
+	
+	<select id="selectBasePrice" resultType="int">
+		SELECT BASE_PRICE
+		FROM AIR_SCHEDULE
+		WHERE AIR_SCHE_CODE = #{airScheCode}
+	</select>
+	
+	<insert id="bookTickets">
+		INSERT INTO PASSENGER_SCHEDULE (
+			PASS_SCHE_CODE
+			, MEM_ID
+			, PASS_NAME
+			, GENDER
+			, BIRTH_DATE
+			, COUNTRY_CODE
+			, PASSPORT_NUM
+			, PASS_EMAIL
+			, PASS_PHONE
+			, PASS_ADDR
+			, AIR_SCHE_CODE
+			, SEAT_CODE
+			, TICKET_PRICE
+			, ORDER_CODE
+			, ORDER_DATE
+		)
+		<foreach collection="passengerScheduleList" item="passengerScheduleInfo" separator="UNION ALL">
+			SELECT
+				#{passengerScheduleInfo.passScheCode}
+				, #{passengerScheduleInfo.memId}
+				, #{passengerScheduleInfo.passName}
+				, #{passengerScheduleInfo.gender}
+				, TO_DATE(#{passengerScheduleInfo.birthDate}, 'YYYY-MM-DD')
+				, #{passengerScheduleInfo.countryCode}
+				, #{passengerScheduleInfo.passportNum}
+				, #{passengerScheduleInfo.passEmail}
+				, #{passengerScheduleInfo.passPhone}
+				, #{passengerScheduleInfo.passAddr}
+				, #{passengerScheduleInfo.airScheCode}
+				, #{passengerScheduleInfo.seatCode}
+				, #{passengerScheduleInfo.ticketPrice}
+				, #{passengerScheduleInfo.orderCode}
+				, TO_DATE(#{passengerScheduleInfo.orderDate}, 'YYYYMMDDHH24MISS')
+			FROM DUAL
+		</foreach>
+	</insert>
+	
+	<update id="bookSeats">
+		UPDATE SEAT_INFO S
+		SET
+		IS_BOOKED = (
+						WITH TBL AS
+						(
+						<foreach collection="passengerScheduleList" item="passengerScheduleInfo" separator="UNION ALL" >
+							SELECT #{passengerScheduleInfo.passEmail} PASS_EMAIL
+							, #{passengerScheduleInfo.airScheCode} AIR_SCHE_CODE
+							, #{passengerScheduleInfo.seatCode} SEAT_CODE
+							FROM DUAL
+						</foreach>	
+						)
+						SELECT PASS_EMAIL
+						FROM TBL T
+						WHERE S.AIR_SCHE_CODE = T.AIR_SCHE_CODE
+						AND S.SEAT_CODE = T.SEAT_CODE
+					)
+		WHERE 1 = 1
+		AND			
+		<foreach collection="passengerScheduleList" item="passengerScheduleInfo" separator="OR" >
+			(S.AIR_SCHE_CODE = #{passengerScheduleInfo.airScheCode}
+			AND S.SEAT_CODE = #{passengerScheduleInfo.seatCode})
+		</foreach>
+	</update>
+	
+	<!-- WHERE S.AIR_SCHE_CODE IN (
+		<foreach collection="passengerScheduleList" item="passengerScheduleInfo" separator="," >
+			#{passengerScheduleInfo.airScheCode}
+		</foreach>
+	)
+	AND S.SEAT_CODE IN (
+		<foreach collection="passengerScheduleList" item="passengerScheduleInfo" separator="," >
+			#{passengerScheduleInfo.seatCode}
+		</foreach>
+	) -->
+	
+	<!-- <foreach collection="passengerScheduleList" item="passengerScheduleInfo" separator="OR" >
+	(WHERE S.AIR_SCHE_CODE = #{passengerScheduleInfo.airScheCode}
+	AND S.SEAT_CODE = #{passengerScheduleInfo.seatCode})
+	</foreach> -->
+	
+	<update id="updateSpareSeats">
+		UPDATE AIR_SCHEDULE
+		SET
+		SPARE_SEAT = SPARE_SEAT - #{count}
+		WHERE AIR_SCHE_CODE = #{departureAirScheCode}
+		<if test="hasReturn eq 'Y'.toString()">
+			OR AIR_SCHE_CODE = #{returnAirScheCode}
+		</if>
+	</update>
+	
+	
+	<select id="selectOrderDetails" resultMap="passengerSchedule">
+		SELECT P.PASS_NAME
+		    , P.PASS_SCHE_CODE
+		    , P.SEAT_CODE
+		    , A.DEPARTURE_DATE
+		    , A.DEPARTURE_PORT_CODE
+		    , A.DCOUNTRY_NAME
+		    , A.ARRIVAL_PORT_CODE
+		    , A.ACOUNTRY_NAME
+		    , A.GATE_NUM
+		    , A.BOARDING_DATE
+		FROM PASSENGER_SCHEDULE P INNER JOIN AIR_SCHEDULE_V A
+		ON P.AIR_SCHE_CODE = A.AIR_SCHE_CODE
+		WHERE ORDER_CODE = #{orderCode}
+	</select>
+	
+
+		
+	<!-- 로그인  -->
+	<select id="login" resultMap="member">
+		SELECT MEM_ID
+			, MEM_NAME
+			, IS_ADMIN
+		FROM AIR_MEMBER
+		WHERE MEM_ID=#{memId}
+		AND MEM_PW=#{memPw}
+	</select>	
+	
+	<select id="getPoints" resultType="int">
+		SELECT POINTS
+		FROM AIR_MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	
+	<update id="updatePoints">
+		UPDATE AIR_MEMBER
+		SET
+		POINTS = POINTS - #{points}
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 SQL문을 mapper태그 안에 작성 -->
+<mapper namespace="memberMapper">
+		<!-- 회원  -->
+		<resultMap type="com.kh.airline.member.vo.AirMemberVO" id="member">
+		<id 	column="MEM_ID" 		property="memId"/>
+		<result column="MEM_PW" 		property="memPw"/>
+		<result column="MEM_NAME" 		property="memName"/>
+		<result column="GENDER" 		property="gender"/>
+		<result column="BIRTH_DATE" 	property="birthDate"/>
+		<result column="COUNTRY_CODE" 	property="countryCode"/>
+		<result column="MEM_EMAIL" 		property="memEmail"/>
+		<result column="MEM_PHONE" 		property="memPhone"/>
+		<result column="MEM_ADDR" 		property="memAddr"/>
+		<result column="POINTS" 		property="points"/>
+		<result column="EMP_CODE" 		property="empCode"/>
+		<result column="IS_ADMIN" 		property="isAdmin"/>
+		<result column="COUNTRY_NAME" 	property="countryName"/>
+		</resultMap>
+		<!-- 나라 -->
+		<resultMap type="com.kh.airline.member.vo.CountryVO" id="country">
+		<id 	column="COUNTRY_CODE" 		property="countryCode"/>
+		<result column="COUNTRY_NAME" 		property="countryName"/>
+		</resultMap>
+		<!-- 회원 사이드 메뉴 -->
+		<resultMap type="com.kh.airline.member.vo.MemberSideMenuVO" id="memSide">
+		<id 	column="SIDE_MENU_CODE" 		property="sideMenuCode"/>
+		<result column="SIDE_MENU_NAME" 		property="sideMenuName"/>
+		<result column="SIDE_MENU_URI" 			property="sideMenuUri"/>
+		</resultMap>
+		<!-- 회원 이미지  -->
+		<resultMap type="com.kh.airline.member.vo.MemImgVO" id="memImg">
+		<id 	column="MEM_IMG_CODE" 			property="memImgCode"/>
+		<result column="ORIGIN_MEM_IMG_NAME"	property="originMemImgName"/>
+		<result column="ATTACHED_MEM_IMG_NAME" 	property="attachedMemImgName"/>
+		<result column="MEM_ID" 				property="memId"/>
+		</resultMap>
+		<!-- 항공편 목록  -->
+		<resultMap type="com.kh.airline.ticket.vo.AirScheduleVVO" id="airSchedule">
+		<id 	column="AIR_SCHE_CODE" property="airScheCode"/>
+		<result column="DEPARTURE_DATE" 		property="departureDate"/>
+		<result column="BOARDING_DATE" 		property="boardingDate"/>
+		<result column="DEPARTURE_PORT_CODE" 		property="departurePortCode"/>
+		<result column="ARRIVAL_DATE" 		property="arrivalDate"/>
+		<result column="ARRIVAL_PORT_CODE" 		property="arrivalPortCode"/>
+		<result column="DPORT_NAME" 		property="dportName"/>
+		<result column="DCITY_NAME" 		property="dcityName"/>
+		<result column="DCOUNTRY_NAME" 		property="dcountryName"/>
+		<result column="APORT_NAME" 		property="aportName"/>
+		<result column="ACITY_NAME" 		property="acityName"/>
+		<result column="ACOUNTRY_NAME" 		property="acountryName"/>
+		<result column="GATE_NUM" 		property="gateNum"/>
+		<result column="BASE_PRICE" 		property="basePrice"/>
+		<result column="SPARE_SEAT" 		property="spareSeat"/>
+		<result column="DISTANCE" 		property="distance"/>
+		<result column="HIGHEST_SPEED" 		property="highestSpeed"/>
+		<result column="HRS" 		property="hrs"/>
+	</resultMap>
+		<!-- 예매자   -->
+		<resultMap type="com.kh.airline.member.vo.MyTicketVO" id="myTicket">
+		<id 	column="PASS_SCHE_CODE" property="passScheCode"/>
+		<result column="MEM_ID" 		property="memId"/>
+		<result column="PASS_NAME" 		property="passName"/>
+		<result column="GENDER" 		property="gender"/>
+		<result column="BIRTH_DATE" 		property="birthDate"/>
+		<result column="COUNTRY_CODE" 		property="countryCode"/>
+		<result column="PASSPORT_NUM" 		property="passportNum"/>
+		<result column="PASS_EMAIL" 		property="passEmail"/>
+		<result column="PASS_PHONE" 		property="passPhone"/>
+		<result column="PASS_ADDR" 		property="passAddr"/>
+		<result column="AIR_SCHE_CODE" 		property="airScheCode"/>
+		<result column="SEAT_CODE" 		property="seatCode"/>
+		<result column="TICKET_PRICE" 		property="ticketPrice"/>
+		<result column="ORDER_CODE" 		property="orderCode"/>
+		<result column="ORDER_DATE" 		property="orderDate"/>
+		<result column="DEPARTURE_DATE" 		property="departureDate"/>
+		<association property="airScheduleVO" resultMap="airSchedule"/>
+	</resultMap>
+		
+	<!-- 회원 상세조회  -->
+	<select id="selectMemInfo" resultMap="member">
+		SELECT MEM_ID
+			, MEM_PW
+			, MEM_NAME
+			, GENDER
+			, TO_CHAR(BIRTH_DATE, 'YYYY-MM-DD') AS BIRTH_DATE
+			, COUNTRY_NAME
+			, CO.COUNTRY_CODE
+			, MEM_EMAIL
+			, MEM_PHONE
+			, POINTS
+			, MEM_ADDR
+			, EMP_CODE
+		FROM AIR_MEMBER MEM, COUNTRY CO 
+		WHERE MEM.COUNTRY_CODE = CO.COUNTRY_CODE
+		AND MEM_ID=#{memId}
+	</select>
+	<!-- 회원 상세조회 리스트  -->
+	<select id="selectMemInfoList" resultMap="member">
+		SELECT MEM_ID
+			, MEM_PW
+			, MEM_NAME
+			, GENDER
+			, BIRTH_DATE
+			, COUNTRY_CODE
+			, MEM_EMAIL
+			, MEM_PHONE
+			, POINTS
+			, MEM_ADDR
+			, EMP_CODE
+			, IS_ADMIN
+		FROM AIR_MEMBER
+		WHERE 1 = 1
+		<if test="memId != null and !memId.equals('')">
+		AND MEM_ID = #{memId}
+		</if>
+	</select>
+	
+	<!-- 로그인  -->
+	<select id="login" resultMap="member">
+		SELECT MEM_ID
+			, MEM_NAME
+			, IS_ADMIN
+		FROM AIR_MEMBER
+		WHERE MEM_ID=#{memId}
+		AND MEM_PW=#{memPw}
+	</select>
+	
+	<!-- 회원가입  -->
+	<insert id="insertMember">
+		INSERT INTO AIR_MEMBER (
+			MEM_ID
+			, MEM_PW
+			, MEM_NAME
+			, GENDER
+			, BIRTH_DATE
+			, COUNTRY_CODE
+			, MEM_EMAIL
+			, MEM_PHONE
+			, MEM_ADDR
+		) VALUES (
+			  #{memId        }
+			, #{memPw        }
+			, #{memName      }
+			, #{gender       }
+			, #{birthDate    }
+			, #{countryCode  }
+			, #{memEmail     }
+			, #{memPhone     }
+			, #{memAddr      }
+		)
+	</insert>
+	<!-- 아이디 조회 -->
+	<select id="selectMemId" resultType="String">
+		SELECT MEM_ID
+		FROM AIR_MEMBER
+		WHERE MEM_EMAIL=#{memEmail}
+	</select>
+	<!-- 임시 비밀번호로 변경 -->
+	 <update id="updateMemPw">
+		UPDATE AIR_MEMBER SET MEM_PW =#{memPw} 
+		WHERE MEM_ID=#{memId}
+	</update>
+	<!-- 회원가입 나라조회 -->
+	<select id="listCountry" resultMap="country">
+		SELECT COUNTRY_CODE
+			, COUNTRY_NAME
+		FROM COUNTRY
+	</select>
+	<!-- 아이디 중복확인  -->
+	<select id="idConfirm" resultMap="member">
+		SELECT MEM_ID
+		FROM AIR_MEMBER
+		WHERE MEM_ID=#{memId}
+	</select>
+	<!-- 멤버 사이드 메뉴 조회  -->
+	<select id="selectMemSide" resultMap="memSide">
+		SELECT SIDE_MENU_CODE
+			, SIDE_MENU_NAME
+			, SIDE_MENU_URI
+		FROM MEM_SIDE_MENU
+		ORDER BY SIDE_MENU_CODE
+	</select>
+	<!-- 내정보보기 수정한 데이터 저장  -->
+	<update id="updateMemInfo">
+		UPDATE AIR_MEMBER 
+			SET 
+			 MEM_NAME = #{memName}
+			, GENDER = #{gender}
+			, BIRTH_DATE = #{birthDate}
+			, MEM_EMAIL = #{memEmail}
+			, MEM_PHONE = #{memPhone}
+			, MEM_ADDR = #{memAddr}
+		WHERE MEM_ID =#{memId}
+	</update>
+	<!-- 회원 이미지 번호 조회  -->
+	<select id="selectNextMemImgCode" resultType="int">
+		SELECT NVL(MAX(MEM_IMG_CODE), 0) + 1
+		FROM MEM_IMG
+	</select>
+	<!-- 회원 이미지 등록  -->
+	<insert id="insertMemImg">
+		INSERT INTO MEM_IMG (
+			MEM_IMG_CODE
+			, ORIGIN_MEM_IMG_NAME	
+			, ATTACHED_MEM_IMG_NAME 	
+			, MEM_ID 				
+		) VALUES (
+			#{memImgCode             }
+			, #{originMemImgName	 }
+			, #{attachedMemImgName 	 }
+			, #{memId 			     }
+		)
+	</insert>
+	<!-- 회원 이미지 조회  -->
+	<select id="selectMemImg" resultType="String">
+		SELECT ATTACHED_MEM_IMG_NAME
+		FROM MEM_IMG
+		WHERE MEM_ID=#{memId}
+	</select>
+	<!-- 회원 이미지 삭제  -->
+	<delete id="deleteMemImg">
+		DELETE FROM MEM_IMG
+		WHERE MEM_ID = #{memId}
+	</delete>
+	<!-- 예매 조회  -->
+	<select id="selectMyTicket" resultMap="myTicket">
+		SELECT P.PASS_NAME
+		    , P.PASS_SCHE_CODE
+		    , P.SEAT_CODE
+		    , A.DEPARTURE_DATE
+		    , A.DEPARTURE_PORT_CODE
+		    , A.DCOUNTRY_NAME
+		    , A.ARRIVAL_PORT_CODE
+		    , A.ACOUNTRY_NAME
+		    , A.GATE_NUM
+		    , A.BOARDING_DATE
+		FROM PASSENGER_SCHEDULE P INNER JOIN AIR_SCHEDULE_V A
+		ON P.AIR_SCHE_CODE = A.AIR_SCHE_CODE
+		WHERE MEM_ID = #{memId}
+		AND TO_CHAR(DEPARTURE_DATE, 'YYYYMMDDHH24MISS') &gt;= #{departureDate}
+	</select>
+	<!-- 지난 예매 조회  -->
+	<select id="selectPastMyTicket" resultMap="myTicket">
+		SELECT P.PASS_NAME
+		    , P.PASS_SCHE_CODE
+		    , P.SEAT_CODE
+		    , A.DEPARTURE_DATE
+		    , A.DEPARTURE_PORT_CODE
+		    , A.DCOUNTRY_NAME
+		    , A.ARRIVAL_PORT_CODE
+		    , A.ACOUNTRY_NAME
+		    , A.GATE_NUM
+		    , A.BOARDING_DATE
+		FROM PASSENGER_SCHEDULE P INNER JOIN AIR_SCHEDULE_V A
+		ON P.AIR_SCHE_CODE = A.AIR_SCHE_CODE
+		WHERE MEM_ID = #{memId}
+		AND TO_CHAR(DEPARTURE_DATE, 'YYYYMMDDHH24MISS') &lt;= #{departureDate}
+	</select>
+	
+	<select id="selectMemPw" resultType="String">
+		SELECT MEM_ID
+		FROM AIR_MEMBER
+		WHERE MEM_ID=#{memId}
+		AND MEM_PW=#{memPw}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

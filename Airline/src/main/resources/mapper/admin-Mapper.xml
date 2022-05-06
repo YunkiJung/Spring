@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 SQL문을 mapper태그 안에 작성 -->
+<mapper namespace="adminMapper">
+	<resultMap type="com.kh.airline.admin.vo.AdminMenuVO" id="adminMenu">
+		<id 	column="MENU_CODE" 			property="menuCode"/>
+		<result column="MENU_NAME" 			property="menuName"/>
+		<result column="MENU_SRC" 			property="menuSrc"/>
+	</resultMap>
+	
+	<!-- 관리자 메뉴 목록. 0419정욱. -->
+	<select id="selectAdminMenuList" resultMap="adminMenu">
+		SELECT MENU_CODE
+			, MENU_NAME
+			, MENU_SRC
+		FROM A_ADMIN_MENU
+	</select>
+	
+	
+<!-- 회원 관련 기능 -->
+	<resultMap type="com.kh.airline.admin.vo.AdminAirMemberVO" id="member">
+		<id 	column="MEM_ID" 		property="memId"/>
+		<result column="MEM_PW" 		property="memPw"/>
+		<result column="MEM_NAME" 		property="memName"/>
+		<result column="GENDER" 		property="gender"/>
+		<result column="BIRTH_DATE" 	property="birthDate"/>
+		<result column="COUNTRY_CODE" 	property="countryCode"/>
+		<result column="MEM_EMAIL" 		property="memEmail"/>
+		<result column="MEM_PHONE" 		property="memPhone"/>
+		<result column="MEM_ADDR" 		property="memAddr"/>
+		<result column="POINTS" 		property="points"/>
+		<result column="EMP_CODE" 		property="empCode"/>
+		<result column="IS_ADMIN" 		property="isAdmin"/>
+		<result column="ROW_NUM" 		property="rowNum"/>
+		
+	</resultMap>
+	
+	<!-- 회원 수 -->
+	<select id="countMemberList" resultType="int">
+		SELECT COUNT(MEM_ID) FROM AIR_MEMBER
+		WHERE 1 = 1
+		<if test="memId != null and !memId.equals('')">
+		AND MEM_ID = #{memId}
+		</if>
+	</select>
+	
+	<!-- 회원 상세조회 리스트  -->
+	<select id="selectAdminMemberList" resultMap="member">
+		SELECT MEM_ID
+			, MEM_NAME
+			, EMP_CODE
+			, ROW_NUM
+			FROM (SELECT MEM_ID
+				, MEM_NAME
+				, EMP_CODE
+				, ROWNUM AS ROW_NUM
+				FROM AIR_MEMBER)
+		WHERE 1 = 1
+		AND ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}		
+		<if test="memId != null and !memId.equals('')">
+		AND MEM_ID LIKE '%'||#{memId}||'%'
+		</if>
+	</select>
+	
+		
+	<!-- 회원 조회 -->
+	<select id="selectAdminMember" resultMap="member">
+		SELECT MEM_ID
+			, MEM_PW
+			, MEM_NAME
+			, GENDER
+			, TO_CHAR(BIRTH_DATE, 'YYYY-MM-DD') AS BIRTH_DATE
+			, COUNTRY_CODE
+			, MEM_EMAIL
+			, MEM_PHONE
+			, POINTS
+			, MEM_ADDR
+			, EMP_CODE
+			, IS_ADMIN
+		FROM AIR_MEMBER
+		WHERE 1 = 1
+		<if test="memId != null and !memId.equals('')">
+		AND MEM_ID = #{memId}
+		</if>
+	</select>
+	
+	<delete id="deleteAirMember">
+		DELETE AIR_MEMBER WHERE MEM_ID = #{memId}
+	</delete>
+	
+	<update id="updateAirMember">
+		UPDATE AIR_MEMBER
+		SET
+		MEM_PW = #{memPw}
+			, MEM_NAME = #{memName}
+			, GENDER = #{gender}
+			, BIRTH_DATE = #{birthDate}
+			, COUNTRY_CODE = #{countryCode}
+			, MEM_EMAIL = #{memEmail}
+			, MEM_PHONE = #{memPhone}
+			, MEM_ADDR = #{memAddr}
+			, POINTS = #{points}
+			, EMP_CODE = #{empCode}
+			, IS_ADMIN = #{isAdmin}
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	
+	
+<!-- 직원 관련 기능 -->
+	<resultMap type="com.kh.airline.admin.vo.AdminEmpVO" id="adminEmp">
+		<id 	column="EMP_CODE" 			property="empCode"/>
+		<result column="EMP_ID" 			property="empId"/>
+		<result column="EMP_PW" 			property="empPw"/>
+		<result column="EMP_NAME"			property="empName"/>
+		<result column="GENDER" 			property="gender"/>
+		<result column="EMP_EMAIL" 			property="empEmail"/>
+		<result column="EMP_PHONE"			property="empPhone"/>
+		<result column="EMP_ADDR" 			property="empAddr"/>
+		<result column="BIRTH_DATE"			property="birthDate"/>
+		<result column="HIRE_DATE" 			property="hireDate"/>
+		<result column="DEPT_CODE" 			property="deptCode"/>
+		<result column="TEAM_CODE" 			property="teamCode"/>
+		<result column="MANAGER_CODE" 		property="managerCode"/>
+		<result column="NATIONALITY" 		property="nationality"/>
+		<result column="IS_DOMESTIC" 		property="isDomestic"/>
+		<result column="IS_INTERNATIONAL"	property="isInternational"/>
+		<result column="JOB_CODE"			property="jobCode"/>
+		<result column="ROW_NUM"			property="rowNum"/>
+	</resultMap>
+	
+	<!-- 직원 수 -->
+	<select id="countEmpList" resultType="int">
+		SELECT COUNT(EMP_CODE) FROM EMP
+		WHERE 1 = 1
+		<if test="empCode != null and !empCode.equals('')">
+		AND EMP_CODE = #{empCode}
+		</if>
+	</select>
+	
+	<!-- 직원 조회 -->
+	<select id="selectEmp" resultMap="adminEmp">
+		SELECT EMP_CODE
+			, EMP_ID
+			, EMP_PW
+			, EMP_NAME
+			, GENDER
+			, EMP_EMAIL
+			, EMP_PHONE
+			, EMP_ADDR
+			, TO_CHAR(BIRTH_DATE, 'YYYY-MM-DD') AS BIRTH_DATE
+			, TO_CHAR(HIRE_DATE, 'YYYY-MM-DD') AS HIRE_DATE
+			, DEPT_CODE
+			, TEAM_CODE
+			, MANAGER_CODE
+			, NATIONALITY
+			, IS_DOMESTIC
+			, IS_INTERNATIONAL
+			, JOB_CODE
+		FROM EMP
+		WHERE 1 = 1
+		<if test="empCode != null and !empCode.equals('')">
+		AND EMP_CODE = #{empCode}
+		</if>
+		<if test="empName != null and !empName.equals('')">
+		AND EMP_NAME = #{empName}
+		</if>
+		<if test="deptCode != null and !deptCode.equals('')">
+		AND DEPT_CODE = #{deptCode}
+		</if>
+	</select>
+	
+	<!-- 직원 목록 -->
+	<select id="selectEmpList" resultMap="adminEmp">
+		SELECT EMP_CODE
+			, EMP_ID
+			, EMP_NAME
+			, DEPT_CODE
+			, JOB_CODE
+			, ROW_NUM
+		FROM
+		(SELECT EMP_CODE
+			, EMP_ID
+			, EMP_NAME
+			, DEPT_CODE
+			, JOB_CODE
+			, ROWNUM AS ROW_NUM
+		FROM EMP)
+		WHERE 1 = 1
+		AND ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+		<if test="empId != null and !empId.equals('')">
+		AND EMP_ID LIKE '%'||#{empId}||'%'
+		</if>
+		<if test="empName != null and !empName.equals('')">
+		AND EMP_NAME LIKE '%'||#{empName}||'%'
+		</if>
+		<if test="deptCode != null and !deptCode.equals('')">
+		AND DEPT_CODE LIKE '%'||#{deptCode}||'%'
+		</if>
+	</select>
+	
+	
+	<!-- 직원 정보 수정 -->
+	<update id="updateEmp">
+		UPDATE EMP
+		SET
+		EMP_ID = #{empId}
+			, EMP_PW = #{empPw}
+			, EMP_NAME = #{empName}
+			, GENDER = #{gender}
+			, EMP_EMAIL = #{empEmail}
+			, EMP_PHONE = #{empPhone}
+			, EMP_ADDR = #{empAddr}
+			, BIRTH_DATE = #{birthDate}
+			, HIRE_DATE = #{hireDate}
+			, DEPT_CODE = #{deptCode}
+			, TEAM_CODE = #{teamCode}
+			, MANAGER_CODE = #{managerCode}
+			, NATIONALITY = #{nationality}
+			, IS_DOMESTIC = #{isDomestic}
+			, IS_INTERNATIONAL = #{isInternational}
+			, JOB_CODE = #{jobCode}
+		WHERE EMP_CODE = #{empCode}
+	</update>
+	
+	<!-- 직원 추가 -->
+	<insert id="insertEmp">
+		INSERT INTO EMP (
+			EMP_CODE
+			, EMP_ID
+			, EMP_PW
+			, EMP_NAME
+			, GENDER
+			, EMP_EMAIL
+			, EMP_PHONE
+			, EMP_ADDR
+			, BIRTH_DATE
+			, HIRE_DATE
+			, DEPT_CODE
+			, TEAM_CODE
+			, MANAGER_CODE
+			, NATIONALITY
+			, IS_DOMESTIC
+			, IS_INTERNATIONAL
+			, JOB_CODE
+		) VALUES (
+			(SELECT 'EMP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(EMP_CODE, 5))), 0) + 1, 3, '0') FROM EMP)
+			, #{empId}
+			, #{empPw}
+			, #{empName}
+			, #{gender}
+			, #{empEmail}
+			, #{empPhone}
+			, #{empAddr}
+			, #{birthDate}
+			, #{hireDate}
+			, #{deptCode}
+			, #{teamCode}
+			, #{managerCode}
+			, #{nationality}
+			, #{isDomestic}
+			, #{isInternational}
+			, #{jobCode}
+		)
+	</insert>
+	
+	<delete id="deleteEmp">
+		DELETE EMP
+		WHERE EMP_CODE = #{empCode}
+	</delete>
+	
+	
+<!-- 예매 관련 기능 -->
+	 <resultMap type="com.kh.airline.admin.vo.AdminPassengerScheduleVO" id="passengerSchedule">
+		<id 	column="PASS_SCHE_CODE" property="passScheCode"/>
+		<result column="MEM_ID" 		property="memId"/>
+		<result column="PASS_NAME" 		property="passName"/>
+		<result column="GENDER" 		property="gender"/>
+		<result column="BIRTH_DATE" 	property="birthDate"/>
+		<result column="COUNTRY_CODE" 	property="countryCode"/>
+		<result column="PASS_EMAIL" 	property="passEmail"/>
+		<result column="PASSPORT_NUM" 	property="passportNum"/>
+		<result column="PASS_PHONE" 	property="passPhone"/>
+		<result column="PASS_ADDR"		property="passAddr"/>
+		<result column="AIR_SCHE_CODE"	property="airScheCode"/>
+		<result column="SEAT_CODE" 		property="seatCode"/>
+		<result column="TICKET_PRICE" 	property="ticketPrice"/>
+		<result column="ORDER_CODE" 	property="orderCode"/>
+		<result column="ORDER_DATE" 	property="orderDate"/>
+	</resultMap>
+	
+	<!-- 예매 상세 정보 -->
+	<select id="selectPassengerSchedule" resultMap="passengerSchedule">
+		SELECT PASS_SCHE_CODE
+			, MEM_ID
+			, PASS_NAME
+			, GENDER
+			, TO_CHAR(BIRTH_DATE, 'YYYY-MM-DD') AS BIRTH_DATE
+			, COUNTRY_CODE
+			, PASSPORT_NUM
+			, PASS_EMAIL
+			, PASS_PHONE
+			, PASS_ADDR
+			, AIR_SCHE_CODE
+			, SEAT_CODE
+			, TICKET_PRICE
+			, ORDER_CODE
+			, TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') AS ORDER_DATE
+		FROM PASSENGER_SCHEDULE
+		WHERE 1 = 1
+		<if test="passScheCode != null and !passScheCode.equals('')">
+		AND PASS_SCHE_CODE = #{passScheCode}
+		</if>
+		<if test="airScheCode != null and !airScheCode.equals('')">
+		AND AIR_SCHE_CODE = #{airScheCode}
+		</if>
+		<if test="memId != null and !memId.equals('')">
+		AND MEM_ID = #{memId}
+		</if>
+		<if test="passName != null and !passName.equals('')">
+		AND PASS_NAME = #{passName}
+		</if>
+		<if test="seatCode != null and !seatCode.equals('')">
+		AND SEAT_CODE = #{seatCode}
+		</if>
+	</select>
+	
+	
+	<!-- 예매 수 조회 -->
+	<select id="countPassengerScheduleList" resultType="int">
+		SELECT COUNT(PASS_SCHE_CODE) FROM PASSENGER_SCHEDULE
+		WHERE 1 = 1
+		<if test="passScheCode != null and !passScheCode.equals('')">
+		AND PASS_SCHE_CODE = #{passScheCode}
+		</if>
+	</select>
+	
+	<!-- 예매 목록 조회 -->
+	<select id="selectPassengerScheduleList" resultMap="passengerSchedule">
+		SELECT PASS_SCHE_CODE
+			, MEM_ID
+			, PASS_NAME
+			, COUNTRY_CODE
+			, AIR_SCHE_CODE
+			, SEAT_CODE
+			, ORDER_CODE
+			, ORDER_DATE
+			, ROW_NUM
+		FROM (SELECT PASS_SCHE_CODE
+			, MEM_ID
+			, PASS_NAME
+			, COUNTRY_CODE
+			, AIR_SCHE_CODE
+			, SEAT_CODE
+			, ORDER_CODE
+			, ORDER_DATE
+			, ROWNUM AS ROW_NUM
+		FROM PASSENGER_SCHEDULE)
+		WHERE 1 = 1
+		AND ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+		<if test="passScheCode != null and !passScheCode.equals('')">
+		AND PASS_SCHE_CODE LIKE '%'||#{passScheCode}||'%'
+		</if>
+		<if test="memId != null and !memId.equals('')">
+		AND MEM_ID LIKE '%'||#{memId}||'%'
+		</if>
+		<if test="passName != null and !passName.equals('')">
+		AND PASS_NAME LIKE '%'||#{passName}||'%'
+		</if>
+		<if test="seatCode != null and !seatCode.equals('')">
+		AND SEAT_CODE LIKE '%'||#{seatCode}||'%'
+		</if>
+		
+	</select>
+	
+	<!-- 예매 정보 수정 -->
+	<update id="updatePassengerSchedule">
+		UPDATE PASSENGER_SCHEDULE
+		SET 
+		MEM_ID = #{memId}
+			, PASS_NAME = #{passName}
+			, GENDER = #{gender}
+			, BIRTH_DATE = #{birthDate}
+			, COUNTRY_CODE = #{countryCode}
+			, PASS_EMAIL = #{passEmail}
+			, PASS_PHONE = #{passPhone}
+			, PASS_ADDR = #{passAddr}
+			, AIR_SCHE_CODE = #{airScheCode}
+			, SEAT_CODE = #{seatCode}
+			, TICKET_PRICE = #{ticketPrice}
+			, ORDER_CODE = #{orderCode}
+			, ORDER_DATE = #{orderDate}
+		WHERE PASS_SCHE_CODE = #{passScheCode}
+	</update>
+	
+	<!-- ****** 예매 삭제 (삭제 아닌 비활성화 시키고 환불처리로 넘어가야함) -->
+	<delete id="deletePassengerSchedule">
+		DELETE PASS_SCHE_CODE 
+		WHERE PASS_SCHE_CODE = #{passScheCode}
+	</delete>
+	
+	<!-- 매출 현황 조회 -->
+	<select id="selectSales" resultType="int">
+		SELECT SUM(TICKET_PRICE)
+		FROM PASSENGER_SCHEDULE
+		WHERE TO_CHAR(ORDER_DATE, 'YYYY/MM') = #{orderDate}
+	</select>
+	
+	
+	
+<!-- 운항 관련 기능 -->
+	<resultMap type="com.kh.airline.admin.vo.AdminAirScheduleVO" id="airSchedule">
+		<id 	column="AIR_SCHE_CODE"		property="airScheCode"/>
+		<result column="PLANE_CODE" 		property="planeCode"/>
+		<result column="PATH_CODE" 			property="pathCode"/>
+		<result column="TEAM_CODE" 			property="teamCode"/>
+		<result column="DEPARTURE_DATE"	 	property="departureDate"/>
+		<result column="GATE_NUM" 			property="gateNum"/>
+		<result column="BASE_PRICE" 		property="basePrice"/>
+		<result column="SPARE_SEAT" 		property="spareSeat"/>
+	</resultMap>
+	
+	<!-- 운항 수 조회 -->
+	<select id="countAirSchedule" resultType="int">
+		SELECT COUNT(AIR_SCHE_CODE) FROM AIR_SCHEDULE WHERE 1 = 1
+		<if test="airScheCode != null and !airScheCode.equals('')">
+		AND AIR_SCHE_CODE = #{airScheCode}
+		</if>
+	</select>
+	
+	<!-- 운항 목록 조회 -->
+	<select id="selectAirScheduleList" resultMap="airSchedule">
+		SELECT AIR_SCHE_CODE
+			, PLANE_CODE
+			, PATH_CODE
+			, DEPARTURE_DATE
+			, SPARE_SEAT
+			, ROW_NUM
+		FROM (
+			SELECT AIR_SCHE_CODE
+				, PLANE_CODE
+				, PATH_CODE
+				, DEPARTURE_DATE
+				, SPARE_SEAT
+				, ROWNUM AS ROW_NUM
+			FROM (
+				SELECT AIR_SCHE_CODE
+					, PLANE_CODE
+					, PATH_CODE
+					, TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD hh24:mi') AS DEPARTURE_DATE
+					, SPARE_SEAT
+				FROM AIR_SCHEDULE
+				ORDER BY AIR_SCHE_CODE DESC))
+		WHERE 1 = 1
+		AND ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+		<if test="airScheCode != null and !airScheCode.equals('')">
+		AND AIR_SCHE_CODE LIKE '%'||#{airScheCode}||'%'
+		</if>
+		<if test="planeCode != null and !planeCode.equals('')">
+		AND PLANE_CODE LIKE '%'||#{planeCode}||'%'
+		</if>
+		<if test="pathCode != null and !pathCode.equals('')">
+		AND PATH_CODE LIKE '%'||#{pathCode}||'%'
+		</if>
+		<if test="departureDate != null and !departureDate.equals('')">
+		AND DEPARTURE_DATE LIKE '%'||#{departureDate}||'%'
+		</if>
+		ORDER BY ROW_NUM DESC
+		
+	</select>
+	
+	<!-- 운항 정보 상세 조회 -->
+	<select id="selectAirSchedule" resultMap="airSchedule">
+		SELECT 
+		AIR_SCHE_CODE
+			, PLANE_CODE
+			, PATH_CODE
+			, TEAM_CODE
+			, DEPARTURE_DATE
+			, GATE_NUM
+			, BASE_PRICE
+			, (SELECT COUNT(SEAT_CODE)
+				FROM SEAT_INFO I INNER JOIN AIR_SCHEDULE S 
+				ON I.AIR_SCHE_CODE = S.AIR_SCHE_CODE 
+				WHERE S.AIR_SCHE_CODE = #{airScheCode}
+				AND IS_BOOKED IS NULL) AS SPARE_SEAT
+		FROM AIR_SCHEDULE
+		WHERE AIR_SCHE_CODE = #{airScheCode}
+	</select>
+	
+	<!-- 운항 정보 삭제 -->
+	<delete id="deleteAdminAirSchedule">
+		DELETE AIR_SCHEDULE WHERE AIR_SCHE_CODE = #{airScheCode}
+	</delete>
+	
+	<!-- 운항 정보 수정 -->
+	<update id="updateAirSchedule">
+		UPDATE AIR_SCHEDULE
+		SET
+		PLANE_CODE = #{planeCode}
+			, PATH_CODE = #{pathCode}
+			, TEAM_CODE = #{teamCode}
+			, DEPARTURE_DATE = TO_DATE(#{departureDate}, 'YYYY-MM-DD HH24:MI:SS')
+			, GATE_NUM = #{gateNum}
+			, BASE_PRICE = #{basePrice}
+		WHERE AIR_SCHE_CODE = #{airScheCode}
+	</update>
+	
+	<!-- 항공편 정보 추가 -->
+	<insert id="insertAirSchedule">
+		INSERT INTO AIR_SCHEDULE (
+			AIR_SCHE_CODE
+			, PLANE_CODE
+			, PATH_CODE
+			, TEAM_CODE
+			, DEPARTURE_DATE
+			, GATE_NUM
+			, BASE_PRICE
+			, SPARE_SEAT
+		) VALUES (
+			(SELECT 'AIR_SCHE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(AIR_SCHE_CODE, 10))), 0) + 1, 3, '0') FROM AIR_SCHEDULE)
+			, #{planeCode}
+			, #{pathCode}
+			, #{teamCode}
+			, TO_DATE(#{departureDate}, 'YYYY-MM-DD HH24:MI:SS')
+			, #{gateNum}
+			, #{basePrice}
+			, (SELECT CAPACITY 
+		        FROM AIRPLANE A INNER JOIN PLANE_MODEL M
+		        ON A.MODEL_CODE = M.MODEL_CODE
+		        WHERE PLANE_CODE = #{planeCode})
+			)
+		</insert>
+		
+		
+	<resultMap type="com.kh.airline.admin.vo.AdminSeatInfoVO" id="seatInfo">
+		<id 	column="SEAT_CODE" property="seatCode"/>
+		<result column="AIR_SCHE_CODE" property="airScheCode"/>
+		<result column="COL_CODE" property="colCode"/>
+		<result column="ROW_NUM" property="rowNum"/>
+		<result column="SEAT_CLASS" property="seatClass"/>
+		<result column="IS_BOOKED" property="isBooked"/>
+	</resultMap>
+
+			
+	<insert id="insertSeatInfo">
+		DECLARE
+		    TYPE ARRAY_T IS VARRAY(6) of VARCHAR2(10);
+		    ARRAY ARRAY_T := ARRAY_T('A', 'B', 'C', 'D', 'E', 'F');
+		    AIR_SCHEDULE_CODE SEAT_INFO.AIR_SCHE_CODE%TYPE;
+		    ROW_NUM SEAT_INFO.ROW_NUM%TYPE;
+		      
+		BEGIN
+		    SELECT MAX(AIR_SCHE_CODE) 
+		    INTO AIR_SCHEDULE_CODE
+		    FROM AIR_SCHEDULE;
+		    
+		    SELECT (CAPACITY / 6)
+		    INTO ROW_NUM
+		    FROM PLANE_MODEL
+		    WHERE MODEL_CODE = (SELECT MODEL_CODE 
+		                        FROM AIRPLANE A INNER JOIN AIR_SCHEDULE S 
+		                        ON A.PLANE_CODE = S.PLANE_CODE
+		                        WHERE AIR_SCHE_CODE = AIR_SCHEDULE_CODE);
+		    
+		    FOR i IN 1..ARRAY.COUNT
+		    LOOP
+		        FOR j IN 1..ROW_NUM
+		        LOOP
+		            INSERT INTO SEAT_INFO 
+		            VALUES (
+		                j||ARRAY(i)
+		                , AIR_SCHEDULE_CODE
+		                , ARRAY(i)
+		                , j
+		                , 'ECONOMY'
+		                , NULL
+		            );
+		        END LOOP;
+		    END LOOP;
+		END;
+		
+	</insert>
+	
+	<!-- 항공편 가격 수정 -->
+	<update id="updateTicketPrice">
+		UPDATE AIR_SCHEDULE
+		SET
+		BASE_PRICE = #{basePrice}
+		WHERE AIR_SCHE_CODE = #{airScheCode}
+	</update>
+	
+	<!-- SeatInfo List -->
+	<select id="selectSeatColCode" resultType="string">
+		SELECT DISTINCT(COL_CODE) AS COL_CODE
+		FROM SEAT_INFO
+		WHERE AIR_SCHE_CODE = #{airScheCode}
+		ORDER BY COL_CODE ASC
+	</select>
+	
+	<select id="selectSeatRowNum" resultType="int">
+		SELECT (CAPACITY / 6)
+	    FROM PLANE_MODEL
+	    WHERE MODEL_CODE = (SELECT MODEL_CODE 
+	                        FROM AIRPLANE A INNER JOIN AIR_SCHEDULE S 
+	                        ON A.PLANE_CODE = S.PLANE_CODE
+	                        WHERE AIR_SCHE_CODE = #{airScheCode})
+	</select>
+	
+	<update id="updatePassSeat">
+		UPDATE PASSENGER_SCHEDULE
+		SET
+		PASS_SCHE_CODE = #{passScheCode}
+		, MEM_ID = #{memId}
+		, PASS_NAME = #{passName}
+		, GENDER = #{gender}
+		, BIRTH_DATE = #{birthDate}
+		, COUNTRY_CODE = #{countryCode}
+		, PASSPORT_NUM = #{passportNum}
+		, PASS_EMAIL = #{passEmail}
+		, PASS_PHONE = #{passPhone}
+		, PASS_ADDR = #{passAddr}
+		, AIR_SCHE_CODE = #{airScheCode}
+		, SEAT_CODE = #{seatCode}
+		, TICKET_PRICE = #{ticketPrice}
+		, ORDER_CODE = #{orderCode}
+		, ORDER_DATE = #{orderDate}
+		WHERE PASS_SCHE_CODE = #{passScheCode}
+	</update>
+	
+	<update id="updateSeatNull">
+		UPDATE SEAT_INFO
+		SET
+		IS_BOOKED = NULL
+		WHERE IS_BOOKED = #{passEmail}
+	</update>
+	<update id="updateSeatNum">
+		UPDATE SEAT_INFO
+		SET
+		IS_BOOKED = #{passEmail}
+		WHERE SEAT_CODE = #{seatCode}
+	</update>
+
+	
+	<insert id="insertPassSeat">
+		INSERT INTO PASSENGER_SCHEDULE (
+		PASS_SCHE_CODE
+			, MEM_ID
+			, PASS_NAME
+			, GENDER
+			, BIRTH_DATE
+			, COUNTRY_CODE
+			, PASSPORT_NUM
+			, PASS_EMAIL
+			, PASS_PHONE
+			, PASS_ADDR
+			, AIR_SCHE_CODE
+			, SEAT_CODE
+			, TICKET_PRICE
+			, ORDER_CODE
+			, ORDER_DATE
+		) VALUES (
+			#{passScheCode}
+			, #{memId}
+			, #{passName}
+			, #{gender}
+			, #{birthDate}
+			, #{countryCode}
+			, #{passportNum}
+			, #{passEmail}
+			, #{passPhone}
+			, #{passAddr}
+			, #{airScheCode}
+			, #{seatCode}
+			, #{ticketPrice}
+			, #{orderCode}
+			, #{orderDate}
+		)
+	</insert>
+	
+	<!-- isBooked Check -->
+	<select id="isBookedCheck" resultType="String">
+		SELECT SEAT_CODE
+		FROM SEAT_INFO
+		WHERE IS_BOOKED IS NOT NULL
+		AND AIR_SCHE_CODE = #{airScheCode}
+	</select>
+	
+<!-- 공용 정보  -->
+
+	<!-- 국가 정보 -->
+	<resultMap type="com.kh.airline.admin.vo.AdminCountryVO" id="country">
+		<id 	column="COUNTRY_CODE" property="countryCode"/>
+		<result column="COUNTRY_NAME" property="countryName"/>
+	</resultMap>
+	
+	<select id="selectCountry" resultMap="country">
+		SELECT COUNTRY_CODE
+			, COUNTRY_NAME
+		FROM COUNTRY
+	</select>
+	
+	<!-- 항공기 정보 -->
+	<resultMap type="com.kh.airline.admin.vo.AdminAirplaneVO" id="airplane">
+		<id		column="MODEL_CODE" property="modelCode"/>
+		<result column="PLANE_CODE" property="planeCode"/>
+		<result column="MODEL_NAME" property="modelName"/>
+	</resultMap>
+	
+	<select id="selectModelNameList" resultMap="airplane">
+		SELECT M.MODEL_NAME
+			, A.PLANE_CODE
+		FROM AIRPLANE A INNER JOIN PLANE_MODEL M
+		ON M.MODEL_CODE = A.MODEL_CODE
+	</select>
+	
+	<!-- 경로 정보 -->
+	<resultMap type="com.kh.airline.admin.vo.AdminFlightPathVO" id="flightPath">
+		<id 	column="PATH_CODE" property="pathCode"/>
+		<result column="DEPARTURE_PORT_CODE" property="departurePortCode"/>
+		<result column="ARRIVAL_PORT_CODE" property="arrivalPortCode"/>
+		<result column="DISTANCE" property="distance"/>
+		<result column="DEPARTURE_PORT_NAME" property="departurePortName"/>
+		<result column="ARRIVAL_PORT_NAME" property="arrivalPortName"/>
+	</resultMap>
+	
+	<select id="selectPathCodeList" resultMap="flightPath">
+		SELECT PATH_CODE
+		, (SELECT PORT_NAME FROM AIRPORT WHERE PORT_CODE = DEPARTURE_PORT_CODE) AS DEPARTURE_PORT_NAME
+		, (SELECT PORT_NAME FROM AIRPORT WHERE PORT_CODE = ARRIVAL_PORT_CODE) AS ARRIVAL_PORT_NAME
+		FROM FLIGHT_PATH
+	</select>
+	
+	<select id="selectTeamCodeList" resultType="String">
+		SELECT TEAM_CODE
+		FROM CREW_TEAM
+	</select>
+	
+	<select id="selectDeptCodeList" resultType="String">
+		SELECT DEPT_CODE
+		FROM DEPT
+	</select>
+	
+	<select id="selectManagerCodeList" resultType="String">
+		SELECT EMP_CODE
+		FROM EMP
+	</select>
+	
+	<select id="selectJobCodeList" resultType="String">
+		SELECT JOB_CODE
+		FROM JOB_LIST
+	</select>
+	
+	
+	<select id="selectCapacity" resultType="int">
+		SELECT CAPACITY
+		FROM PLANE_MODEL
+		WHERE MODEL_CODE = (SELECT MODEL_CODE FROM AIRPLANE WHERE PLANE_CODE = #{planeCode})
+	</select>
+	
+	<resultMap type="com.kh.airline.admin.vo.AdminAirportVO" id="airport">
+		<id 	column="PORT_CODE" property="portCode"/>
+		<result column="PORT_NAME" property="portName"/>
+		<result column="CITY_CODE" property="cityCode"/>
+	</resultMap>
+
+	<select id="selectAirportList" resultMap="airport">
+		SELECT PORT_CODE
+			, PORT_NAME
+		FROM AIRPORT
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

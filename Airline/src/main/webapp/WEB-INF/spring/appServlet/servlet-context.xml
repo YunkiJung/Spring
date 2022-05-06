@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<!-- 어노테이션 사용으로 객체를 생성할 수 있게 하는 설정 -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- resource의 경로 지정 -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- 타일즈 설정 -->
+    <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <beans:property name="definitions">
+            <beans:list>
+                <beans:value>classpath:tiles-config.xml</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+    
+    <beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+        <beans:property name="order" value="1" />
+    </beans:bean>
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.kh.airline.*.controller" />
+	
+	<context:component-scan base-package="com.kh.airline.*.interceptor"/>
+	<!-- <beans:bean id="testInterceptor" class="com.kh.shop.interceptor.TestInterceptor"></beans:bean>
+	<beans:bean id="loginInterceptor" class="com.kh.shop.interceptor.LoginInterceptor"></beans:bean> -->
+	<beans:bean id="menuInterceptor" class="com.kh.airline.common.interceptor.menuInterceptor"></beans:bean>
+	<beans:bean id="memberSideInterceptor" class="com.kh.airline.member.interceptor.memberSideInterceptor"></beans:bean>
+	<beans:bean id="adminInterceptor" class="com.kh.airline.admin.interceptor.adminInterceptor"></beans:bean>
+	
+	<!-- 인터셉터 설정 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/ticket/*"/>
+			<mapping path="/member/*"/>
+			<exclude-mapping path="/member/join"/> 
+			<exclude-mapping path="/member/pwConfirm"/> 
+			<exclude-mapping path="/ticket/searchPortsInfo"/> 
+			<exclude-mapping path="/ticket/getBookedSeatList"/> 
+			<exclude-mapping path="/ticket/getSeatNumInSession"/> 
+			<exclude-mapping path="/ticket/login"/> 
+			<exclude-mapping path="/ticket/getPoints"/> 
+			<exclude-mapping path="/member/selectCountry"/> 
+			<exclude-mapping path="/member/idConfirm"/> 
+			<beans:ref bean="menuInterceptor"/>
+		</interceptor>
+		 <interceptor>
+			<mapping path="/member/*"/>
+			<exclude-mapping path="/member/join"/>
+			<exclude-mapping path="/member/pwConfirm"/>
+			<exclude-mapping path="/member/selectCountry"/> 
+			<exclude-mapping path="/member/idConfirm"/>
+			<beans:ref bean="memberSideInterceptor"/>
+		</interceptor> 
+		<interceptor>
+			<mapping path="/admin/*"/>
+			<exclude-mapping path="/admin/selectMember"/>
+			<exclude-mapping path="/admin/selectEmp"/>
+			<exclude-mapping path="/admin/selectPass"/>
+			<exclude-mapping path="/admin/selectAirSche"/>
+			<exclude-mapping path="/admin/nullCheck"/>
+			<exclude-mapping path="/admin/checkPassScheForSeat"/>
+			<beans:ref bean="adminInterceptor"/>
+		</interceptor>
+	</interceptors>
+</beans:beans>

@@ -1,0 +1,74 @@
+@font-face {
+    font-family: 'ROKAFSlabSerifBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts2201-3@1.0/ROKAFSlabSerifBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.loginSpan{
+  background-color: #f1f1f5;
+  color: black;
+  font-size: 12px;
+  padding: 16px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  width: 10em;
+}
+
+.loginSpan:hover{
+	background-color: black;
+  	color: white;
+}
+
+
+.modal{
+	position: fixed;
+	 z-index: 10001;
+}
+.regMember{
+	font-size: 2em;
+	text-align: center;
+	margin-left: 9.4em;
+}
+.regMember-memInfo, .regMember-logInfo {
+	font-size: 1.5em;
+	text-decoration: underline;
+}
+.logInfo {
+	font-size: 1.2em;
+	margin-top: 0.5em;
+}
+.btn {
+	font-size: 0.8em;
+	height: 4em;
+}
+.tabInput {
+	width: 16em;	
+}
+.genderRadio {
+	font-size: 1.5em;
+	margin-top: 0.5em;
+}
+.modal-lg {
+	width: 650px;
+}
+.text-end {
+	text-align: right;
+}
+.loginBtnDiv {
+	text-align: center;	
+}
+.findSpan{
+	 cursor: pointer;
+}
+.modal-body{
+	padding: 2em 2em;
+	overflow:auto;
+}
+.airline {
+	font-family: 'ROKAFSlabSerifBold';
+}
+.tm-top-bar {
+	height: 130px;
+}

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 SQL문을 mapper태그 안에 작성 -->
+<mapper namespace="passengerScheduleMapper">
+	<resultMap type="com.kh.airline.admin.vo.AdminPassengerSchdeuleVO" id="passSchedule">
+		<id 	column="PASS_SCHE_CODE" property="passScheCode"/>
+		<result column="MEM_ID" 		property="memId"/>
+		<result column="PASS_NAME" 		property="passName"/>
+		<result column="GENDER" 		property="gender"/>
+		<result column="BIRTH_DATE" 	property="birthDate"/>
+		<result column="COUNTRY_CODE" 	property="countryCode"/>
+		<result column="PASS_EMAIL" 	property="passEmail"/>
+		<result column="PASS_PHONE" 	property="passPhone"/>
+		<result column="PASS_ADDR"		property="passAddr"/>
+		<result column="AIR_SCHE_CODE"	property="airScheCode"/>
+		<result column="SEAT_NUM" 		property="seatNum"/>
+		<result column="SEAT_CLASS" 	property="seatClass"/>
+		<result column="TICKET_PRICE" 	property="ketPrice"/>
+		<result column="ORDER_CODE" 	property="orderCode"/>
+		<result column="ORDER_DATE" 	property="orderDate"/>
+	</resultMap>
+	
+	
+	<!-- 예매코드 혹은 회원 아이디나 예매 시 이름으로 비행기 표 정보 검색  -->
+	<!-- <select id="selectPassSchedule" resultMap="passSchedule">
+		SELECT PASS_SCHE_CODE
+		    , P.MEM_ID
+		    , P.PASS_NAME
+		    , P.GENDER
+		    , P.SEAT_NUM
+		    , P.SEAT_CLASS
+		    , P.PASS_SCHE_CODE
+		    , P.AIR_SCHE_CODE
+		    , F.DEPARTURE_PORT_CODE
+		    , F.ARRIVAL_PORT_CODE
+		    , DPORT.PORT_NAME "DEPART FROM"
+		    , DCITY.CITY_NAME
+		    , DEPARTURE_DATE
+		    , APORT.PORT_NAME "ARRIVE TO"
+		    , ACITY.CITY_NAME
+		    , DISTANCE
+		    , PMODEL.HIGHEST_SPEED
+		    , DISTANCE / HIGHEST_SPEED AS HRS
+		FROM AIR_MEMBER M RIGHT OUTER JOIN PASSENGER_SCHEDULE P
+		ON M.MEM_ID = P.MEM_ID
+		INNER JOIN AIR_SCHEDULE A
+		ON P.AIR_SCHE_CODE = A.AIR_SCHE_CODE
+		INNER JOIN FLIGHT_PATH F
+		ON A.PATH_CODE = F.PATH_CODE
+		INNER JOIN AIRPORT DPORT
+		ON F.DEPARTURE_PORT_CODE = DPORT.PORT_CODE
+		INNER JOIN AIRPORT APORT
+		ON F.ARRIVAL_PORT_CODE = APORT.PORT_CODE
+		INNER JOIN CITY DCITY
+		ON DPORT.CITY_CODE = DCITY.CITY_CODE
+		INNER JOIN CITY ACITY
+		ON APORT.CITY_CODE = ACITY.CITY_CODE
+		INNER JOIN AIRPLANE PLANE
+		ON A.PLANE_CODE = PLANE.PLANE_CODE
+		INNER JOIN PLANE_MODEL PMODEL
+		ON PLANE.MODEL_CODE = PMODEL.MODEL_CODE
+		WHERE 1 = 1;
+		<if test="!passScheCode.equals('') or passScheCode != null">
+		AND PASS_SCHE_CODES = #{passScheCode}
+		</if>
+		<if test="!memId.equals('') or memId != null">
+		AND P.MEM_ID = #{memId}
+		</if>
+		<if test="!passName.equals('') or passName != null">
+		AND PASS_NAME = #{passName}
+		</if>
+		
+	</select>
+	
+
+	 -->
+
+		
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

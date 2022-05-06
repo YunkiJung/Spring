@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 SQL문을 mapper태그 안에 작성 -->
+<mapper namespace="empMapper">
+	<resultMap type="com.kh.airline.emp.vo.EmpVO" id="emp">
+		<id 	column="EMP_CODE" 			property="empCode"/>
+		<result column="EMP_ID" 			property="empId"/>
+		<result column="EMP_PW" 			property="empPw"/>
+		<result column="EMP_NAME"			property="empName"/>
+		<result column="GENDER" 			property="gender"/>
+		<result column="EMP_EMAIL" 			property="empEmail"/>
+		<result column="EMP_PHONE"			property="empPhone"/>
+		<result column="EMP_ADDR" 			property="empAddr"/>
+		<result column="BIRTH_DATE"			property="birthDate"/>
+		<result column="HIRE_DATE" 			property="hireDate"/>
+		<result column="DEPT_CODE" 			property="deptCode"/>
+		<result column="TEAM_CODE" 			property="teamCode"/>
+		<result column="MANAGER_CODE" 		property="managerCode"/>
+		<result column="NATIONALITY" 		property="nationality"/>
+		<result column="IS_DOMESTIC" 		property="isDomestic"/>
+		<result column="IS_INTERNATIONAL"	property="isInternational"/>
+		<result column="JOB_CODE"			property="jobCode"/>
+	</resultMap>
+	
+	
+		
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
