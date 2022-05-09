@@ -3,11 +3,13 @@ function selectAirSche(){
 	var infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
 	var airScheCode;
 	
-	if(arguments.length === 1){
+	if(arguments.length === 2){
 		airScheCode = arguments[0];
+		planeCode = arguments[1]; 
 	}
 	else{
 		airScheCode = '-';
+		planeCode = arguments[0]; 
 	}
 	
 	
@@ -19,7 +21,7 @@ function selectAirSche(){
 	
 	if(result.spareSeat != undefined){
 	$('#airScheCode').val(result.airScheCode);
-	$('select[name=planeCode]').val(result.planeCode).prop('disabled',true).prop('selected', true);
+	$('select[name=planeCode]').val(planeCode).prop('disabled',true).prop('selected', true);
 	$('select[name=pathCode]').val(result.pathCode).prop('selected', true).prop('disabled', true);
 	$('select[name=teamCode]').val(result.teamCode).prop('selected', true).prop('disabled', true);
 	$('input[name=gateNum]').val(result.gateNum).prop('disabled', true);
@@ -33,13 +35,24 @@ function selectAirSche(){
 	
 	else{
 	$('#airScheCode').val(result.airScheCode);
-	$('select[name=planeCode]').val(result.planeCode).prop('selected',true);
-	$('select[name=pathCode]').val(result.pathCode).prop('selected', true);
-	$('select[name=teamCode]').val(result.teamCode).prop('selected', true);
-	$('input[name=gateNum]').val(result.gateNum);
-	$('#departureDate1').val('');
-	$('#departureDate2').val('');
-	$('input[name=basePrice]').val(result.basePrice);
+	$('select[name=planeCode]').val(planeCode).prop('selected',true).attr("disabled", true);
+	$('select[name=pathCode]').val(result.pathCode).prop('selected', true).attr("disabled", false);
+	$('select[name=teamCode]').val(result.teamCode).prop('selected', true).attr("disabled", false);
+	$('input[name=gateNum]').val(result.gateNum).attr("disabled", false);
+	
+	/*$('#datepicker').datepicker();
+	$(document).ready(function(){
+		var now = new Date();
+		$('p').eq(0).text(now);
+	});*/
+	/*$(selector).datepicker({
+		dateFormat: 'yyyy-mm-dd hh:mi:ss',
+		minDate: new Date()
+	})*/
+	
+	$('#departureDate1').val('').attr("disabled", false);
+	$('#departureDate2').val('').attr("disabled", false);
+	$('input[name=basePrice]').val(result.basePrice).attr("disabled", false);
 	$('input[name=spareSeat]').val(result.spareSeat);
 		
 	}
@@ -103,10 +116,10 @@ function selectSeatInfo(){
 }
 
 
-function insertAirSche(){
+function insertAirSche(planeCode){
 	
-	selectAirSche();
-	
+	selectAirSche(planeCode);
+	$('select[name=planeCode]').val(planeCode).prop('selected', true);
 	var modalFooter = document.getElementById('modalFooter');
 	modalFooter.innerHTML = '';
 	var str = '';
@@ -128,6 +141,8 @@ function insertAirScheInfo(){
 }
 
 	
-
+function selectPath(){
+	
+}
 
 

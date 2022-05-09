@@ -11,10 +11,13 @@ public class SearchVO extends PagingVO{
 	private String seatCode;
 	private String airScheCode;
 	private String planeCode;
+	private String modelName;
 	private String departureDate;
 	private String pathCode;
 	private String departurePortCode;
 	private String arrivalPortCode;
+	
+	
 	public String getMemId() {
 		return memId;
 	}
@@ -74,6 +77,13 @@ public class SearchVO extends PagingVO{
 	}
 	public void setPlaneCode(String planeCode) {
 		this.planeCode = planeCode;
+	}
+	
+	public String getModelName() {
+		return modelName;
+	}
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
 	}
 	public String getDepartureDate() {
 		return departureDate;

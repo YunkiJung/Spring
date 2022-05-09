@@ -79,7 +79,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body">
-					<form action="/member/login" method="post">
+					<form action="/member/login" method="post" id="loginFrom">
 						<div class="row">
 							<div class="mb-3">
 								<input class="form-control" type="text" placeholder="ID" name="memId" id="loginMemId" required>
@@ -98,7 +98,7 @@
 						</div>
 						<div class="row" style="margin-bottom: 0.7em;">
 							<div class="col d-grid gap-2">
-								<button type="submit" class="btn btn-primary">로그인</button>
+								<button type="button" class="btn btn-primary" onclick="confirmMember();">로그인</button>
 							</div>
 						</div>
 					</form>	
@@ -143,7 +143,7 @@
 						    <label class="form-label logInfo">비밀번호</label>
 						</div>
 						<div class="col-9">
-						    <input type="password" class="form-control" required name="memPw" id="memPw">
+						    <input type="password" class="form-control" required name="memPw" id="memPw" placeholder="8~16자 영문, 숫자, 특수문자 조합">
 						</div>
 						<div class="col-3">
 						    <label class="form-label logInfo">비밀번호 확인</label>
@@ -298,7 +298,7 @@
 		</div>
 	</div>
 	
-<script type="text/javascript" src="/resources/common/js/menu.js?ver=24"></script>
+<script type="text/javascript" src="/resources/common/js/menu.js?ver=37"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 window.addEventListener('load', function(){
 	
 	let fromCity = document.getElementById('fromCity');
@@ -106,19 +105,14 @@ function searchToPorts(){
 
 
 
-
-
-
 function myWeather(){
-	
-	let map;
-
-        
 	
     navigator.geolocation.getCurrentPosition(showLocation);
 
     var city = document.getElementById('cityName');
     var weatherTag = document.getElementById('weather');
+    var tempTag = document.getElementById('temp');
+    
     function showLocation(position){
         console.log('Longitude : ' + position.coords.longitude);
         console.log('Latitude : ' + position.coords.latitude);
@@ -131,26 +125,29 @@ function myWeather(){
                 console.log(rtyu.name);
                 console.log(rtyu.weather[0].icon);
                 city.innerHTML = rtyu.name; 
-                weatherTag.innerHTML = '<img src="http://openweathermap.org/img/wn/' + rtyu.weather[0].icon + '@2x.png"></img>';
-                
-                map = new google.maps.Map(document.getElementById("map"), {
-	                center: { lat: 43.648520, lng: -79.395880 },
-	                zoom: 8,
-            	});
-                
+                weatherTag.innerHTML = '<img style="width:300px; height:300px; margin: 0 auto;" src="http://openweathermap.org/img/wn/' + rtyu.weather[0].icon + '@2x.png"></img>';
+                tempTag.innerHTML = '<div style="text-align: center;font-size: 2em;">'+ tempCal(rtyu.main.temp) +'°C</div>'
             }
         };
 
         xhttp.open('GET', 'https://api.openweathermap.org/data/2.5/weather?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude + '&appid=3fb46e9791606ca833bb06d811afe8ae', true);
         xhttp.send();
-    }    
-
+        
+		   var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+			var options = { //지도를 생성할 때 필요한 기본 옵션
+				center: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude), //지도의 중심좌표.
+				level: 3 //지도의 레벨(확대, 축소 정도)
+			};
+			
+			var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴     
+	}
 }
+
 myWeather();
 
-
-
-
-
-
-
+function tempCal(kel){
+	
+	let tem = kel - 273.15;
+	
+	return tem.toFixed(1);
+};

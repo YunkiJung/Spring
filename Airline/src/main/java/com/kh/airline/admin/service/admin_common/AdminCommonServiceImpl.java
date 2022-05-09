@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.airline.admin.vo.AdminAirScheViewVO;
 import com.kh.airline.admin.vo.AdminAirplaneVO;
 import com.kh.airline.admin.vo.AdminAirportVO;
 import com.kh.airline.admin.vo.AdminCountryVO;
@@ -64,6 +65,16 @@ public class AdminCommonServiceImpl implements AdminCommonService{
 	@Override
 	public List<AdminAirplaneVO> selectModelNameList() {
 		return sqlSession.selectList("adminMapper.selectModelNameList");
+	}
+	
+	@Override
+	public List<AdminAirportVO> planeModelList(AdminAirplaneVO adminAirplaneVO) {
+		return sqlSession.selectList("adminMapper.planeModelList", adminAirplaneVO);
+	}
+
+	@Override
+	public List<AdminAirScheViewVO> selectPlaneList(AdminAirScheViewVO adminAirScheViewVO) {
+		return sqlSession.selectList("adminMapper.selectPlaneList", adminAirScheViewVO);
 	}
 	
 	

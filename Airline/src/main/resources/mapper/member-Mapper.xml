@@ -258,12 +258,11 @@
 		WHERE MEM_ID = #{memId}
 		AND TO_CHAR(DEPARTURE_DATE, 'YYYYMMDDHH24MISS') &lt;= #{departureDate}
 	</select>
-	
+	<!-- 비밀번호 조회-->
 	<select id="selectMemPw" resultType="String">
-		SELECT MEM_ID
+		SELECT MEM_PW
 		FROM AIR_MEMBER
 		WHERE MEM_ID=#{memId}
-		AND MEM_PW=#{memPw}
 	</select>
 	
 </mapper>

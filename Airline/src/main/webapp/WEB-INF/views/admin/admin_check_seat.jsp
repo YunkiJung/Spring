@@ -138,6 +138,10 @@ background-color: white;
 										airScheCode<br> <input type="text"
 											value="${adminAirScheduleVO.airScheCode }"><br>
 										seatCode<br> <input type="text" name="seatCode"><br>
+										<input type="hidden" name="passAddr">
+										<input type="hidden" name="ticketPrice">
+										<input type="hidden" name="orderCode">
+										<input type="hidden" name="orderDate">
 										
 										<input type="submit" class="btn btn-primary" value="정보 입력">
 									</form>

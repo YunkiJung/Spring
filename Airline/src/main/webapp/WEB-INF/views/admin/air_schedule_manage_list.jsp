@@ -9,15 +9,16 @@
 </head>
 <body>
 	<div class="row">
-		<div class="col-8" id="searchContainer">
-			<form action="/admin/airScheManage" method="get">
+		<div class="col-8" id="searchContainer" style="text-align: center;">
+			<form action="/admin/airScheList" method="get">
+				<h2>
+				현재 항공기 코드 : ${adminAirScheduleVO.planeCode }
+				</h2>
+				<input type="hidden" name="planeCode" value="${adminAirScheduleVO.planeCode }">
 				<table class="table table-light">
 					<tr>
 						<td>
 							운항 코드 <input type="text" name="airScheCode">
-						</td>
-						<td>
-							항공기 코드 <input type="text" name="planeCode">
 						</td>
 						<td>
 							경로 코드 <input type="text" name="pathCode">
@@ -26,7 +27,8 @@
 							출발일 <input type="date" name="departureDate">
 						</td>
 
-						<td><input type="submit" class="btn btn-primary" value="검색">
+						<td>
+						<input type="submit" class="btn btn-primary" value="검색">
 						</td>
 					</tr>
 
@@ -40,8 +42,6 @@
 					<tr>
 						<td>운항 코드</td>
 
-						<td>항공기 코드</td>
-
 						<td>경로 코드</td>
 
 						<td>출발일</td>
@@ -50,11 +50,9 @@
 					</tr>
 				</thead>
 				<c:forEach items="${airScheduleList }" var="list">
-					<tr onclick="selectAirSche('${list.airScheCode}');"
+					<tr onclick="selectAirSche('${list.airScheCode}','${list.planeCode}');"
 						data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 						<td>${list.airScheCode }</td>
-
-						<td>${list.planeCode }</td>
 
 						<td>${list.pathCode }</td>
 
@@ -69,7 +67,7 @@
 			<div class="row d-flex align-self-center">
 				<div class="col-1">
 					<input type="button" class="btn btn-primary" value="추가"
-						onclick="insertAirSche();">
+						onclick="insertAirSche('${adminAirScheduleVO.planeCode}');">
 				</div>
 
 				<div class="col-10">
@@ -78,19 +76,19 @@
 							<li
 								class="page-item <c:if test="${!searchVO.prev }">disabled</c:if>">
 								<a class="page-link"
-								href="admin/airScheManage?nowPage=${searchVO.beginPage - 1 }">Previous</a>
+								href="admin/airScheList?nowPage=${searchVO.beginPage - 1 }">Previous</a>
 							</li>
 							<c:forEach begin="${searchVO.beginPage }"
 								end="${searchVO.endPage }" var="pageIndex">
 								<li
 									class="page-item <c:if test="${searchVO.nowPage eq pageIndex }">active</c:if>"><a
 									class="page-link"
-									href="/admin/airScheManage?nowPage=${pageIndex }">${pageIndex}</a></li>
+									href="/admin/airScheList?nowPage=${pageIndex }">${pageIndex}</a></li>
 							</c:forEach>
 							<li
 								class="page-item <c:if test="${!searchVO.next }">disabled</c:if>">
 								<a class="page-link"
-								href="/admin/airScheManage?=${searchVO.endPage + 1 }">Next</a>
+								href="/admin/airScheList?=${searchVO.endPage + 1 }">Next</a>
 							</li>
 						</ul>
 					</nav>
@@ -132,7 +130,9 @@
 											</td>
 										</tr>
 										<tr>
-											<td><input type="date" name="departureDate1"
+											<td>
+											<input type="date" id="datepicker">
+											<input type="date" name="departureDate1"
 												id="departureDate1" class="form-control"
 												value=""> <input type="time"
 												name="departureDate2" id="departureDate2"
@@ -158,12 +158,21 @@
 												</td> -->
 											</tr>
 											<tr>
-											<td colspan="4">PATH_CODE <select name="pathCode">
+											<%-- <td colspan="4">PATH_CODE <select name="pathCode">
 											<c:forEach items="${pathList }" var="path">
 											<option value="${path.pathCode }">${path.departurePortName }->${path.arrivalPortName }</option>
 											</c:forEach>
 											</select>
-											</td>
+											</td> --%>
+												<td>
+												<select name="pathCode">
+												<c:forEach items="${portList }" var="port">
+												<option value="${portCode }" onclick="selectPath(${portCode});">
+													${port.portName }
+													</option>
+												</c:forEach>
+												</select>
+												</td>
 											</tr>
 									</table>
 							</div>
@@ -185,6 +194,7 @@
 
 	</div>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript"
 		src="/resources/admin/js/air_schedule_manage.js?ver=3"></script>
 </body>

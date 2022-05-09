@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>KH Airline</title>
 <link rel="stylesheet" href="/resources/ticket/css/search.css">
 <style>
 .btn-group>.btn:not(:first-child):not(:last-child):not(.dropdown-toggle){
@@ -12,9 +12,13 @@
 	border-top-left-radius: 0.5em;
 }
 
+#map_ma {
+	width:100%; 
+	height:400px; 
+	clear:both; 
+	border:solid 1px black;
+}
 .gps-container{
-	width: 400px;
-	margin: 0 auto;
 }
 </style>
 </head>
@@ -86,18 +90,30 @@
     </div>                  
 </div>
 
-<div class="gps-container">
-	<div id="map">
-	</div>
-	<div id="cityName">
-		
-	</div>
-	<div id="weather">
-		
+<div class="gps-container" style="margin: 1em; margin-top: 2em; margin-bottom: 3em; ">
+	<div class="row justify-content-md-center">
+		<div class="col-12" style="text-align: center;">
+			<h1 style="font-weight: bold;">지도 확인</h1>
+		</div>
+		<div class="col-4" >
+			<div id="map" style="width:500px;height:400px;border: 1px solid black;"></div>
+		</div>
+		<div class="col-2" >
+			<div class="row justify-content-md-center">
+				<div class="col-12">
+					<div id="cityName" style="font-size: 3em; text-align: center;"></div>
+				</div>
+				<div class="col-12">
+					<div class="col-4" id="weather"></div>
+				</div>
+				<div class="col-12">
+					<div id="temp"></div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
-            
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACnhJTi9hf41lTeAMr97iz8i3QtRpycvQ&callback=initMap&v=weekly" async></script>
-<script type="text/javascript" src="/resources/ticket/js/search.js?ver=5"></script>
+ <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=deb391ab5fc0c25217fcd7653ba8fcf6"></script>        
+<script type="text/javascript" src="/resources/ticket/js/search.js?ver=36"></script>
 </body>
 </html>

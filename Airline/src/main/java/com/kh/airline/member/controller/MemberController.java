@@ -51,11 +51,17 @@ public class MemberController {
 		memberService.insertMember(AirMemberVO);
 		return "redirect:/ticket/search";
 	}
+	//로그인 가능여부
+	@ResponseBody
+	@PostMapping("/confirmMember")
+	public AirMemberVO confirmMember(AirMemberVO airMemberVO) {
+		 return memberService.login(airMemberVO); 
+	}
 	//로그인
 	@PostMapping("/login")
 	public String login(AirMemberVO airMemberVO, HttpSession session) {
 		AirMemberVO result = memberService.login(airMemberVO);
-		
+		System.out.println(1111);
 		if(result != null) {
 			session.setAttribute("loginInfo", result);
 		}
@@ -152,29 +158,19 @@ public class MemberController {
 	//비밀번호 변경 페이지로 이동
 	@GetMapping("/chPasswordPage")
 	public String changePwPage(Model model,HttpSession session) {
-		session.removeAttribute("searchInfo");
-		
-		return "member/ch_password_page";
-	}
-	@ResponseBody
-	@PostMapping("pwConfirm")
-	public boolean pwConfirm(HttpSession session, AirMemberVO airMemberVO, String currentPw) {
 		String memId = ((AirMemberVO)session.getAttribute("loginInfo")).getMemId();
-		airMemberVO.setMemId(memId);
-		airMemberVO.setMemPw(currentPw);
-		String id = memberService.selectMemPw(airMemberVO);
-		if(id != null) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		session.removeAttribute("searchInfo");
+		model.addAttribute("currentPw", memberService.selectMemPw(memId));
+		return "member/ch_password_page";
 	}
 	//비밀번호 변경
 	@PostMapping("/chPassword")
 	public String chPassword(AirMemberVO airMemberVO, String newPw,HttpSession session) {
+		String memId = ((AirMemberVO)session.getAttribute("loginInfo")).getMemId();
+		airMemberVO.setMemId(memId);
 		airMemberVO.setMemPw(newPw);
 		memberService.updateMemPw(airMemberVO);
+		
 		return "redirect:/member/memberDetail";
 	}
 	

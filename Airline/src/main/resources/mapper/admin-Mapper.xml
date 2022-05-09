@@ -714,6 +714,47 @@
 		ON M.MODEL_CODE = A.MODEL_CODE
 	</select>
 	
+	<!-- <select id="countAdminPlaneList" resultMap="int">
+		SELECT COUNT(PLANE_CODE)
+		FROM AIRPLANE
+	</select> -->
+	
+	<!-- <select id="planeModelList" resultMap="airplane">
+		SELECT MODEL_NAME
+			, PLANE_CODE
+			, ROW_NUM
+			FROM(
+				SELECT M.MODEL_NAME AS MODEL_NAME
+					, A.PLANE_CODE AS PLANE_CODE
+					, ROWNUM AS ROW_NUM
+				FROM AIRPLANE A INNER JOIN PLANE_MODEL M
+				ON M.MODEL_CODE = A.MODEL_CODE
+			)
+			WHERE 1 = 1
+			<if test="!modelName.equals('') and modelName != null">
+			AND MODEL_NAME LIKE '%'||#{modelName}||'%'
+			</if>
+			<if test="!planeCode.equals('') and planeCode != null">
+			AND PLANE_CODE = #{planeCode}
+			</if>
+	</select> -->
+	
+	<resultMap type="com.kh.airline.admin.vo.AdminAirScheViewVO" id="airScheView">
+		<id column="PLANE_CODE" 			property="planeCode"/>
+		<result column="DEPARTURE_DATE" 			property="departureDate"/>
+		<result column="DEPARTURE_PORT_CODE" 		property="departurePortCode"/>
+		<result column="ARRIVAL_DATE" 			property="arrivalDate"/>
+		<result column="ARRIVAL_PORT_CODE" 		property="arrivalPortCode"/>
+		<result column="FINAL_DEPARTURE_PORT_CODE"	property="finalDeparturePortCode"/>
+		<result column="FINAL_DEPARTURE_DATE" 	property="finalDepartureDate"/>
+		<result column="FINAL_ARRIVAL_PORT_CODE" 	property="finalArrivalPortCode"/>
+		<result column="FINAL_ARRIVAL_DATE" 	property="finalArrivalDate"/>
+	</resultMap>
+	
+	<select id="selectPlaneList" resultMap="airScheView">
+		SELECT * FROM AIRPLANE_V
+	</select>
+	
 	<!-- 경로 정보 -->
 	<resultMap type="com.kh.airline.admin.vo.AdminFlightPathVO" id="flightPath">
 		<id 	column="PATH_CODE" property="pathCode"/>
@@ -727,7 +768,9 @@
 	<select id="selectPathCodeList" resultMap="flightPath">
 		SELECT PATH_CODE
 		, (SELECT PORT_NAME FROM AIRPORT WHERE PORT_CODE = DEPARTURE_PORT_CODE) AS DEPARTURE_PORT_NAME
+		, DEPARTURE_PORT_CODE
 		, (SELECT PORT_NAME FROM AIRPORT WHERE PORT_CODE = ARRIVAL_PORT_CODE) AS ARRIVAL_PORT_NAME
+		, ARRIVAL_PORT_CODE
 		FROM FLIGHT_PATH
 	</select>
 	

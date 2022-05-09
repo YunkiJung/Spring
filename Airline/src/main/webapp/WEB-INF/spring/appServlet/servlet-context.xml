@@ -54,6 +54,7 @@
 			<mapping path="/member/*"/>
 			<exclude-mapping path="/member/join"/> 
 			<exclude-mapping path="/member/pwConfirm"/> 
+			<exclude-mapping path="/member/confirmMember"/> 
 			<exclude-mapping path="/ticket/searchPortsInfo"/> 
 			<exclude-mapping path="/ticket/getBookedSeatList"/> 
 			<exclude-mapping path="/ticket/getSeatNumInSession"/> 
@@ -67,6 +68,7 @@
 			<mapping path="/member/*"/>
 			<exclude-mapping path="/member/join"/>
 			<exclude-mapping path="/member/pwConfirm"/>
+			<exclude-mapping path="/member/confirmMember"/>
 			<exclude-mapping path="/member/selectCountry"/> 
 			<exclude-mapping path="/member/idConfirm"/>
 			<beans:ref bean="memberSideInterceptor"/>

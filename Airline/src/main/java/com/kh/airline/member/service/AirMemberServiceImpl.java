@@ -95,8 +95,8 @@ public class AirMemberServiceImpl implements AirMemberService{
 		return sqlSession.selectList("memberMapper.selectPastMyTicket", myTicketVO);
 	}
 	@Override
-	public String selectMemPw(AirMemberVO airmemberVO) {
-		return sqlSession.selectOne("memberMapper.selectMemPw", airmemberVO);
+	public String selectMemPw(String memId) {
+		return sqlSession.selectOne("memberMapper.selectMemPw", memId);
 	}
 
 }

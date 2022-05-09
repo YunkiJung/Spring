@@ -83,9 +83,9 @@ $('#joinForm').validate({
          },
          memPw: {
 			required: true,
-		},
-         memAge: {
-			required: true,
+			minlength:8, 
+            maxlength:16, 
+            regx:/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@@#$%^&+=]).*$/
 		},
          pwConfirm: {
 			required: true,
@@ -127,7 +127,10 @@ $('#joinForm').validate({
             maxlength: '아이디는 10자 미만 입력해주세요'            
          },
          memPw: {
-			required: '비밀번호를 입력해주세요'
+			required: '비밀번호를 입력해주세요',
+			minlength:'최소 8자 이상', 
+            maxlength:'최대 16자 이하', 
+            regx: '비밀번호 형식이 잘못되었습니다'
 		},
          pwConfirm: {
 			required: '비밀번호 확인을 입력해주세요',
@@ -247,7 +250,6 @@ function selectCountry(){
 });
 }
 
-
 //회원가입 모달 창 닫힐 때 이벤트
 $('#joinModal').on('hidden.bs.modal', function (event) {
 	$('#loginModal').modal('hide');
@@ -287,6 +289,28 @@ $.ajax({
     error: function(){
       //ajax 실행 실패 시 실행되는 구간
        alert('존재하지 않는 아이디 입니다.');
+    }
+});
+}
+function confirmMember(){
+	
+	var memId = document.getElementById('loginMemId').value;
+	var memPw = document.getElementById('loginMemPw').value;
+	$.ajax({
+    url: '/member/confirmMember', //요청경로
+    type: 'post',
+    data:{'memId' : memId, 'memPw' : memPw}, //필요한 데이터 '데이터이름':값
+    success: function(result) {
+		if(result != "") {
+			document.getElementById('loginFrom').submit();
+		}
+		else{
+			alert('아이디 또는 비밀번호가 일치하지 않습니다');
+		}
+    },
+    error: function(){
+	alert('실패');
+      //ajax 실행 실패 시 실행되는 구간
     }
 });
 }

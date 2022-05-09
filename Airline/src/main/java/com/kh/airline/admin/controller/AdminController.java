@@ -1,6 +1,8 @@
 package com.kh.airline.admin.controller;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,7 +22,9 @@ import com.kh.airline.admin.service.admin_flightPath.AdminFlightPathService;
 import com.kh.airline.admin.service.admin_member.AdminAirMemberService;
 import com.kh.airline.admin.service.admin_passengerSchedule.AdminPassengerScheduleService;
 import com.kh.airline.admin.vo.AdminAirMemberVO;
+import com.kh.airline.admin.vo.AdminAirScheViewVO;
 import com.kh.airline.admin.vo.AdminAirScheduleVO;
+import com.kh.airline.admin.vo.AdminAirplaneVO;
 import com.kh.airline.admin.vo.AdminEmpVO;
 import com.kh.airline.admin.vo.AdminPassengerScheduleVO;
 import com.kh.airline.admin.vo.SearchVO;
@@ -226,25 +230,29 @@ public class AdminController {
 // 비행 일정 관리
 	// 비행 일정 조회 페이지
 	@GetMapping("/airScheManage")
-	public String airScheManage(AdminAirScheduleVO adminAirScheduleVO, SearchVO searchVO, Model model) {
+	public String airScheManage(AdminAirScheViewVO adminAirScheViewVO, SearchVO searchVO, Model model) {
+		//int listCnt = aasService.countAdminPlaneList(searchVO);
 		
+		//model.addAttribute("planeList", adminCommonService.planeModelList(adminAirplaneVO));
+		model.addAttribute("planeList", adminCommonService.selectPlaneList(adminAirScheViewVO));
+		model.addAttribute("currentDate", getCurrentDateToString());
+		
+		return "admin/plane_list";
+	}
+	
+	
+	@RequestMapping("/airScheList")
+	public String airScheList(AdminAirScheduleVO adminAirScheduleVO, SearchVO searchVO, Model model) {
 		int listCnt = aasService.countAdminAirSchedule(searchVO);
 		
 		searchVO.setTotalCnt(listCnt);
 		searchVO.setPageInfo();
-		
-		/* model.addAttribute("menuList", adminService.selectAdminMenuList()); */
 		
 		// 일정 목록
 		model.addAttribute("airScheduleList", aasService.selectAdminAirScheduleList(searchVO));
 		
 		// 공항 목록 
 		model.addAttribute("portList", adminCommonService.selectAirportList());
-		
-		/*
-		 * // 항공기 코드 목록 model.addAttribute("modelList",
-		 * adminCommonService.selectPlaneCodeList());
-		 */
 		
 		// 항공기 목록
 		model.addAttribute("planeList", adminCommonService.selectModelNameList());
@@ -254,7 +262,6 @@ public class AdminController {
 		
 		// 팀 목록
 		model.addAttribute("teamList", adminCommonService.selectTeamCodeList());
-		
 		
 		return "admin/air_schedule_manage_list";
 	}
@@ -366,6 +373,15 @@ public class AdminController {
 	}
 	
 	
+	public String getCurrentDateToString() {
+		
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+		Date time = new Date();
+		
+		String time1 = format1.format(time);
+		
+		return time1;
+	}
 	
 	
 }

@@ -23,11 +23,14 @@ width: 17.5%;
 #sideMenu > tr{
 	height: 2.5rem;
 }
+.container{
+	
+}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 </head>
 <body>
-<div class="row">
+<div class="row container" style="background-color: #ee5057;">
 	<div class="col" id="sideMenu">
 		<table class="table table-bordered border-light">
 			<tr onclick="location.href='/admin/mainPage';">
