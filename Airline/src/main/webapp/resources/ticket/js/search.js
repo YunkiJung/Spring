@@ -19,6 +19,10 @@ window.addEventListener('load', function(){
 	let searchBtn = document.getElementById('searchBtn');
 	searchBtn.addEventListener('click', searchAirSchedule);
 	
+	
+	
+	
+	
 });
 
 function searchAirSchedule(){
@@ -97,3 +101,56 @@ function searchToPorts(){
 		}
 	});
 }
+
+
+
+
+
+
+
+
+function myWeather(){
+	
+	let map;
+
+        
+	
+    navigator.geolocation.getCurrentPosition(showLocation);
+
+    var city = document.getElementById('cityName');
+    var weatherTag = document.getElementById('weather');
+    function showLocation(position){
+        console.log('Longitude : ' + position.coords.longitude);
+        console.log('Latitude : ' + position.coords.latitude);
+        
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                var rtyu = JSON.parse(this.responseText);
+                console.log(rtyu);
+                console.log(rtyu.name);
+                console.log(rtyu.weather[0].icon);
+                city.innerHTML = rtyu.name; 
+                weatherTag.innerHTML = '<img src="http://openweathermap.org/img/wn/' + rtyu.weather[0].icon + '@2x.png"></img>';
+                
+                map = new google.maps.Map(document.getElementById("map"), {
+	                center: { lat: 43.648520, lng: -79.395880 },
+	                zoom: 8,
+            	});
+                
+            }
+        };
+
+        xhttp.open('GET', 'https://api.openweathermap.org/data/2.5/weather?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude + '&appid=3fb46e9791606ca833bb06d811afe8ae', true);
+        xhttp.send();
+    }    
+
+}
+myWeather();
+
+
+
+
+
+
+
