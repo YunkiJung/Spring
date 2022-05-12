@@ -20,9 +20,24 @@
 }
 .gps-container{
 }
+ #tvShape {
+  width: 900px;
+  height: 55px;
+  margin: 0 auto;
+  margin-bottom: 5em;
+  font-size: 2em;
+  border: 1px solid black;
+  box-shadow: 5px 5px 5px 5px gray;
+  border-radius: 10px;
+  cursor: pointer;
+   }
+  #tvShape:hover {
+  	background-color: #EFFFFD;
+  }
 </style>
 </head>
 <body>
+
  <div class="tm-section tm-bg-img" id="tm-section-1">
      <div class="tm-bg-white ie-container-width-fix-2">
          <div class="container ie-h-align-center-fix">
@@ -55,7 +70,7 @@
                  <div class="form-row tm-search-form-row">
                       <div class="form-group tm-form-element tm-form-element-50">
                          <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                         <input type="date" class="form-control" value="${firstDefaultDate }" placeholder="mm/yy" name="departureDate">
+                         <input type="date" class="form-control" value="${firstDefaultDate }" placeholder="mm/yy" name="departureDate" id="departureDate">
                      </div>
                      <div class="form-group tm-form-element tm-form-element-50">
                          <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
@@ -90,11 +105,8 @@
     </div>                  
 </div>
 
-<div class="gps-container" style="margin: 1em; margin-top: 2em; margin-bottom: 3em; ">
+<div class="gps-container" style="margin: 1em; margin-top: 5em; margin-bottom: 3em; ">
 	<div class="row justify-content-md-center">
-		<div class="col-12" style="text-align: center;">
-			<h1 style="font-weight: bold;">지도 확인</h1>
-		</div>
 		<div class="col-4" >
 			<div id="map" style="width:500px;height:400px;border: 1px solid black;"></div>
 		</div>
@@ -113,7 +125,13 @@
 		</div>
 	</div>
 </div>
+
+<div class="row" id="tvShape">
+	<div class="col" id="myGpsAirScheduleList">
+	</div>
+</div>
+
  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=deb391ab5fc0c25217fcd7653ba8fcf6"></script>        
-<script type="text/javascript" src="/resources/ticket/js/search.js?ver=36"></script>
+<script type="text/javascript" src="/resources/ticket/js/search.js?ver=46"></script>
 </body>
 </html>

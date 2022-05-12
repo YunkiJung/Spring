@@ -11,6 +11,9 @@ public class AdminAirScheduleVO {
 	private int spareSeat;
 	private String modelCode;
 	
+	private String departurePortCode;
+	private String arrivalPortCode;
+	
 	public String getAirScheCode() {
 		return airScheCode;
 	}
@@ -66,13 +69,20 @@ public class AdminAirScheduleVO {
 	public void setModelCode(String modelCode) {
 		this.modelCode = modelCode;
 	}
-	@Override
-	public String toString() {
-		return "AdminAirScheduleVO [airScheCode=" + airScheCode + ", planeCode=" + planeCode + ", pathCode=" + pathCode
-				+ ", teamCode=" + teamCode + ", departureDate=" + departureDate + ", gateNum=" + gateNum
-				+ ", basePrice=" + basePrice + ", spareSeat=" + spareSeat + ", modelCode=" + modelCode + "]";
-	}
 	
+	
+	public String getDeparturePortCode() {
+		return departurePortCode;
+	}
+	public void setDeparturePortCode(String departurePortCode) {
+		this.departurePortCode = departurePortCode;
+	}
+	public String getArrivalPortCode() {
+		return arrivalPortCode;
+	}
+	public void setArrivalPortCode(String arrivalPortCode) {
+		this.arrivalPortCode = arrivalPortCode;
+	}
 	
 
 }

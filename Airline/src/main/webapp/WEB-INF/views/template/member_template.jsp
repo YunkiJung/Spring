@@ -18,7 +18,7 @@
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <!-- BootStrap  -->
 <link rel="stylesheet" href="/resources/common/font/font-awesome-4.7.0/css/font-awesome.min.css">  
-<link rel="stylesheet" href="/resources/common/css/common.css">
+<!-- <link rel="stylesheet" href="/resources/common/css/common.css"> -->
 <!-- Validation  -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 </head>

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.airline.member.vo.AirMemberVO;
 import com.kh.airline.ticket.vo.AirScheduleVVO;
+import com.kh.airline.ticket.vo.MyGpsInfoVO;
 import com.kh.airline.ticket.vo.PassengerScheduleVO;
 import com.kh.airline.ticket.vo.PortInfoVO;
 import com.kh.airline.ticket.vo.SearchInfoVO;
@@ -92,6 +93,16 @@ public class TicketServiceImpl implements TicketService{
 	@Override
 	public int getPoints(String memId) {
 		return sqlSession.selectOne("ticketMapper.getPoints", memId);
+	}
+
+	@Override
+	public String selectMemEmail(String memId) {
+		return sqlSession.selectOne("ticketMapper.selectMemEmail", memId);
+	}
+
+	@Override
+	public List<AirScheduleVVO> selectAirScheduleListFromMyGps(MyGpsInfoVO myGpsInfoVO) {
+		return sqlSession.selectList("ticketMapper.selectAirScheduleListFromMyGps", myGpsInfoVO);
 	}
 
 	

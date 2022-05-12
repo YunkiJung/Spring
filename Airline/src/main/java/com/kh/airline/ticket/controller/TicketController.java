@@ -8,8 +8,13 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.airline.ticket.service.TicketService;
 import com.kh.airline.member.vo.AirMemberVO;
+import com.kh.airline.ticket.vo.AirScheduleVVO;
+import com.kh.airline.ticket.vo.MyGpsInfoVO;
 import com.kh.airline.ticket.vo.PassengerScheduleVO;
 import com.kh.airline.ticket.vo.PortInfoVO;
 import com.kh.airline.ticket.vo.SearchInfoVO;
@@ -31,6 +38,18 @@ public class TicketController {
 	@Resource(name = "ticketService")
 	private TicketService ticketService;
 	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	@ResponseBody
+	@PostMapping("/selectMyGpsAirScheduleList")
+	public List<AirScheduleVVO> selectMyGpsAirScheduleList(MyGpsInfoVO myGpsInfoVO){
+		
+		
+		return ticketService.selectAirScheduleListFromMyGps(myGpsInfoVO);
+	}
+	
+	
 	
 	//to search.jsp (main) - yunki - 2022.04.19
 	@GetMapping("/search")
@@ -40,6 +59,7 @@ public class TicketController {
 		model.addAttribute("secondDefaultDate", getTwoWeeksLater());
 		System.out.println(getAWeekLater());
 		System.out.println(getTwoWeeksLater());
+		
 		
 		
 		
@@ -510,6 +530,21 @@ public class TicketController {
 		session.removeAttribute("passengerScheduleList");
 		session.removeAttribute("seatCountDown");
 		
+		/* 이메일 전송
+		 * String emailAddr;
+		 * 
+		 * emailAddr = passengerScheduleList.get(0).getPassEmail();
+		 * 
+		 * if (member != null) { emailAddr =
+		 * ticketService.selectMemEmail(member.getMemId()); } try { //메일보내기 MimeMessage
+		 * message = mailSender.createMimeMessage(); MimeMessageHelper messageHelper;
+		 * messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+		 * messageHelper.setFrom("jjangsung1405@gmail.com");
+		 * messageHelper.setTo(emailAddr); messageHelper.setSubject("KH Airline 예약번호");
+		 * messageHelper.setText(passengerScheduleList.get(0).getOrderCode());
+		 * mailSender.send(message); } catch (MessagingException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); }
+		 */
 		return "ticket/confirm_order";
 	}
 	

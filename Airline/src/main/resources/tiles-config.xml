@@ -3,20 +3,20 @@
 
 <tiles-definitions>
 	<definition name="baseLayout" template="/WEB-INF/views/template/template.jsp">
-		<put-attribute name="title" value="Shop"/>
+		<put-attribute name="title" value="KH Airline"/>
 		<put-attribute name="menu" value="/WEB-INF/views/menu/menu.jsp"/>
 		<put-attribute name="body" value=""/>
 	</definition>
 	
 	<definition name="adminLayout" template="/WEB-INF/views/template/admin_template.jsp">
-		<put-attribute name="title" value="Shop"/>
+		<put-attribute name="title" value="KH Airline"/>
 		<put-attribute name="menu" value="/WEB-INF/views/template/admin_menu.jsp"/>
 		<put-attribute name="side" value="/WEB-INF/views/template/admin_side.jsp"/>
 		<put-attribute name="body" value=""/>
 	</definition>
 	<!--멤버 레이아웃  -->
 	<definition name="memberLayout" template="/WEB-INF/views/template/member_template.jsp">
-		<put-attribute name="title" value="Airline"/>
+		<put-attribute name="title" value="KH Airline"/>
 		<put-attribute name="menu" value="/WEB-INF/views/menu/menu.jsp"/>
 		<put-attribute name="side" value="/WEB-INF/views/side/member_side.jsp"/>
 		<put-attribute name="body" value=""/>

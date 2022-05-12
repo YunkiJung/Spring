@@ -1,6 +1,8 @@
 package com.kh.airline.admin.vo;
 
 public class AdminAirScheViewVO {
+	private String airScheCode;
+	private String planeCode;
 	private String departureDate;
 	private String departurePortCode;
 	private String arrivalDate;
@@ -9,8 +11,15 @@ public class AdminAirScheViewVO {
 	private String finalDepartureDate;
 	private String finalArrivalPortCode;
 	private String finalArrivalDate;
-	private String planeCode;
+	private int spareSeat;
 	
+	
+	public String getAirScheCode() {
+		return airScheCode;
+	}
+	public void setAirScheCode(String airScheCode) {
+		this.airScheCode = airScheCode;
+	}
 	public String getDepartureDate() {
 		return departureDate;
 	}
@@ -65,6 +74,12 @@ public class AdminAirScheViewVO {
 	}
 	public void setFinalArrivalPortCode(String finalArrivalPortCode) {
 		this.finalArrivalPortCode = finalArrivalPortCode;
+	}
+	public int getSpareSeat() {
+		return spareSeat;
+	}
+	public void setSpareSeat(int spareSeat) {
+		this.spareSeat = spareSeat;
 	}
 	
 	

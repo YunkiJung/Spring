@@ -37,6 +37,6 @@
 	  <button type="submit" class="btn btn-primary" style="margin-left: 21em; width: 14em;">변경하기</button>
 	</div>
 </form>
-<script type="text/javascript" src="/resources/member/js/ch_password_page.js?ver=44"></script>
+<script type="text/javascript" src="/resources/member/js/ch_password_page.js?ver=45	"></script>
 </body>
 </html>

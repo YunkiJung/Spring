@@ -6,6 +6,7 @@ import com.kh.airline.admin.vo.AdminAirScheViewVO;
 import com.kh.airline.admin.vo.AdminAirplaneVO;
 import com.kh.airline.admin.vo.AdminAirportVO;
 import com.kh.airline.admin.vo.AdminCountryVO;
+import com.kh.airline.admin.vo.SearchVO;
 
 public interface AdminCommonService {
 	
@@ -27,9 +28,9 @@ public interface AdminCommonService {
 	
 	List<AdminAirplaneVO> selectModelNameList();
 	
-	List<AdminAirportVO> selectAirportList();
+	List<String> selectAirportList();
 
 	List<AdminAirportVO> planeModelList(AdminAirplaneVO adminAirplaneVO);
 	
-	List<AdminAirScheViewVO> selectPlaneList(AdminAirScheViewVO adminAirScheViewVO);
+	/* List<String> portList(); */
 }

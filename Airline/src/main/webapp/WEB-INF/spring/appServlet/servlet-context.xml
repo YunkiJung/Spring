@@ -52,8 +52,10 @@
 		<interceptor>
 			<mapping path="/ticket/*"/>
 			<mapping path="/member/*"/>
-			<exclude-mapping path="/member/join"/> 
 			<exclude-mapping path="/member/pwConfirm"/> 
+			<exclude-mapping path="/member/findId"/> 
+			<exclude-mapping path="/member/findPw"/> 
+			<exclude-mapping path="/member/regMemImg"/> 
 			<exclude-mapping path="/member/confirmMember"/> 
 			<exclude-mapping path="/ticket/searchPortsInfo"/> 
 			<exclude-mapping path="/ticket/getBookedSeatList"/> 
@@ -62,15 +64,19 @@
 			<exclude-mapping path="/ticket/getPoints"/> 
 			<exclude-mapping path="/member/selectCountry"/> 
 			<exclude-mapping path="/member/idConfirm"/> 
+			<exclude-mapping path="/ticket/selectMyGpsAirScheduleList"/> 
 			<beans:ref bean="menuInterceptor"/>
 		</interceptor>
 		 <interceptor>
 			<mapping path="/member/*"/>
 			<exclude-mapping path="/member/join"/>
 			<exclude-mapping path="/member/pwConfirm"/>
+			<exclude-mapping path="/member/regMemImg"/>
 			<exclude-mapping path="/member/confirmMember"/>
 			<exclude-mapping path="/member/selectCountry"/> 
 			<exclude-mapping path="/member/idConfirm"/>
+			<exclude-mapping path="/member/findId"/> 
+			<exclude-mapping path="/member/findPw"/>
 			<beans:ref bean="memberSideInterceptor"/>
 		</interceptor> 
 		<interceptor>
@@ -81,6 +87,7 @@
 			<exclude-mapping path="/admin/selectAirSche"/>
 			<exclude-mapping path="/admin/nullCheck"/>
 			<exclude-mapping path="/admin/checkPassScheForSeat"/>
+			<exclude-mapping path="/admin/insertAirScheSet"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 	</interceptors>

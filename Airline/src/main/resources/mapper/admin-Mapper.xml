@@ -393,18 +393,18 @@
 		WHERE PASS_SCHE_CODE = #{passScheCode}
 	</update>
 	
-	<!-- ****** 예매 삭제 (삭제 아닌 비활성화 시키고 환불처리로 넘어가야함) -->
+	<!-- ****** 예매 삭제  -->
 	<delete id="deletePassengerSchedule">
 		DELETE PASS_SCHE_CODE 
 		WHERE PASS_SCHE_CODE = #{passScheCode}
 	</delete>
 	
 	<!-- 매출 현황 조회 -->
-	<select id="selectSales" resultType="int">
+	<!-- <select id="selectSales" resultType="int">
 		SELECT SUM(TICKET_PRICE)
 		FROM PASSENGER_SCHEDULE
 		WHERE TO_CHAR(ORDER_DATE, 'YYYY/MM') = #{orderDate}
-	</select>
+	</select> -->
 	
 	
 	
@@ -418,6 +418,8 @@
 		<result column="GATE_NUM" 			property="gateNum"/>
 		<result column="BASE_PRICE" 		property="basePrice"/>
 		<result column="SPARE_SEAT" 		property="spareSeat"/>
+		<result column="DEPARTURE_PORT_CODE"	property="departurePortCode"/>
+		<result column="ARRIVAL_PORT_CODE"	property="arrivalPortCode"/>
 	</resultMap>
 	
 	<!-- 운항 수 조회 -->
@@ -428,53 +430,12 @@
 		</if>
 	</select>
 	
-	<!-- 운항 목록 조회 -->
-	<select id="selectAirScheduleList" resultMap="airSchedule">
-		SELECT AIR_SCHE_CODE
-			, PLANE_CODE
-			, PATH_CODE
-			, DEPARTURE_DATE
-			, SPARE_SEAT
-			, ROW_NUM
-		FROM (
-			SELECT AIR_SCHE_CODE
-				, PLANE_CODE
-				, PATH_CODE
-				, DEPARTURE_DATE
-				, SPARE_SEAT
-				, ROWNUM AS ROW_NUM
-			FROM (
-				SELECT AIR_SCHE_CODE
-					, PLANE_CODE
-					, PATH_CODE
-					, TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD hh24:mi') AS DEPARTURE_DATE
-					, SPARE_SEAT
-				FROM AIR_SCHEDULE
-				ORDER BY AIR_SCHE_CODE DESC))
-		WHERE 1 = 1
-		AND ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
-		<if test="airScheCode != null and !airScheCode.equals('')">
-		AND AIR_SCHE_CODE LIKE '%'||#{airScheCode}||'%'
-		</if>
-		<if test="planeCode != null and !planeCode.equals('')">
-		AND PLANE_CODE LIKE '%'||#{planeCode}||'%'
-		</if>
-		<if test="pathCode != null and !pathCode.equals('')">
-		AND PATH_CODE LIKE '%'||#{pathCode}||'%'
-		</if>
-		<if test="departureDate != null and !departureDate.equals('')">
-		AND DEPARTURE_DATE LIKE '%'||#{departureDate}||'%'
-		</if>
-		ORDER BY ROW_NUM DESC
-		
-	</select>
-	
 	<!-- 운항 정보 상세 조회 -->
 	<select id="selectAirSchedule" resultMap="airSchedule">
 		SELECT 
 		AIR_SCHE_CODE
 			, PLANE_CODE
-			, PATH_CODE
+			, A.PATH_CODE
 			, TEAM_CODE
 			, DEPARTURE_DATE
 			, GATE_NUM
@@ -484,7 +445,10 @@
 				ON I.AIR_SCHE_CODE = S.AIR_SCHE_CODE 
 				WHERE S.AIR_SCHE_CODE = #{airScheCode}
 				AND IS_BOOKED IS NULL) AS SPARE_SEAT
-		FROM AIR_SCHEDULE
+			, DEPARTURE_PORT_CODE
+			, ARRIVAL_PORT_CODE
+		FROM AIR_SCHEDULE A INNER JOIN FLIGHT_PATH F
+		ON A.PATH_CODE = F.PATH_CODE
 		WHERE AIR_SCHE_CODE = #{airScheCode}
 	</select>
 	
@@ -531,6 +495,104 @@
 		        WHERE PLANE_CODE = #{planeCode})
 			)
 		</insert>
+		<resultMap type="com.kh.airline.admin.vo.AdminAirScheViewVO" id="airScheView">
+		<id column="AIR_SCHE_CODE" 					property="airScheCode"/>
+		<result column="PLANE_CODE" 				property="planeCode"/>
+		<result column="DEPARTURE_DATE" 			property="departureDate"/>
+		<result column="DEPARTURE_PORT_CODE" 		property="departurePortCode"/>
+		<result column="ARRIVAL_DATE" 				property="arrivalDate"/>
+		<result column="ARRIVAL_PORT_CODE" 			property="arrivalPortCode"/>
+		<result column="FINAL_DEPARTURE_PORT_CODE"	property="finalDeparturePortCode"/>
+		<result column="FINAL_DEPARTURE_DATE" 		property="finalDepartureDate"/>
+		<result column="FINAL_ARRIVAL_PORT_CODE" 	property="finalArrivalPortCode"/>
+		<result column="FINAL_ARRIVAL_DATE" 		property="finalArrivalDate"/>
+		<result column="SPARE_SEAT" 				property="spareSeat"/>
+	</resultMap>
+	
+	<!-- 운항 목록 조회 -->
+	<select id="selectAirScheduleList" resultMap="airScheView">
+		SELECT AIR_SCHE_CODE
+			, PLANE_CODE
+			, DEPARTURE_DATE
+			, DEPARTURE_PORT_CODE
+			, ARRIVAL_DATE
+			, ARRIVAL_PORT_CODE
+			, SPARE_SEAT
+			, ROW_NUM
+		FROM (
+			SELECT AIR_SCHE_CODE
+				, PLANE_CODE
+				, DEPARTURE_DATE
+				, DEPARTURE_PORT_CODE
+				, ARRIVAL_DATE
+				, ARRIVAL_PORT_CODE
+				, SPARE_SEAT
+				, ROWNUM AS ROW_NUM
+			FROM (
+				SELECT AIR_SCHE_CODE
+					, PLANE_CODE
+					, TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD hh24:mi') AS DEPARTURE_DATE
+					, DEPARTURE_PORT_CODE
+					, ARRIVAL_DATE
+					, ARRIVAL_PORT_CODE
+					, SPARE_SEAT
+				FROM AIR_SCHEDULE_V
+				ORDER BY AIR_SCHE_CODE DESC))
+		WHERE 1 = 1
+		AND ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+		<if test="airScheCode != null and !airScheCode.equals('')">
+		AND AIR_SCHE_CODE LIKE '%'||#{airScheCode}||'%'
+		</if>
+		<if test="planeCode != null and !planeCode.equals('')">
+		AND PLANE_CODE LIKE '%'||#{planeCode}||'%'
+		</if>
+		<if test="pathCode != null and !pathCode.equals('')">
+		AND PATH_CODE LIKE '%'||#{pathCode}||'%'
+		</if>
+		<if test="departureDate != null and !departureDate.equals('')">
+		AND DEPARTURE_DATE LIKE '%'||#{departureDate}||'%'
+		</if>
+		ORDER BY ROW_NUM DESC
+		
+	</select>
+	
+	<!-- 추가 전 정보 조회 -->
+	<select id="setInsertAirSche" resultMap="airScheView">
+		SELECT FINAL_ARRIVAL_PORT_CODE
+			, FINAL_ARRIVAL_DATE
+		FROM AIRPLANE_V
+		WHERE PLANE_CODE = #{planeCode}
+	</select>
+	
+	<select id="selectPlaneList" resultMap="airScheView">
+		SELECT PLANE_CODE
+			, DEPARTURE_DATE
+			, DEPARTURE_PORT_CODE
+			, ARRIVAL_DATE
+			, ARRIVAL_PORT_CODE
+			, FINAL_DEPARTURE_DATE
+			, FINAL_DEPARTURE_PORT_CODE
+			, FINAL_ARRIVAL_DATE
+			, FINAL_ARRIVAL_PORT_CODE
+			, ROW_NUM
+		FROM
+			(SELECT PLANE_CODE
+				, DEPARTURE_DATE
+				, DEPARTURE_PORT_CODE
+				, ARRIVAL_DATE
+				, ARRIVAL_PORT_CODE
+				, FINAL_DEPARTURE_DATE
+				, FINAL_DEPARTURE_PORT_CODE
+				, FINAL_ARRIVAL_DATE
+				, FINAL_ARRIVAL_PORT_CODE
+				, ROWNUM AS ROW_NUM
+			 FROM AIRPLANE_V)
+		 WHERE 1 = 1
+		 AND ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+		 <if test="planeCode != null and !planeCode.equals('')">
+		 AND PLANE_CODE LIKE '%'||#{planeCode}||'%'
+		 </if>
+	</select>
 		
 		
 	<resultMap type="com.kh.airline.admin.vo.AdminSeatInfoVO" id="seatInfo">
@@ -598,6 +660,7 @@
 		ORDER BY COL_CODE ASC
 	</select>
 	
+	<!-- ROWNUM계산 -->
 	<select id="selectSeatRowNum" resultType="int">
 		SELECT (CAPACITY / 6)
 	    FROM PLANE_MODEL
@@ -607,6 +670,7 @@
 	                        WHERE AIR_SCHE_CODE = #{airScheCode})
 	</select>
 	
+	<!-- 좌석변경 -->
 	<update id="updatePassSeat">
 		UPDATE PASSENGER_SCHEDULE
 		SET
@@ -628,6 +692,7 @@
 		WHERE PASS_SCHE_CODE = #{passScheCode}
 	</update>
 	
+	<!-- 좌석 시 SEAT INFO 수정 -->
 	<update id="updateSeatNull">
 		UPDATE SEAT_INFO
 		SET
@@ -714,46 +779,16 @@
 		ON M.MODEL_CODE = A.MODEL_CODE
 	</select>
 	
-	<!-- <select id="countAdminPlaneList" resultMap="int">
+	<select id="countAdminPlaneList" resultType="int">
 		SELECT COUNT(PLANE_CODE)
 		FROM AIRPLANE
-	</select> -->
-	
-	<!-- <select id="planeModelList" resultMap="airplane">
-		SELECT MODEL_NAME
-			, PLANE_CODE
-			, ROW_NUM
-			FROM(
-				SELECT M.MODEL_NAME AS MODEL_NAME
-					, A.PLANE_CODE AS PLANE_CODE
-					, ROWNUM AS ROW_NUM
-				FROM AIRPLANE A INNER JOIN PLANE_MODEL M
-				ON M.MODEL_CODE = A.MODEL_CODE
-			)
-			WHERE 1 = 1
-			<if test="!modelName.equals('') and modelName != null">
-			AND MODEL_NAME LIKE '%'||#{modelName}||'%'
-			</if>
-			<if test="!planeCode.equals('') and planeCode != null">
-			AND PLANE_CODE = #{planeCode}
-			</if>
-	</select> -->
-	
-	<resultMap type="com.kh.airline.admin.vo.AdminAirScheViewVO" id="airScheView">
-		<id column="PLANE_CODE" 			property="planeCode"/>
-		<result column="DEPARTURE_DATE" 			property="departureDate"/>
-		<result column="DEPARTURE_PORT_CODE" 		property="departurePortCode"/>
-		<result column="ARRIVAL_DATE" 			property="arrivalDate"/>
-		<result column="ARRIVAL_PORT_CODE" 		property="arrivalPortCode"/>
-		<result column="FINAL_DEPARTURE_PORT_CODE"	property="finalDeparturePortCode"/>
-		<result column="FINAL_DEPARTURE_DATE" 	property="finalDepartureDate"/>
-		<result column="FINAL_ARRIVAL_PORT_CODE" 	property="finalArrivalPortCode"/>
-		<result column="FINAL_ARRIVAL_DATE" 	property="finalArrivalDate"/>
-	</resultMap>
-	
-	<select id="selectPlaneList" resultMap="airScheView">
-		SELECT * FROM AIRPLANE_V
+		WHERE 1 = 1
+		<if test="planeCode != null and !planeCode.equals('')">
+		AND PLANE_CODE LIKE '%'||#{planeCode}||'%'
+		</if>
 	</select>
+	
+	
 	
 	<!-- 경로 정보 -->
 	<resultMap type="com.kh.airline.admin.vo.AdminFlightPathVO" id="flightPath">
@@ -765,6 +800,13 @@
 		<result column="ARRIVAL_PORT_NAME" property="arrivalPortName"/>
 	</resultMap>
 	
+	<select id="selectPathCode" resultType="String">
+		SELECT PATH_CODE
+		FROM FLIGHT_PATH
+		WHERE DEPARTURE_PORT_CODE = #{departurePortCode}
+		AND ARRIVAL_PORT_CODE = #{arrivalPortCode}
+	</select>
+	
 	<select id="selectPathCodeList" resultMap="flightPath">
 		SELECT PATH_CODE
 		, (SELECT PORT_NAME FROM AIRPORT WHERE PORT_CODE = DEPARTURE_PORT_CODE) AS DEPARTURE_PORT_NAME
@@ -772,6 +814,20 @@
 		, (SELECT PORT_NAME FROM AIRPORT WHERE PORT_CODE = ARRIVAL_PORT_CODE) AS ARRIVAL_PORT_NAME
 		, ARRIVAL_PORT_CODE
 		FROM FLIGHT_PATH
+	</select>
+	
+	<select id="selectAirportList" resultType="String">
+		SELECT ARRIVAL_PORT_CODE 
+		FROM FLIGHT_PATH 
+		WHERE 1 = 1
+		<choose>
+		<when test="pathCode != null and !pathCode.equals('')">
+		AND DEPARTURE_PORT_CODE = #{portCode}
+		</when>
+		<otherwise>
+		AND DEPARTURE_PORT_CODE = 'ICN'
+		</otherwise>
+		</choose>
 	</select>
 	
 	<select id="selectTeamCodeList" resultType="String">
@@ -807,14 +863,15 @@
 		<result column="CITY_CODE" property="cityCode"/>
 	</resultMap>
 
-	<select id="selectAirportList" resultMap="airport">
-		SELECT PORT_CODE
-			, PORT_NAME
-		FROM AIRPORT
+	<select id="arrivalPortList" resultType="String">
+		SELECT ARRIVAL_PORT_CODE 
+		FROM FLIGHT_PATH 
+		WHERE DEPARTURE_PORT_CODE IN (SELECT FINAL_ARRIVAL_PORT_CODE 
+		                                FROM AIRPLANE_V
+		                                WHERE PLANE_CODE = #{planeCode})
 	</select>
 	
 </mapper>
-
 
 
 

@@ -132,6 +132,56 @@
 		AND SPARE_SEAT &gt;= #{count}
 		AND TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD') = #{departureDate}
 	</select>
+	
+	
+	
+	<select id="selectAirScheduleListFromMyGps" resultMap="airSchedule">
+		SELECT DEPARTURE_DATE
+			, DEPARTURE_PORT_CODE
+		    , BOARDING_DATE
+		    , ARRIVAL_PORT_CODE
+		    , DPORT_NAME
+		    , DCITY_NAME
+		    , DCOUNTRY_NAME
+		    , APORT_NAME
+		    , ACITY_NAME
+		    , ACOUNTRY_NAME
+		    , GATE_NUM
+		    , BASE_PRICE
+		    , SPARE_SEAT
+		    , DISTANCE
+		    , HIGHEST_SPEED
+		    , HRS
+		    , ARRIVAL_DATE
+		FROM 
+		(
+		    SELECT AIR_SCHE_CODE
+				    , TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS DEPARTURE_DATE
+				    , DEPARTURE_PORT_CODE
+				    , BOARDING_DATE
+				    , ARRIVAL_PORT_CODE
+				    , DPORT_NAME
+				    , DCITY_NAME
+				    , DCOUNTRY_NAME
+				    , APORT_NAME
+				    , ACITY_NAME
+				    , ACOUNTRY_NAME
+				    , GATE_NUM
+				    , BASE_PRICE
+				    , SPARE_SEAT
+				    , DISTANCE
+				    , HIGHEST_SPEED
+				    , HRS
+				    , ARRIVAL_DATE
+		            , ROWNUM AS ROW_NUM
+				FROM AIR_SCHEDULE_V
+				WHERE DCOUNTRY_CODE = #{countryCode}
+				AND SPARE_SEAT &gt;= 1
+				AND TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD') &gt;= #{departureDate}
+		)
+		WHERE ROW_NUM &lt; 5
+	</select>
+	
 
 
 	<select id="selectCountryList" resultMap="portInfo">
@@ -315,6 +365,11 @@
 		WHERE MEM_ID = #{memId}
 	</update>
 	
+	<select id="selectMemEmail" resultType="String">
+		SELECT MEM_EMAIL
+		FROM AIR_MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
 </mapper>
 
 

@@ -9,14 +9,7 @@
 <title>Insert title here</title>
 <link href="/resources/admin/css/air_schedule_manage_list.css" rel="stylesheet">
 <style>
-	.on{
-		border: 0.5px solid red;
-		
-	}
-	.off{
-		border: 0.5px solid blue;
-		font-size : 30px;
-	}
+
 </style>
 </head>
 <body>
@@ -25,23 +18,17 @@
 		<div id="searchContainer">
 		<div>
 			<form action="/admin/airScheManage" method="get">
-				<table class="table table-light">
-					<tr>
-						<td>
-							항공기 코드 <input type="text" name="planeCode">
-						</td>
-
-						<td><input type="submit" class="btn btn-primary" value="검색">
-						</td>
-					</tr>
-
-				</table>
+					<div style="width: 500px; margin: 0 auto; font-size: 20px; font-weight: bold; margin-top: 50px;">
+						항공기 코드 
+						<input type="text" name="planeCode">
+						<input type="submit" class="btn btn-primary" value="검색">
+					</div>
 			</form>
 		</div>
 
 		<!-- <div class="col-10" id="listContainer"> -->
-		<div >
-		<table>
+		<div>
+		<table class="planeTable">
 			<!-- <table class="table table-light"> -->
 			<colgroup>
 				<col width="*">
@@ -52,34 +39,31 @@
 				<col width="*">
 				<col width="13%">
 				<col width="*">
-				<col width="13%">
 			</colgroup>
 				<thead>
 					<tr>
 						<td>항공기 코드</td>
-						<td>출발 공항</td>
-						<td>출발 일</td>
-						<td>도착 공항</td>
-						<td>도착 일</td>
-						<td>종착지 출발 공항</td>
-						<td>종착지 출발 일</td>	
-						<td>종착지 도착 공항</td>
-						<td>종착 일</td>
+						<td>다음 경로</td>
+						<td>다음 일정 출발 일</td>
+						<td>다음 일정 도착 일</td>
+						<td>최종 경로</td>
+						<td>최종 출발 일</td>	
+						<td>최종 도착 일</td>
 					</tr>
 				</thead>
 				
 				
-				
+				<tbody>
 				<c:forEach items="${planeList }" var="list">
 						
 							<tr onclick="location.href='/admin/airScheList?planeCode=${list.planeCode}';"
 								<c:choose>
 <%-- 									<c:when	test="${currentDate > departureDate and currentDate < arrivalDate}"> --%>
 									<c:when	test="${currentDate > list.departureDate and currentDate < list.arrivalDate}">
-										class="on"
+										class="on" style="background-color: #66DE93;"  
 									</c:when>
 									<c:otherwise>
-										class="off"
+										class="off" style="background-color: #FF616D;" 
 									</c:otherwise>
 								</c:choose>
 							>
@@ -91,49 +75,53 @@
 								</td>
 								<td>
 									<c:if test="${empty list.departurePortCode }">
-									<a style="color: grey;">미정</a>
+									미정
 									</c:if>
 									${list.departurePortCode }
+									<c:if test="${not empty list.departurePortCode }">
+										-
+									</c:if> 
+									${list.arrivalPortCode }
 								</td>
 								<td>
 									<c:if test="${empty list.departureDate }">
-									<a style="color: grey;">미정</a>
+									미정
 									</c:if>
 									${list.departureDate }
 								</td>
 								<td>
-									<c:if test="${empty list.arrivalPortCode }">
-									<a style="color: grey;">미정</a>
-									</c:if>
-									${list.arrivalPortCode }</td>
-								<td>
 									<c:if test="${empty list.arrivalDate }">
-									<a style="color: grey;">미정</a>
+									미정
 									</c:if>
-									${list.arrivalDate }</td>
+									${list.arrivalDate }
+								</td>
 								<td>
 									<c:if test="${empty list.finalDeparturePortCode }">
-									<a style="color: grey;">미정</a>
+									미정
 									</c:if>
-									${list.finalDeparturePortCode }</td>
+									
+									${list.finalDeparturePortCode }
+									<c:if test="${not empty list.finalDeparturePortCode }">
+										-
+									</c:if>
+									${list.finalArrivalPortCode }
+								</td>
 								<td>
 									<c:if test="${empty list.finalDepartureDate }">
-									<a style="color: grey;">미정</a>
+									미정
 									</c:if>
-									${list.finalDepartureDate }</td>
-								<td>
-									<c:if test="${empty list.finalArrivalPortCode }">
-									<a style="color: grey;">미정</a>
-									</c:if>
-									${list.finalArrivalPortCode }</td>
+									${list.finalDepartureDate }
+								</td>
 								<td>
 									<c:if test="${empty list.finalArrivalDate }">
-									<a style="color: grey;">미정</a>
+									미정
 									</c:if>
-									${list.finalArrivalDate }</td>
+									${list.finalArrivalDate }
+								</td>
 							</tr>
 						
 				</c:forEach>
+				</tbody>
 			</table>
 
 
@@ -143,19 +131,19 @@
 							<li
 								class="page-item <c:if test="${!searchVO.prev }">disabled</c:if>">
 								<a class="page-link"
-								href="admin/airScheList?nowPage=${searchVO.beginPage - 1 }">Previous</a>
+								href="admin/airScheManage?nowPage=${searchVO.beginPage - 1 }">Previous</a>
 							</li>
 							<c:forEach begin="${searchVO.beginPage }"
 								end="${searchVO.endPage }" var="pageIndex">
 								<li
 									class="page-item <c:if test="${searchVO.nowPage eq pageIndex }">active</c:if>"><a
 									class="page-link"
-									href="/admin/airScheList?nowPage=${pageIndex }">${pageIndex}</a></li>
+									href="/admin/airScheManage?nowPage=${pageIndex }">${pageIndex}</a></li>
 							</c:forEach>
 							<li
 								class="page-item <c:if test="${!searchVO.next }">disabled</c:if>">
 								<a class="page-link"
-								href="/admin/airScheList?=${searchVO.endPage + 1 }">Next</a>
+								href="/admin/airScheManage?=${searchVO.endPage + 1 }">Next</a>
 							</li>
 						</ul>
 					</nav>

@@ -21,7 +21,6 @@ window.addEventListener('load', function(){
 	
 	
 	
-	
 });
 
 function searchAirSchedule(){
@@ -124,9 +123,43 @@ function myWeather(){
                 console.log(rtyu);
                 console.log(rtyu.name);
                 console.log(rtyu.weather[0].icon);
+                console.log(rtyu.sys.country);
+                console.log(document.getElementById('departureDate').value);
                 city.innerHTML = rtyu.name; 
                 weatherTag.innerHTML = '<img style="width:300px; height:300px; margin: 0 auto;" src="http://openweathermap.org/img/wn/' + rtyu.weather[0].icon + '@2x.png"></img>';
-                tempTag.innerHTML = '<div style="text-align: center;font-size: 2em;">'+ tempCal(rtyu.main.temp) +'°C</div>'
+                tempTag.innerHTML = '<div style="text-align: center;font-size: 2em;">'+ tempCal(rtyu.main.temp) +'°C</div>';
+                
+                
+                $.ajax({
+					url: '/ticket/selectMyGpsAirScheduleList', //요청경로
+					type: 'post',
+					data: {'countryCode':rtyu.sys.country, 'departureDate':document.getElementById('departureDate').value}, //필요한 데이터 '데이터이름':값
+					success: function(result) {
+						//ajax 실행 성공 후 실행할 코드 작성
+						//alert('성공');
+						
+						let gpsTag = document.getElementById('myGpsAirScheduleList');
+						
+						let str = '';
+						
+						for(let i = 0; i < result.length; i++){
+							str += '<div style="text-align: center;">'
+							str += result[i].dcityName + '('+ result[i].departurePortCode + ')'      + '→'  ; 
+							str += result[i].acityName + '('+ result[i].arrivalPortCode + ')'     	  ; 
+							str += '<span style="margin-left: 1em;">'+ result[i].hrs            ;  
+							str += '<span style="font-size: 1.3em;color: blue;margin-left: 2.2em;">$' + result[i].basePrice ; 
+							str += '</div>'
+						}
+						
+						gpsTag.innerHTML = str;
+						
+					},
+					error: function() {
+						//ajax 실행 실패 시 실행되는 구간
+						alert('실패');
+					}
+				});
+                
             }
         };
 

@@ -3,7 +3,9 @@ package com.kh.airline.admin.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -26,6 +28,7 @@ import com.kh.airline.admin.vo.AdminAirScheViewVO;
 import com.kh.airline.admin.vo.AdminAirScheduleVO;
 import com.kh.airline.admin.vo.AdminAirplaneVO;
 import com.kh.airline.admin.vo.AdminEmpVO;
+import com.kh.airline.admin.vo.AdminFlightPathVO;
 import com.kh.airline.admin.vo.AdminPassengerScheduleVO;
 import com.kh.airline.admin.vo.SearchVO;
 
@@ -228,30 +231,42 @@ public class AdminController {
 	
 	
 // 비행 일정 관리
-	// 비행 일정 조회 페이지
+	// 항공기 목록
 	@GetMapping("/airScheManage")
-	public String airScheManage(AdminAirScheViewVO adminAirScheViewVO, SearchVO searchVO, Model model) {
-		//int listCnt = aasService.countAdminPlaneList(searchVO);
+	public String airScheManage(SearchVO searchVO, Model model) {
 		
-		//model.addAttribute("planeList", adminCommonService.planeModelList(adminAirplaneVO));
-		model.addAttribute("planeList", adminCommonService.selectPlaneList(adminAirScheViewVO));
+		int listCnt = aasService.countAdminPlaneList(searchVO);
+		
+		searchVO.setTotalCnt(listCnt);
+		searchVO.setPageInfo();
+		
+		model.addAttribute("planeList", aasService.selectPlaneList(searchVO));
 		model.addAttribute("currentDate", getCurrentDateToString());
 		
 		return "admin/plane_list";
 	}
 	
-	
+	// 운항 리스트
 	@RequestMapping("/airScheList")
-	public String airScheList(AdminAirScheduleVO adminAirScheduleVO, SearchVO searchVO, Model model) {
-		int listCnt = aasService.countAdminAirSchedule(searchVO);
+	public String airScheList(SearchVO searchVO, Model model) {
+		int listCnt = aasService.countAirSchedule(searchVO);
 		
 		searchVO.setTotalCnt(listCnt);
 		searchVO.setPageInfo();
 		
-		// 일정 목록
-		model.addAttribute("airScheduleList", aasService.selectAdminAirScheduleList(searchVO));
+		model.addAttribute("airScheduleList", aasService.selectAirScheduleList(searchVO));
+//		int listCnt = aasService.countAdminAirSchedule(searchVO);
+//		
+//		searchVO.setTotalCnt(listCnt);
+//		searchVO.setPageInfo();
+//		
+//		// 일정 목록
+//		model.addAttribute("airScheduleList", aasService.selectAdminAirScheduleList(searchVO));
 		
-		// 공항 목록 
+		// 일반 공항 목록
+		model.addAttribute("portCodeList", adminCommonService.selectAirportList());
+
+		// 공항 목록
 		model.addAttribute("portList", adminCommonService.selectAirportList());
 		
 		// 항공기 목록
@@ -272,6 +287,26 @@ public class AdminController {
 	public AdminAirScheduleVO selectAirSche(AdminAirScheduleVO adminAirScheduleVO){
 		return aasService.selectAdminAirSchedule(adminAirScheduleVO);
 	}
+	
+	
+	 //운항 추가 준비
+	 @ResponseBody
+	 @PostMapping("/insertAirScheSet")
+	 public Map<String, Object> setInsertAirSche(String planeCode) {
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 map.put("final", aasService.setInsertAirSche(planeCode));
+		 map.put("arrivalPortList", aasService.arrivalPortList(planeCode));
+		 return map;
+	 }
+	 
+	 // 운항 추가 전 pathCode 조회
+	 @ResponseBody
+	 @PostMapping("/selectPathCode")
+	 public String selectPathCode(AdminFlightPathVO adminFlightPathVO) {
+		 
+		 return aasService.selectPathCode(adminFlightPathVO);
+	 }
+	
 	
 	//운항 추가
 	@PostMapping("/insertAirSche")
@@ -294,6 +329,7 @@ public class AdminController {
 		return "redirect:/admin/airScheManage";
 	}
 	
+	
 	// 좌석 정보 조회
 	@RequestMapping("/selectSeatInfo")
 	public String selectSeatInfo(AdminAirScheduleVO adminAirScheduleVO, Model model) {
@@ -301,19 +337,14 @@ public class AdminController {
 		model.addAttribute("rowNum", (aasService.selectSeatRowNum(adminAirScheduleVO)));
 		model.addAttribute("countryList", adminCommonService.selectCountry());
 		
+		System.out.println(adminAirScheduleVO);
+		
 		return "admin/admin_check_seat";
 	}
 	
 	@ResponseBody
 	@RequestMapping("/nullCheck")
 	public List<String> nullCheck(String airScheCode){
-		/*
-		 * System.out.println(
-		 * "111!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1"); for(int i =
-		 * 0; i < aasService.isBookedCheck(airScheCode).size(); i++) {
-		 * System.out.println(aasService.isBookedCheck(airScheCode) +
-		 * "!!!!!!!!!!!!!!!!!!!"); }
-		 */
 		
 		List<String> seatCode = aasService.isBookedCheck(airScheCode); 
 		

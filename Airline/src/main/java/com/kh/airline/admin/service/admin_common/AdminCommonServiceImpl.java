@@ -10,6 +10,7 @@ import com.kh.airline.admin.vo.AdminAirScheViewVO;
 import com.kh.airline.admin.vo.AdminAirplaneVO;
 import com.kh.airline.admin.vo.AdminAirportVO;
 import com.kh.airline.admin.vo.AdminCountryVO;
+import com.kh.airline.admin.vo.SearchVO;
 
 @Service("adminCommonService")
 public class AdminCommonServiceImpl implements AdminCommonService{
@@ -58,7 +59,7 @@ public class AdminCommonServiceImpl implements AdminCommonService{
 	}
 
 	@Override
-	public List<AdminAirportVO> selectAirportList() {
+	public List<String> selectAirportList() {
 		return sqlSession.selectList("adminMapper.selectAirportList");
 	}
 
@@ -72,10 +73,12 @@ public class AdminCommonServiceImpl implements AdminCommonService{
 		return sqlSession.selectList("adminMapper.planeModelList", adminAirplaneVO);
 	}
 
-	@Override
-	public List<AdminAirScheViewVO> selectPlaneList(AdminAirScheViewVO adminAirScheViewVO) {
-		return sqlSession.selectList("adminMapper.selectPlaneList", adminAirScheViewVO);
-	}
+	/*
+	 * @Override public List<String> portList() { return
+	 * sqlSession.selectList("adminMapper.portList"); }
+	 */
+
+	
 	
 	
 

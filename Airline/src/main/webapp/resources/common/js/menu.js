@@ -1,3 +1,7 @@
+ $.validator.addMethod("regx", function(value, element, regexpr) {          
+    return regexpr.test(value);
+});
+ 
  //우편번호
  function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -86,14 +90,14 @@ $('#joinForm').validate({
 			minlength:8, 
             maxlength:16, 
             regx:/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@@#$%^&+=]).*$/
+
 		},
          pwConfirm: {
 			required: true,
 			equalTo: '#memPw'
 		},
-         memEmail: {
+         memEmail1: {
 			required: true,
-			email: true
 		},
          memName: {
 			required: true
@@ -102,14 +106,11 @@ $('#joinForm').validate({
 			required: true,
 			date: true
 		},
-         memAddrs: {
-			required: true
-		},
          memAddr1: {
 			required: true
 		},
-         memPhones: {
-			required: true,
+         memAddr2: {
+			required: true
 		},
          memPhone1: {
 			required: true,
@@ -118,6 +119,9 @@ $('#joinForm').validate({
          memPhone2: {
 			required: true,
 			minlength: 4
+		},
+		checkAgreement: {
+			required: true,
 		},
       },
       messages: {
@@ -138,26 +142,19 @@ $('#joinForm').validate({
 		},
          memEmail1: {
 			required: '이메일을 입력해주세요',
-			email: true
 		},
          memName: {
 			required: '이름을 입력해주세요'
-		},
-		 memAge: {
-			required: '나이를 입력해주세요'
 		},
          birthDate: {
 			required: '생년월일을 입력해주세요',
 			date: true
 		},
-         memAddrs: {
-			required: '주소를 입력해주세요'
-		},
          memAddr1: {
 			required: '주소를 입력해주세요'
 		},
-         memPhones: {
-			required: '연락서를 입력해주세요'
+         memAddr2: {
+			required: '상세주소를 입력해주세요'
 		},
 		 memPhone1: {
 			required: '연락서를 입력해주세요',
@@ -187,10 +184,11 @@ $('#joinForm').validate({
 			$('#memPhone2').attr('name', 'memPhones');
 			$('#memEmail1').attr('name', 'memEmails');
 			$('#memEmail2').attr('name', 'memEmails');
+			$('#sample6_address').attr('name', 'memAddrs');
 			$('#sample6_detailAddress').attr('name', 'memAddrs');
-			
+			alert('회원가입 성공');
          	form.submit();   //유효성 검사를 통과시 전송
-      }
+      },
 });
 //아이디 확인
 function idConfirm(){
@@ -204,7 +202,7 @@ function idConfirm(){
 		var str = '';
 		
 		if(result.memId != null) {
-		 str +='<div>' ;
+		 str +='<div>';
 		 str +='이미 있는 아이디 입니다.' ;
 		 str +='</div>' ;
 		} 
@@ -259,7 +257,6 @@ $('#joinModal').on('hidden.bs.modal', function (event) {
 //아이디 찾기
 function findId(){
 	var memEmail = document.getElementById('findIdEmail').value;
-	alert(memEmail);
 $.ajax({
    url: '/member/findId', //요청경로
     type: 'post',
@@ -270,7 +267,7 @@ $.ajax({
     },
     error: function(){
       //ajax 실행 실패 시 실행되는 구간
-       alert('존재하지 않는 아이디 입니다.');
+       alert('이메일이 존재하지 않습니다.');
     }
 });
 }
@@ -288,7 +285,7 @@ $.ajax({
     },
     error: function(){
       //ajax 실행 실패 시 실행되는 구간
-       alert('존재하지 않는 아이디 입니다.');
+       alert('이메일 또는 아이디를 다시 확인해 주시기 바랍니다');
     }
 });
 }

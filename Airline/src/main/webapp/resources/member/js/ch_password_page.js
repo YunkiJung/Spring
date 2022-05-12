@@ -56,6 +56,7 @@ $('#chPassword').validate({
       },      
       //유효성 검사 성공시 결과
       submitHandler: function(form) {
+		alert('비밀번호 변경성공');
          form.submit();   //유효성 검사를 통과시 전송
       }
  });

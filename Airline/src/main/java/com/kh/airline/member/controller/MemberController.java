@@ -105,8 +105,8 @@ public class MemberController {
 			messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 			messageHelper.setFrom("");
 			messageHelper.setTo(airMemberVO.getMemEmail());
-			messageHelper.setSubject("아이디입니다.");
-			messageHelper.setText(memId);
+			messageHelper.setSubject("KH Airline 아이디입니다.");
+			messageHelper.setText("아이디 :"+memId);
 			mailSender.send(message);
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
@@ -128,14 +128,13 @@ public class MemberController {
 			messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 			messageHelper.setFrom("");
 			messageHelper.setTo(airMemberVO.getMemEmail());
-			messageHelper.setSubject("임시 비밀번호 입니다.");
-			messageHelper.setText(getTempPw);
+			messageHelper.setSubject("KH Airline 임시 비밀번호 입니다.");
+			messageHelper.setText("임시 비밀번호 :"+ getTempPw);
 			mailSender.send(message);
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	//아이디 중복확인
 	@ResponseBody

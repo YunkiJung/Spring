@@ -65,6 +65,7 @@ public class AirMemberVO {
 	}
 	
 	public void setMemEmails(String memEmails[]) {
+		System.out.println("email = " + memEmails.length);
 		this.memEmail = memEmails[0] + memEmails[1];
 	}
 	
@@ -82,9 +83,11 @@ public class AirMemberVO {
 	}
 	
 	public void setMemAddrs(String[] memAddrs) {
-		this.memAddr = memAddrs[0] + memAddrs[1];
+		System.out.println("memAddrs = " + memAddrs.length);
+		this.memAddr = memAddrs[0] + memAddrs[1] + memAddrs[2];
 	}
 	public void setMemPhones(String[] memPhones) {
+		System.out.println("memPhones = " + memPhones.length);
 		this.memPhone = memPhones[0] + "-" + memPhones[1] + "-" + memPhones[2];
 	}
 	

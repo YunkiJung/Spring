@@ -6,7 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.airline.admin.vo.AdminAirScheViewVO;
 import com.kh.airline.admin.vo.AdminAirScheduleVO;
+import com.kh.airline.admin.vo.AdminFlightPathVO;
 import com.kh.airline.admin.vo.AdminSeatInfoVO;
 import com.kh.airline.admin.vo.SearchVO;
 
@@ -63,7 +65,41 @@ public class AdminAirScheduleServiceImpl implements AdminAirScheduleService{
 		return sqlSession.selectList("adminMapper.isBookedCheck", airScheCode);
 	}
 
+	@Override
+	public int countAdminPlaneList(SearchVO searchVO) {
+		return sqlSession.selectOne("adminMapper.countAdminPlaneList", searchVO);
+	}
 
+
+	@Override
+	public List<AdminAirScheViewVO> selectPlaneList(SearchVO searchVO) {
+		return sqlSession.selectList("adminMapper.selectPlaneList", searchVO);
+	}
+
+	@Override
+	public int countAirSchedule(SearchVO searchVO) {
+		return sqlSession.selectOne("adminMapper.countAirSchedule", searchVO);
+	}
+	
+	@Override
+	public List<AdminAirScheViewVO> selectAirScheduleList(SearchVO searchVO) {
+		return sqlSession.selectList("adminMapper.selectAirScheduleList", searchVO);
+	}
+
+	@Override
+	public AdminAirScheViewVO setInsertAirSche(String planeCode) {
+		return sqlSession.selectOne("adminMapper.setInsertAirSche", planeCode);
+	}
+
+	@Override
+	public List<String> arrivalPortList(String planeCode) {
+		return sqlSession.selectList("adminMapper.arrivalPortList", planeCode);
+	}
+
+	@Override
+	public String selectPathCode(AdminFlightPathVO adminFlightPathVO) {
+		return sqlSession.selectOne("adminMapper.selectPathCode", adminFlightPathVO);
+	}
 
 	
 

@@ -138,7 +138,7 @@
 						<div class="col-3">
 						    <input type="button" class="btn btn-warning" value="중복확인" onclick="idConfirm();" name="idConfirmBtn" style="font-size: 0.9em; height: 3.7em;">
 						</div>
-						<div id="idConfirmDiv" style="color: red; font-size: 12px;"></div>
+						<div id="idConfirmDiv" style="color: red; font-size: 12px; margin-left: 12.5em;"></div>
 						<div class="col-3">
 						    <label class="form-label logInfo">비밀번호</label>
 						</div>
@@ -155,7 +155,7 @@
 						    <label class="form-label logInfo">이메일</label>
 						</div>
 						<div class="col-5">
-						    <input type="text" class="form-control" required name="memEmail1" id="memEmail1" style="width: 15em;">
+						    <input type="text" class="form-control" required name="memEmail1" id="memEmail1" style="width: 14em;">
 						</div>
 						<div class="col-4">
 						    <select class="form-select" aria-label="Default select example" name="memEmail2" id="memEmail2">
@@ -207,13 +207,13 @@
 							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-secondary" id="postBtn" style="margin-left: 2em; font-size: 0.9em;">
 						</div>
 						<div class="col-12">
-							<input type="text" id="sample6_address" placeholder="주소" class="form-control" name="memAddrs" style="width: 39em;">
+							<input type="text" id="sample6_address" placeholder="주소" class="form-control" name="memAddr1" style="width: 37.8em;">
 						</div>
 						<div class="col-6">
-							<input type="text" id="sample6_detailAddress" placeholder="상세주소" class="form-control" name="memAddr1" style="width: 19em;">
+							<input type="text" id="sample6_detailAddress" placeholder="상세주소" class="form-control" name="memAddr2" style="width: 18em;">
 						</div>
 						<div class="col-6">
-							<input type="text" id="sample6_extraAddress" placeholder="참고항목" class="form-control" name="memAddrs" style="width: 19.5em;">
+							<input type="text" id="sample6_extraAddress" placeholder="참고항목" class="form-control" name="memAddrs" style="width: 19em;">
 						</div>
 						<div class="col-9">
 					    	<label for="inputState" class="form-label logInfo">전화번호</label>
@@ -253,8 +253,13 @@
 			<div class="modal-content">
 				<div class="modal-body" id="findIdModal">
 					<div class="row">
+						<div class="mb-3" style="text-align: center;">
+							<h2>아이디 찾기</h2>
+						</div>
+					</div>
+					<div class="row">
 						<div class="mb-3">
-							<input class="form-control" type="text" placeholder="EMAIL" name="memEmail" id="findIdEmail" required>
+							<input class="form-control" type="text" placeholder="EMAIL" id="findIdEmail" required>
 						</div>
 					</div>
 					<div class="row">
@@ -276,13 +281,18 @@
 			<div class="modal-content">
 				<div class="modal-body" id="findPwModal">
 					<div class="row">
-						<div class="mb-3">
-							<input class="form-control" type="text" placeholder="EMAIL" name="memEmail" id="findEmail" required>
+						<div class="mb-3" style="text-align: center;">
+							<h2>비밀번호 찾기</h2>
 						</div>
 					</div>
 					<div class="row">
 						<div class="mb-3">
-							<input class="form-control" type="text" placeholder="ID" name="memId" id="findId" required>
+							<input class="form-control" type="text" placeholder="EMAIL" id="findEmail" required>
+						</div>
+					</div>
+					<div class="row">
+						<div class="mb-3">
+							<input class="form-control" type="text" placeholder="ID" id="findId" required>
 						</div>
 					</div>
 					<div class="row">
@@ -298,7 +308,7 @@
 		</div>
 	</div>
 	
-<script type="text/javascript" src="/resources/common/js/menu.js?ver=37"></script>
+<script type="text/javascript" src="/resources/common/js/menu.js?ver=46"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </body>
 </html>
