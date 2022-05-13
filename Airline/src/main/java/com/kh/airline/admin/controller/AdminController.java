@@ -63,11 +63,11 @@ public class AdminController {
 	
 	
 	// 관리자용 메인 페이지 (임시)
-	@GetMapping("/mainPage")
+	@GetMapping("/sales")
 	public String AdminPage(Model model) {
 		
 		
-		return "admin/main_page";
+		return "admin/sales";
 	}
 	
 	//////////////회원관리 기능////////////////////
@@ -291,11 +291,12 @@ public class AdminController {
 	
 	 //운항 추가 준비
 	 @ResponseBody
-	 @PostMapping("/insertAirScheSet")
-	 public Map<String, Object> setInsertAirSche(String planeCode) {
-		 Map<String, Object> map = new HashMap<String, Object>();
-		 map.put("final", aasService.setInsertAirSche(planeCode));
-		 map.put("arrivalPortList", aasService.arrivalPortList(planeCode));
+	 @PostMapping("/setInsertAirSche")
+	 public Map<String, Object> setInsertAirSche(AdminAirScheduleVO adminAirScheduleVO) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("final", aasService.setInsertAirSche(adminAirScheduleVO));
+		
+		 map.put("arrivalPortList", aasService.arrivalPortList(adminAirScheduleVO.getPlaneCode()));
 		 return map;
 	 }
 	 

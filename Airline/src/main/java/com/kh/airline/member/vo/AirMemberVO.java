@@ -4,7 +4,7 @@ public class AirMemberVO {
 	private String memId;
 	private String memPw;
 	private String memName;
-	private String gender;
+	private String gender; 
 	private String birthDate;
 	private String countryCode;
 	private String memEmail;

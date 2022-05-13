@@ -133,10 +133,19 @@
 		AND TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD') = #{departureDate}
 	</select>
 	
-	
+	<!-- <select id="selectTripInfo" resultMap="airSchedule">
+		SELECT DCITY_NAME
+			, ACITY_NAME
+			, DEPARTURE_PORT_CODE
+			, ARRIVAL_PORT_CODE
+			, BASE_PRICE
+		FROM AIR_SCHEDULE_V
+		WHERE AIR_SCHE_CODE =#{airScheCode}
+	</select> -->
 	
 	<select id="selectAirScheduleListFromMyGps" resultMap="airSchedule">
-		SELECT DEPARTURE_DATE
+		SELECT AIR_SCHE_CODE
+			, DEPARTURE_DATE
 			, DEPARTURE_PORT_CODE
 		    , BOARDING_DATE
 		    , ARRIVAL_PORT_CODE
@@ -246,6 +255,7 @@
 			, AIR_SCHE_CODE
 			, SEAT_CODE
 			, TICKET_PRICE
+			, USED_POINTS
 			, ORDER_CODE
 			, ORDER_DATE
 		)
@@ -264,6 +274,7 @@
 				, #{passengerScheduleInfo.airScheCode}
 				, #{passengerScheduleInfo.seatCode}
 				, #{passengerScheduleInfo.ticketPrice}
+				, #{passengerScheduleInfo.usedPoints}
 				, #{passengerScheduleInfo.orderCode}
 				, TO_DATE(#{passengerScheduleInfo.orderDate}, 'YYYYMMDDHH24MISS')
 			FROM DUAL
@@ -362,6 +373,13 @@
 		UPDATE AIR_MEMBER
 		SET
 		POINTS = POINTS - #{points}
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	<update id="plusPoints">
+		UPDATE AIR_MEMBER
+		SET
+		POINTS = POINTS + #{points}
 		WHERE MEM_ID = #{memId}
 	</update>
 	

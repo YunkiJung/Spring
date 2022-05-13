@@ -49,7 +49,7 @@ public interface AdminAirScheduleService {
 	List<AdminAirScheViewVO> selectAirScheduleList(SearchVO searchVO);
 	
 	// 일정 추가을 위한 마지막 운항 정보
-	AdminAirScheViewVO setInsertAirSche(String planeCode);
+	AdminAirScheViewVO setInsertAirSche(AdminAirScheduleVO adminAirScheduleVO);
 	
 	// 마지막 공항에 대한 목적지 목록
 	List<String> arrivalPortList(String planeCode);

@@ -399,11 +399,16 @@
 		WHERE PASS_SCHE_CODE = #{passScheCode}
 	</delete>
 	
-	<!-- 매출 현황 조회 -->
-	<!-- <select id="selectSales" resultType="int">
+	<!-- 월 별 매출 합계 조회 -->
+	<!-- <select id="selectSalesForMonthList" resultType="int">
 		SELECT SUM(TICKET_PRICE)
-		FROM PASSENGER_SCHEDULE
-		WHERE TO_CHAR(ORDER_DATE, 'YYYY/MM') = #{orderDate}
+		FROM PASSENGER_SCHEDULE 
+		WHERE 1 = 1
+		<if test="date != null and !date.equals('')">
+		AND SUBSTR(ORDER_DATE, 4, 2) = (
+										SELECT SUBSTR(TO_CHAR(#{date}, 'YYYY-MM-DD'), 6, 2) 
+										FROM DUAL)
+		</if>
 	</select> -->
 	
 	
@@ -537,7 +542,8 @@
 					, ARRIVAL_PORT_CODE
 					, SPARE_SEAT
 				FROM AIR_SCHEDULE_V
-				ORDER BY AIR_SCHE_CODE DESC))
+				WHERE TO_DATE(ARRIVAL_DATE, 'YYYY-MM-DD hh24:mi:ss') &gt; SYSDATE
+				ORDER BY ARRIVAL_DATE DESC))
 		WHERE 1 = 1
 		AND ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
 		<if test="airScheCode != null and !airScheCode.equals('')">
@@ -558,8 +564,8 @@
 	
 	<!-- 추가 전 정보 조회 -->
 	<select id="setInsertAirSche" resultMap="airScheView">
-		SELECT FINAL_ARRIVAL_PORT_CODE
-			, FINAL_ARRIVAL_DATE
+		SELECT NVL(FINAL_ARRIVAL_PORT_CODE, 'ICN') AS FINAL_ARRIVAL_PORT_CODE
+			, NVL(TO_CHAR(TO_DATE(FINAL_ARRIVAL_DATE, 'YYYY-MM-DD HH24:MI:SS') + 4 / 24, 'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(SYSDATE + 4 / 24, 'YYYY-MM-DD HH24:MI:SS')) AS FINAL_ARRIVAL_DATE
 		FROM AIRPLANE_V
 		WHERE PLANE_CODE = #{planeCode}
 	</select>
@@ -586,7 +592,8 @@
 				, FINAL_ARRIVAL_DATE
 				, FINAL_ARRIVAL_PORT_CODE
 				, ROWNUM AS ROW_NUM
-			 FROM AIRPLANE_V)
+			 FROM AIRPLANE_V
+)
 		 WHERE 1 = 1
 		 AND ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
 		 <if test="planeCode != null and !planeCode.equals('')">
@@ -866,7 +873,7 @@
 	<select id="arrivalPortList" resultType="String">
 		SELECT ARRIVAL_PORT_CODE 
 		FROM FLIGHT_PATH 
-		WHERE DEPARTURE_PORT_CODE IN (SELECT FINAL_ARRIVAL_PORT_CODE 
+		WHERE DEPARTURE_PORT_CODE IN (SELECT NVL(FINAL_ARRIVAL_PORT_CODE, 'ICN') 
 		                                FROM AIRPLANE_V
 		                                WHERE PLANE_CODE = #{planeCode})
 	</select>

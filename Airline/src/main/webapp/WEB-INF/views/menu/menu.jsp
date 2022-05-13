@@ -56,7 +56,7 @@
 									    <li><a class="dropdown-item" href="/member/logout">Logout</a></li>
 									    <c:if test="${sessionScope.loginInfo.isAdmin eq 'Y' }">
 									    	<li>
-									    		<a class="dropdown-item" href="/admin/mainPage">관리자 메뉴</a>
+									    		<a class="dropdown-item" href="/admin/sales">관리자 메뉴</a>
 									    	</li>
 									    </c:if>
 									  </ul>

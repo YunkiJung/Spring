@@ -143,11 +143,13 @@ function myWeather(){
 						let str = '';
 						
 						for(let i = 0; i < result.length; i++){
-							str += '<div style="text-align: center;">'
-							str += result[i].dcityName + '('+ result[i].departurePortCode + ')'      + '→'  ; 
-							str += result[i].acityName + '('+ result[i].arrivalPortCode + ')'     	  ; 
-							str += '<span style="margin-left: 1em;">'+ result[i].hrs            ;  
-							str += '<span style="font-size: 1.3em;color: blue;margin-left: 2.2em;">$' + result[i].basePrice ; 
+							str += '<div class="row" id="tvShape" onclick="tripInfo('+ result[i].airScheCode + ')">' ; 
+							str += '	<div class="col" id="myGpsAirScheduleList">' ; 
+							str += 			result[i].dcityName + '('+ result[i].departurePortCode + ')'      + '→'  ; 
+							str += 			result[i].acityName + '('+ result[i].arrivalPortCode + ')'     	  ; 
+							str += '		<span style="margin-left: 1em;">'+ result[i].hrs            ;  
+							str += '		<span style="font-size: 1.3em;color: blue;margin-left: 2.2em;">$' + result[i].basePrice ; 
+							str += '	</div>'
 							str += '</div>'
 						}
 						
@@ -175,6 +177,10 @@ function myWeather(){
 			var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴     
 	}
 }
+
+function tripInfo(airScheCode){
+		
+};
 
 myWeather();
 

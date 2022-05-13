@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +25,7 @@
   width: 900px;
   height: 55px;
   margin: 0 auto;
-  margin-bottom: 5em;
+  margin-bottom: 1em;
   font-size: 2em;
   border: 1px solid black;
   box-shadow: 5px 5px 5px 5px gray;
@@ -34,10 +35,12 @@
   #tvShape:hover {
   	background-color: #EFFFFD;
   }
+  #tvShape:last-child {
+  margin-bottom: 3em;
+  }
 </style>
 </head>
 <body>
-
  <div class="tm-section tm-bg-img" id="tm-section-1">
      <div class="tm-bg-white ie-container-width-fix-2">
          <div class="container ie-h-align-center-fix">
@@ -105,6 +108,7 @@
     </div>                  
 </div>
 
+<!-- 지도 및 날씨 -->
 <div class="gps-container" style="margin: 1em; margin-top: 5em; margin-bottom: 3em; ">
 	<div class="row justify-content-md-center">
 		<div class="col-4" >
@@ -126,12 +130,51 @@
 	</div>
 </div>
 
-<div class="row" id="tvShape">
-	<div class="col" id="myGpsAirScheduleList">
-	</div>
+<!-- 비행 -->
+<div id="myGpsAirScheduleList" data-bs-toggle="modal" data-bs-target="#ticketModal">
+</div>
+
+<!-- 비행 Modal -->
+<div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">항공권 예매</h5>
+        <div class="row">
+        <div class="input-group mb-3">
+        	<div class="col-12">
+        		<div class="tm-form-element tm-form-element-2">
+                      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+	                        <input type="radio" class="btn-check" name="hasReturn" id="oneway1" autocomplete="off" value="N"> 
+	                        <label class="btn btn-outline-secondary trvRadio" for="oneway1" style="width: 8em; font-size: 0.8em; padding-top: 1em;"><span style="font-size: 1.4em;">편도</span></label >
+	                    	<input type="radio" class="btn-check" name="hasReturn" id="return1" autocomplete="off" value="Y" checked>
+	                 		<label class="btn btn-outline-secondary trvRadio" for="return1" style="width: 8em; font-size: 0.8em; padding-top: 1em;"><span style="font-size: 1.4em;">왕복</span></label>
+             	 	 </div>
+          		 </div>
+        	</div>
+        </div> 
+        	<div class="col-12">
+        		<input type="text" id="departureInfoModal">
+        	</div>
+        	<div class="col-12">
+        		<input type="text" id="arrivalInfoModal">
+        	</div>
+        	<div class="col-6">
+        		<input type="text" id="departureDateModal">
+        	</div>
+        	<div class="col-6">
+        		<input type="text" id="arrivalDateModal">
+        	</div>
+        	<div class="col-12">
+        		<input type="submit" value="Search">
+        	</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=deb391ab5fc0c25217fcd7653ba8fcf6"></script>        
-<script type="text/javascript" src="/resources/ticket/js/search.js?ver=46"></script>
+<script type="text/javascript" src="/resources/ticket/js/search.js?ver=55"></script>
 </body>
 </html>

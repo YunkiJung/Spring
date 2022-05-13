@@ -93,7 +93,7 @@ function selectAirSche(airScheCode, departurePortCode, arrivalPortCode, planeCod
 	
 	/*$('select[name=pathCode]').val(result.pathCode).prop('selected', true).prop('disabled', true);*/
 	$('input[name=departurePortCode]').val(departurePortCode).prop('readonly', true);
-	$('select[name=arrivalPortCode]').val();
+	$('select[name=arrivalPortCode]').empty();
 	var str = $('<option>' + arrivalPortCode + '</option>');
 	$('select[name=arrivalPortCode]').append(str);
 	$('select[name=teamCode]').val(result.teamCode).prop('readonly', true).prop('readonly', true);
@@ -199,7 +199,7 @@ function insertAirSche(planeCode){
 	var infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
 	
 	$.ajax({
-   url: '/admin/insertAirScheSet', //요청경로
+   url: '/admin/setInsertAirSche', //요청경로
     type: 'post',
     data:{'planeCode':planeCode}, 
     success: function(result) {
@@ -213,8 +213,14 @@ function insertAirSche(planeCode){
       
 		$('#airScheCode').val();
 		$('select[name=planeCode]').val(planeCode).prop('selected',true).attr('readonly', true);
+		if(result.final.finalArrivalPortCode != null){
 		$('input[name=departurePortCode]').val(result.final.finalArrivalPortCode).attr('readonly', true);
+		}
+		else{
+		$('input[name=departurePortCode]').val('ICN').attr('readonly', true);
+		}
 		$('select[name=arrivalPortCode]').val('');
+		$('select[name=arrivalPortCode]').empty();
 		
 		for(var i = 0; i < result.arrivalPortList.length; i++){
 			var str = $('<option>' + result.arrivalPortList[i] + '</option>');
@@ -224,9 +230,10 @@ function insertAirSche(planeCode){
 		
 		$('input[name=gateNum]').val('');
 		
-		
-		$('input[name=departureDate1]').val('').attr('readonly', false);
-		$('input[name=departureDate2]').val('').attr('readonly', false);
+		var date1 = result.final.finalArrivalDate.substr(0, 10);
+		var date2 = result.final.finalArrivalDate.substr(11, 8);
+		$('input[name=departureDate1]').val(date1).attr('readonly', false);
+		$('input[name=departureDate2]').val(date2).attr('readonly', false);
 		$('input[name=basePrice]').val('');
 		$('input[name=spareSeat]').val('');
 		
@@ -238,6 +245,7 @@ function insertAirSche(planeCode){
 		str += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
 		
 		modalFooter.innerHTML += str;
+		
 		
 		infoModal.show();
       

@@ -87,8 +87,8 @@ public class AdminAirScheduleServiceImpl implements AdminAirScheduleService{
 	}
 
 	@Override
-	public AdminAirScheViewVO setInsertAirSche(String planeCode) {
-		return sqlSession.selectOne("adminMapper.setInsertAirSche", planeCode);
+	public AdminAirScheViewVO setInsertAirSche(AdminAirScheduleVO adminAirScheduleVO) {
+		return sqlSession.selectOne("adminMapper.setInsertAirSche", adminAirScheduleVO);
 	}
 
 	@Override

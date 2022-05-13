@@ -16,6 +16,7 @@ public class PassengerScheduleVO{
 	private String airScheCode;
 	private String seatCode;
 	private int ticketPrice;
+	private int usedPoints;
 	private String orderCode;
 	private String orderDate;
 	private List<PassengerScheduleVO> passengerScheduleList;
@@ -25,6 +26,12 @@ public class PassengerScheduleVO{
 	
 	
 	
+	public int getUsedPoints() {
+		return usedPoints;
+	}
+	public void setUsedPoints(int usedPoints) {
+		this.usedPoints = usedPoints;
+	}
 	public AirScheduleVVO getAirScheduleVO() {
 		return airScheduleVO;
 	}
@@ -127,14 +134,21 @@ public class PassengerScheduleVO{
 	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "PassengerScheduleVO [passScheCode=" + passScheCode + ", memId=" + memId + ", passName=" + passName
 				+ ", gender=" + gender + ", birthDate=" + birthDate + ", countryCode=" + countryCode + ", passportNum="
 				+ passportNum + ", passEmail=" + passEmail + ", passPhone=" + passPhone + ", passAddr=" + passAddr
 				+ ", airScheCode=" + airScheCode + ", seatCode=" + seatCode + ", ticketPrice=" + ticketPrice
-				+ ", orderCode=" + orderCode + ", orderDate=" + orderDate + "]";
+				+ ", usedPoints=" + usedPoints + ", orderCode=" + orderCode + ", orderDate=" + orderDate
+				+ ", passengerScheduleList=" + passengerScheduleList + ", airScheduleVO=" + airScheduleVO + "]";
 	}
+	
+	
+	
+	
 	
 	
 	

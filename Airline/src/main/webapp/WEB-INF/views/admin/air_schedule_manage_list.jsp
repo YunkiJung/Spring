@@ -236,7 +236,7 @@
 											</c:forEach>
 											</select> --%>
 											출발
-											<input type="text" value="" name="departurePortCode">
+											<input type="text" value="" name="departurePortCode" readonly>
 											<%-- <c:forEach items="${pathList }" var="port">
 											<option value="${port.departurePortCode}"></option>
 											</c:forEach> --%>
@@ -287,6 +287,6 @@
     <script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/js/tempus-dominus.js"
           crossorigin="anonymous"></script> -->
           <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script> -->
-	<script type="text/javascript" src="/resources/admin/js/air_schedule_manage.js?ver=17"></script>
+	<script type="text/javascript" src="/resources/admin/js/air_schedule_manage.js?ver=18"></script>
 </body>
 </html>

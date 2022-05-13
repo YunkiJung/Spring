@@ -61,7 +61,6 @@ public class MemberController {
 	@PostMapping("/login")
 	public String login(AirMemberVO airMemberVO, HttpSession session) {
 		AirMemberVO result = memberService.login(airMemberVO);
-		System.out.println(1111);
 		if(result != null) {
 			session.setAttribute("loginInfo", result);
 		}

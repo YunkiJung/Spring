@@ -77,7 +77,20 @@ public class TicketServiceImpl implements TicketService{
 		sqlSession.update("ticketMapper.updateSpareSeats", searchInfoVO);
 		if(airMemberVO.getMemId() != null) {
 			sqlSession.update("ticketMapper.updatePoints", airMemberVO);
+			List<PassengerScheduleVO> list = passengerScheduleDto.getPassengerScheduleList();
+			int total = 0;
+			for(int i = 0; i < list.size(); i++) {
+				total += list.get(i).getTicketPrice();
+			}
+			
+			total = (int)(total * 0.05);
+			airMemberVO.setPoints(total);
+			sqlSession.update("ticketMapper.plusPoints", airMemberVO);
 		}
+		
+		
+		
+		
 	}
 
 	@Override
@@ -104,6 +117,12 @@ public class TicketServiceImpl implements TicketService{
 	public List<AirScheduleVVO> selectAirScheduleListFromMyGps(MyGpsInfoVO myGpsInfoVO) {
 		return sqlSession.selectList("ticketMapper.selectAirScheduleListFromMyGps", myGpsInfoVO);
 	}
+
+	/*
+	 * @Override public AirScheduleVVO selectTripInfo(AirScheduleVVO airScheduleVVO)
+	 * { return sqlSession.selectList("ticketMapper.selectTripInfo",
+	 * airScheduleVVO); }
+	 */
 
 	
 

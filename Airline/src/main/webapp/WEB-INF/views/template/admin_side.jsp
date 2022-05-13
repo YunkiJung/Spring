@@ -33,7 +33,7 @@ width: 17.5%;
 <div class="row container" style="background-color: #ee5057;">
 	<div class="col" id="sideMenu">
 		<table class="table table-bordered border-light">
-			<tr onclick="location.href='/admin/mainPage';">
+			<tr onclick="location.href='/ticket/search';">
 				<td>
 					<a><i class="bi bi-house" id="icon"></i> MainPage</a>
 				</td>
@@ -78,10 +78,10 @@ width: 17.5%;
 							</tr>
 							</c:when>
 							
-							<c:when test="${list.menuSrc eq 'home'}">
+							<c:when test="${list.menuSrc eq 'sales'}">
 							<tr onclick="location.href='/admin/${list.menuSrc }';" >
 								<td>
-								<i class="bi bi-door-open-fill" id="icon" style="color:#76828e;" ></i>
+								<i class="bi bi-currency-exchange" id="icon" style="color:#76828e;" ></i>
 									<a id="menuTd">${list.menuName }</a>
 								</td>
 							</tr>

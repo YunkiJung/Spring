@@ -454,7 +454,7 @@ public class TicketController {
 	
 	
 	@GetMapping("/confirmOrder")
-	public String confirmOrder(AirMemberVO airMemberVO, HttpSession session, PassengerScheduleVO PassengerScheduleDto, Model model) {
+	public String confirmOrder(AirMemberVO airMemberVO, HttpSession session, PassengerScheduleVO passengerScheduleDto, Model model) {
 		
 		AirMemberVO member = (AirMemberVO)session.getAttribute("loginInfo"); 
 		
@@ -503,13 +503,17 @@ public class TicketController {
 		
 		if(member != null) {
 			airMemberVO.setMemId(member.getMemId());
+			for(int i = 0; i < passengerScheduleList.size(); i++) {
+				passengerScheduleList.get(i).setUsedPoints(airMemberVO.getPoints());
+				
+			}
 		}
 		
 		////////////////// insert ticket information //////////////////
 		
-		PassengerScheduleDto.setPassengerScheduleList(passengerScheduleList);
+		passengerScheduleDto.setPassengerScheduleList(passengerScheduleList);
 		
-		ticketService.bookTickets(PassengerScheduleDto, searchInfoVO, airMemberVO);
+		ticketService.bookTickets(passengerScheduleDto, searchInfoVO, airMemberVO);
 		
 		//model.addAttribute("ticketInfoList", ticketService.selectOrderDetails(passengerScheduleList.get(0).getOrderCode()));
 		
