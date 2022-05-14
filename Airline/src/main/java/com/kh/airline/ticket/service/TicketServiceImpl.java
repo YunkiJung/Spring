@@ -118,14 +118,12 @@ public class TicketServiceImpl implements TicketService{
 		return sqlSession.selectList("ticketMapper.selectAirScheduleListFromMyGps", myGpsInfoVO);
 	}
 
-	/*
-	 * @Override public AirScheduleVVO selectTripInfo(AirScheduleVVO airScheduleVVO)
-	 * { return sqlSession.selectList("ticketMapper.selectTripInfo",
-	 * airScheduleVVO); }
-	 */
+	@Override
+	public AirScheduleVVO selectTripInfo(AirScheduleVVO airScheduleVVO) {
+		return sqlSession.selectOne("ticketMapper.selectTripInfo", airScheduleVVO);
+	}
 
 	
-
 	
 
 }

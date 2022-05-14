@@ -133,15 +133,17 @@
 		AND TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD') = #{departureDate}
 	</select>
 	
-	<!-- <select id="selectTripInfo" resultMap="airSchedule">
+	 <select id="selectTripInfo" resultMap="airSchedule">
 		SELECT DCITY_NAME
 			, ACITY_NAME
 			, DEPARTURE_PORT_CODE
 			, ARRIVAL_PORT_CODE
 			, BASE_PRICE
+			, DEPARTURE_DATE
+			, ARRIVAL_DATE
 		FROM AIR_SCHEDULE_V
 		WHERE AIR_SCHE_CODE =#{airScheCode}
-	</select> -->
+	</select>
 	
 	<select id="selectAirScheduleListFromMyGps" resultMap="airSchedule">
 		SELECT AIR_SCHE_CODE

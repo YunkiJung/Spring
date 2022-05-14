@@ -2,6 +2,7 @@ package com.kh.airline.admin.controller;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.javassist.expr.NewArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,13 +64,20 @@ public class AdminController {
 	private AdminCommonService adminCommonService;
 	
 	
-	// 관리자용 메인 페이지 (임시)
+	// 첫 화면 겸 매출 현황
 	@GetMapping("/sales")
 	public String AdminPage(Model model) {
 		
 		
 		return "admin/sales";
 	}
+	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @PostMapping("/salesSumForYear") public List<Integer> salesSumForYear(){
+	 * List<Integer> list = new ArrayList<Integer>(); return list; }
+	 */
 	
 	//////////////회원관리 기능////////////////////
 	@GetMapping("/memberManage")

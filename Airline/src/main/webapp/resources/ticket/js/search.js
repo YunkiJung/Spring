@@ -143,17 +143,18 @@ function myWeather(){
 						let str = '';
 						
 						for(let i = 0; i < result.length; i++){
-							str += '<div class="row" id="tvShape" onclick="tripInfo('+ result[i].airScheCode + ')">' ; 
+							str += '<div class="row" id="tvShape" onclick="tripInfo(\'' + result[i].airScheCode   +'\')">' ;
 							str += '	<div class="col" id="myGpsAirScheduleList">' ; 
-							str += 			result[i].dcityName + '('+ result[i].departurePortCode + ')'      + '→'  ; 
+							str += 			result[i].dcityName + '('+ result[i].departurePortCode + ')'      + '→'  ;
 							str += 			result[i].acityName + '('+ result[i].arrivalPortCode + ')'     	  ; 
-							str += '		<span style="margin-left: 1em;">'+ result[i].hrs            ;  
+							str += '		<span style="margin-left: 1em;">'+ result[i].hrs  + result[i].departureDate        ;  
 							str += '		<span style="font-size: 1.3em;color: blue;margin-left: 2.2em;">$' + result[i].basePrice ; 
 							str += '	</div>'
 							str += '</div>'
 						}
-						
 						gpsTag.innerHTML = str;
+						
+						
 						
 					},
 					error: function() {
@@ -179,8 +180,94 @@ function myWeather(){
 }
 
 function tripInfo(airScheCode){
-		
+		$.ajax({
+		url: '/ticket/tripInfo', //요청경로
+		type: 'post',
+		data: {'airScheCode':airScheCode}, //필요한 데이터 '데이터이름':값
+		success: function(result) {
+			//alert('성공');
+			$('#ticketModal').modal('show');
+			
+			let departureInfoModal = document.getElementById('departureInfoModal');
+			let arrivalInfoModal = document.getElementById('arrivalInfoModal');
+			let departureDateModal = document.getElementById('departureDateModal');
+			
+			departureInfoModal.addEventListener('keyup', searchFromPortsModal);
+			arrivalInfoModal.addEventListener('keyup', searchToPortsModal);
+			
+			
+			departureInfoModal.value = result.departurePortCode;
+			arrivalInfoModal.value = result.arrivalPortCode;
+			departureDateModal.value= result.departureDate.substr(0, 10);
+			
+		},
+		error: function() {
+			//ajax 실행 실패 시 실행되는 구간
+			alert('실패');
+		}
+	});
 };
+
+function searchFromPortsModal(){
+	
+	let departureInfoModal = document.getElementById('departureInfoModal').value;
+	
+	$.ajax({
+		url: '/ticket/searchPortsInfo', //요청경로
+		type: 'post',
+		data: {'searchCity':departureInfoModal}, //필요한 데이터 '데이터이름':값
+		success: function(result) {
+			//ajax 실행 성공 후 실행할 코드 작성
+			//alert(result[0].portCode);
+			let datalist = document.getElementById('fromPortListModal');
+			
+			let str = '';
+			for(let i = 0; i < result.length; i++){
+				str += '<option value="' + result[i].portCode + '">' + result[i].portName + '(' + result[i].cityName + ')' + '</option>';
+			}
+			
+			datalist.innerHTML = str;
+			console.log(result);
+		},
+		error: function() {
+			//ajax 실행 실패 시 실행되는 구간
+			alert('실패');
+		}
+	});
+}
+
+function searchToPortsModal(){
+	
+	let arrivalInfoModal = document.getElementById('arrivalInfoModal').value;
+	
+	$.ajax({
+		url: '/ticket/searchPortsInfo', //요청경로
+		type: 'post',
+		data: {'searchCity':arrivalInfoModal}, //필요한 데이터 '데이터이름':값
+		success: function(result) {
+			//ajax 실행 성공 후 실행할 코드 작성
+			//alert(result[0].portCode);
+			let datalist = document.getElementById('arrivalPortListModal');
+			
+			let str = '';
+			for(let i = 0; i < result.length; i++){
+				str += '<option value="' + result[i].portCode + '">' + result[i].portName + '(' + result[i].cityName + ')' + '</option>';
+			}
+			
+			datalist.innerHTML = str;
+			console.log(result);
+		},
+		error: function() {
+			//ajax 실행 실패 시 실행되는 구간
+			alert('실패');
+		}
+	});
+}
+
+
+
+
+
 
 myWeather();
 

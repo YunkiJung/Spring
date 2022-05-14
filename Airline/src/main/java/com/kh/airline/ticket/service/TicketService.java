@@ -52,5 +52,5 @@ public interface TicketService {
 	List<AirScheduleVVO> selectAirScheduleListFromMyGps(MyGpsInfoVO myGpsInfoVO);
 	
 	//여행조회
-	/* AirScheduleVVO selectTripInfo(AirScheduleVVO airScheduleVVO); */
+	 AirScheduleVVO selectTripInfo(AirScheduleVVO airScheduleVVO); 
 }

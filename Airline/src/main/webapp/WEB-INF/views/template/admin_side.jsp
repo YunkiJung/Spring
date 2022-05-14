@@ -81,7 +81,7 @@ width: 17.5%;
 							<c:when test="${list.menuSrc eq 'sales'}">
 							<tr onclick="location.href='/admin/${list.menuSrc }';" >
 								<td>
-								<i class="bi bi-currency-exchange" id="icon" style="color:#76828e;" ></i>
+								<i class="bi bi-currency-exchange" id="icon" style="color:#fae100;" ></i>
 									<a id="menuTd">${list.menuName }</a>
 								</td>
 							</tr>

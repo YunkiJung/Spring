@@ -60,6 +60,7 @@
 			<exclude-mapping path="/ticket/searchPortsInfo"/> 
 			<exclude-mapping path="/ticket/getBookedSeatList"/> 
 			<exclude-mapping path="/ticket/getSeatNumInSession"/> 
+			<exclude-mapping path="/ticket/tripInfo"/> 
 			<exclude-mapping path="/ticket/login"/> 
 			<exclude-mapping path="/ticket/getPoints"/> 
 			<exclude-mapping path="/member/selectCountry"/> 

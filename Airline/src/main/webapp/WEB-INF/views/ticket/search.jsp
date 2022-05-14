@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>KH Airline</title>
-<link rel="stylesheet" href="/resources/ticket/css/search.css">
+<link rel="stylesheet" href="/resources/ticket/css/search.css?ver=1">
 <style>
 .btn-group>.btn:not(:first-child):not(:last-child):not(.dropdown-toggle){
 	border-bottom-left-radius: 0.5em;
@@ -38,6 +38,14 @@
   #tvShape:last-child {
   margin-bottom: 3em;
   }
+  
+  #myGpsAirScheduleList{
+  	width: 1000px;
+  border: 1px solid black;
+  background-color: gray;
+  margin: 0 auto;
+  border-radius: 10px;
+  }
 </style>
 </head>
 <body>
@@ -58,7 +66,6 @@
                                  <i class="fa fa-map-marker fa-2x tm-form-element-icon"></i>
                                  <input type="text" class="form-control" id="toCity" placeholder="도착지" list="toPortList" name="arrivalPortCode"  autocomplete="none">
                                  <datalist id="toPortList">
-    
 								 </datalist>
                              </div>
                              <div class="tm-form-element tm-form-element-2">
@@ -131,50 +138,57 @@
 </div>
 
 <!-- 비행 -->
-<div id="myGpsAirScheduleList" data-bs-toggle="modal" data-bs-target="#ticketModal">
+<div id="myGpsAirScheduleList">
 </div>
 
 <!-- 비행 Modal -->
 <div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">항공권 예매</h5>
+    <div class="modal-content" style="width: 520px;">
+         <div class="modal-body">
+         <form action="/ticket/searchAirSchedule" method="post">
+         <input type="hidden" name="hasReturn" value="N">
         <div class="row">
-        <div class="input-group mb-3">
         	<div class="col-12">
-        		<div class="tm-form-element tm-form-element-2">
-                      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-	                        <input type="radio" class="btn-check" name="hasReturn" id="oneway1" autocomplete="off" value="N"> 
-	                        <label class="btn btn-outline-secondary trvRadio" for="oneway1" style="width: 8em; font-size: 0.8em; padding-top: 1em;"><span style="font-size: 1.4em;">편도</span></label >
-	                    	<input type="radio" class="btn-check" name="hasReturn" id="return1" autocomplete="off" value="Y" checked>
-	                 		<label class="btn btn-outline-secondary trvRadio" for="return1" style="width: 8em; font-size: 0.8em; padding-top: 1em;"><span style="font-size: 1.4em;">왕복</span></label>
-             	 	 </div>
-          		 </div>
-        	</div>
-        </div> 
-        	<div class="col-12">
-        		<input type="text" id="departureInfoModal">
+        		<input type="text" id="departureInfoModal" list="fromPortListModal" class="tripModal form-control" name="departurePortCode">
+        		<datalist id="fromPortListModal">
+				 </datalist>
         	</div>
         	<div class="col-12">
-        		<input type="text" id="arrivalInfoModal">
+        		<input type="text" id="arrivalInfoModal" list="arrivalPortListModal" class="tripModal form-control" name="arrivalPortCode">
+        		<datalist id="arrivalPortListModal">
+				 </datalist>
         	</div>
         	<div class="col-6">
-        		<input type="text" id="departureDateModal">
-        	</div>
+				<input type="date" id="departureDateModal" class="tripDateModal form-control" name="departureDate">
+ 			</div>
         	<div class="col-6">
-        		<input type="text" id="arrivalDateModal">
-        	</div>
-        	<div class="col-12">
-        		<input type="submit" value="Search">
+				<div class="form-group tm-form-element tm-form-element-2" style="margin-left: 5px; height:49px; width: 93%">                                            
+                     <select name="count" class="form-control tm-select">
+                         <option value="">Adult</option>
+                         <option value="1">1</option>
+                         <option value="2">2</option>
+                         <option value="3">3</option>
+                         <option value="4">4</option>
+                         <option value="5">5</option>
+                         <option value="6">6</option>
+                         <option value="7">7</option>
+                         <option value="8">8</option>
+                         <option value="9">9</option>
+                     </select>
+                 </div>
+ 			</div>
+        	<div class="col-12" style="text-align: center;">
+        		<input type="submit" class="btn btn-primary" value="Search" style="margin: 0 auto; width: 220px;">
         	</div>
         </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
 
  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=deb391ab5fc0c25217fcd7653ba8fcf6"></script>        
-<script type="text/javascript" src="/resources/ticket/js/search.js?ver=55"></script>
+<script type="text/javascript" src="/resources/ticket/js/search.js?ver=75"></script>
 </body>
 </html>

@@ -49,7 +49,11 @@ public class TicketController {
 		return ticketService.selectAirScheduleListFromMyGps(myGpsInfoVO);
 	}
 	
-	
+	@ResponseBody
+	@PostMapping("/tripInfo")
+	public AirScheduleVVO tripInfo(AirScheduleVVO airScheduleVVO) {
+		return ticketService.selectTripInfo(airScheduleVVO);
+	}
 	
 	//to search.jsp (main) - yunki - 2022.04.19
 	@GetMapping("/search")
