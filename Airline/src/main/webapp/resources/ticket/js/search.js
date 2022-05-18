@@ -145,10 +145,11 @@ function myWeather(){
 						for(let i = 0; i < result.length; i++){
 							str += '<div class="row" id="tvShape" onclick="tripInfo(\'' + result[i].airScheCode   +'\')">' ;
 							str += '	<div class="col" id="myGpsAirScheduleList">' ; 
-							str += 			result[i].dcityName + '('+ result[i].departurePortCode + ')'      + '→'  ;
+							str += '		<span style="margin-left: 1em;">' + 	result[i].dcityName + '('+ result[i].departurePortCode + ')'      + '→'  ;
 							str += 			result[i].acityName + '('+ result[i].arrivalPortCode + ')'     	  ; 
-							str += '		<span style="margin-left: 1em;">'+ result[i].hrs  + result[i].departureDate        ;  
-							str += '		<span style="font-size: 1.3em;color: blue;margin-left: 2.2em;">$' + result[i].basePrice ; 
+							str += '		<span style="margin-left: 1em;">'+ result[i].hrs +'</span>'     ;  
+							str += '		<span style="margin-left: 1em;">'+ result[i].departureDate + '</span>'     ;  
+							str += '		<span style="font-size: 1.3em;color: blue;margin-left: 2.2em;float: right;margin-right:1em;">$' + result[i].basePrice + '</span>' ; 
 							str += '	</div>'
 							str += '</div>'
 						}

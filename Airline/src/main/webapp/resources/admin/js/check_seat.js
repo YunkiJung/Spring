@@ -53,7 +53,7 @@ function selectSeatInfo(event){
 		return;
 	}
 	else{
-		var airScheCode = $('input[name=adminAirScheCode]').val();
+		var airScheCode = document.getElementById('airScheCode').value;
 		$('#passPhone').val($('#passPhone1').val() + '-' + $('#passPhone2').val() + '-' + $('#passPhone3').val());
 		$.ajax({
 			   url: '/admin/checkPassScheForSeat', 
@@ -85,7 +85,6 @@ function selectSeatInfo(event){
 					$('#passPhone3').val('');
 					}
 					$('input[name=passAddr]').val(result.passAddr);
-					$('input[name=airScheCode]').val(result.airScheCode);
 					$('input[name=seatCode]').val(result.seatCode);
 					$('input[name=ticketPrice]').val(result.ticketPrice);
 					$('input[name=orderCode]').val(result.orderCode);

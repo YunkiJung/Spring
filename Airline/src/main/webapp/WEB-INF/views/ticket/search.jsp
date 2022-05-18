@@ -19,32 +19,37 @@
 	clear:both; 
 	border:solid 1px black;
 }
-.gps-container{
-}
- #tvShape {
+ 
+  #myGpsAirScheduleList{
+  width: 1000px;
+  margin: 0 auto;
+  border-radius: 10px;
+  }
+  
+   #tvShape {
   width: 900px;
-  height: 55px;
+  height: 50px;
   margin: 0 auto;
   margin-bottom: 1em;
-  font-size: 2em;
+  font-size: 1.5em;
   border: 1px solid black;
   box-shadow: 5px 5px 5px 5px gray;
   border-radius: 10px;
   cursor: pointer;
    }
-  #tvShape:hover {
+  
+   #tvShape:hover {
   	background-color: #EFFFFD;
   }
   #tvShape:last-child {
-  margin-bottom: 3em;
+  margin-bottom: 2em;
   }
-  
-  #myGpsAirScheduleList{
-  	width: 1000px;
-  border: 1px solid black;
-  background-color: gray;
-  margin: 0 auto;
-  border-radius: 10px;
+  #tvShape:first-child {
+  margin-top: 1.5em;
+  }
+  .h2Flight {
+  	font-weight: bold;
+  	text-align: center;
   }
 </style>
 </head>
@@ -138,9 +143,14 @@
 </div>
 
 <!-- 비행 -->
-<div id="myGpsAirScheduleList">
+<div>
+	<div>
+		<h2 class="h2Flight">운한 예정</h2>
+	</div>
+<div style="margin-bottom: 2em; ">
+	<div id="myGpsAirScheduleList"></div>
 </div>
-
+</div>
 <!-- 비행 Modal -->
 <div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -189,6 +199,6 @@
 </div>
 
  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=deb391ab5fc0c25217fcd7653ba8fcf6"></script>        
-<script type="text/javascript" src="/resources/ticket/js/search.js?ver=75"></script>
+<script type="text/javascript" src="/resources/ticket/js/search.js?ver=78"></script>
 </body>
 </html>

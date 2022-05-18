@@ -22,67 +22,80 @@ function selectPass(){
     success: function(result) {
 	
 	if(result.passName != undefined){
-	$('#passScheCode').val(result.passScheCode).prop('disabled', true);
-	$('#passName').val(result.passName);
-	$('#memId').val(result.memId).prop('disabled', true);
-	if(result.gender === "MALE"){
+		$('#passScheCode').val(result.passScheCode);
+		$('#passScheCode').attr('readonly', true);
+		$('#passName').val(result.passName);
+		$('#memId').val(result.memId);
+		$('#memId').attr('readonly', true);
+		
+		if(result.gender === "MALE"){
 			$('#female').prop('checked', true);
 		}
 		else{
 			$('#male').prop('checked', true);
 		}
-	$('input[name=birthDate]').val(result.birthDate);
-	$('select[name=countryCode]').val(result.countryCode).prop('selected', true);
-	$('input[name=passEmail]').val(result.passEmail);
-	if(result.passPhone != undefined){
-	$('#passPhone1').val(result.passPhone.substr(0, 3));
-	$('#passPhone2').val(result.passPhone.substr(4, 4));
-	$('#passPhone3').val(result.passPhone.substr(9, 4));
-	}
-	else{
-	$('#passPhone1').val('');
-	$('#passPhone2').val('');
-	$('#passPhone3').val('');
-	}
-	$('input[name=passAddr]').val(result.passAddr);
-	$('input[name=airScheCode]').val(result.airScheCode).prop('disabled', true);
-	$('input[name=seatCode]').val(result.seatCode).prop('disabled', true);
-	$('input[name=ticketPrice]').val(result.ticketPrice).prop('disabled', true);
-	$('input[name=orderCode]').val(result.orderCode).prop('disabled', true);
-	$('input[name=orderDate]').val(result.orderDate).prop('disabled', true);
+			
+		$('input[name=birthDate]').val(result.birthDate);
+		$('select[name=countryCode]').val(result.countryCode).prop('selected', true);
+		$('input[name=passEmail]').val(result.passEmail);
 		
+		if(result.passPhone != undefined){
+			$('#passPhone1').val(result.passPhone.substr(0, 3));
+			$('#passPhone2').val(result.passPhone.substr(4, 4));
+			$('#passPhone3').val(result.passPhone.substr(9, 4));
+		}
+		else{
+			$('#passPhone1').val('');
+			$('#passPhone2').val('');
+			$('#passPhone3').val('');
+		}
+		$('input[name=passAddr]').val(result.passAddr);
+		$('input[name=airScheCode]').val(result.airScheCode);
+		$('input[name=airScheCode]').attr('readonly', true);
+		$('input[name=seatCode]').val(result.seatCode);
+		$('input[name=seatCode]').attr('readonly', true);
+		$('input[name=ticketPrice]').val(result.ticketPrice);
+		$('input[name=ticketPrice]').attr('readonly', true);
+		$('input[name=orderCode]').val(result.orderCode);
+		$('input[name=orderCode]').attr('readonly', true);
+		$('input[name=orderDate]').val(result.orderDate);
+		$('input[name=orderDate]').attr('readonly', true);
 	}
 	
 	else{
-	$('#passScheCode').val(result.passScheCode);
-	$('#passName').val(result.passName);
-	$('#memId').val(result.memId);
-	if(result.gender === "MALE"){
+		$('#passScheCode').val(result.passScheCode);
+		$('#passName').val(result.passName);
+		$('#memId').val(result.memId);
+		
+		if(result.gender === "MALE"){
 			$('#female').prop('checked', true);
 		}
 		else{
 			$('#male').prop('checked', true);
 		}
-	$('input[name=birthDate]').val(result.birthDate);
-	$('select[name=countryCode]').val(result.countryCode).prop('selected', true);
-	$('input[name=passEmail]').val(result.passEmail);
-	if(result.passPhone != undefined){
-	$('#passPhone1').val(result.passPhone.substr(0, 3));
-	$('#passPhone2').val(result.passPhone.substr(4, 4));
-	$('#passPhone3').val(result.passPhone.substr(9, 4));
-	}
-	else{
-	$('#passPhone1').val('');
-	$('#passPhone2').val('');
-	$('#passPhone3').val('');
-	}
-	$('input[name=passAddr]').val(result.passAddr);
-	$('input[name=airScheCode]').val(result.airScheCode);
-	$('input[name=seatCode]').val(result.seatCode);
-	$('input[name=ticketPrice]').val(result.ticketPrice);
-	$('input[name=orderCode]').val(result.orderCode);
-	$('input[name=orderDate]').val(result.orderDate);
+			
+		$('input[name=birthDate]').val(result.birthDate);
+		$('select[name=countryCode]').val(result.countryCode).prop('selected', true);
+		$('input[name=passEmail]').val(result.passEmail);
 		
+		if(result.passPhone != undefined){
+			$('#passPhone1').val(result.passPhone.substr(0, 3));
+			$('#passPhone2').val(result.passPhone.substr(4, 4));
+			$('#passPhone3').val(result.passPhone.substr(9, 4));
+		}
+		
+		else{
+			$('#passPhone1').val('');
+			$('#passPhone2').val('');
+			$('#passPhone3').val('');
+		}
+		
+		$('input[name=passAddr]').val(result.passAddr);
+		$('input[name=airScheCode]').val(result.airScheCode);
+		$('input[name=seatCode]').val(result.seatCode);
+		$('input[name=ticketPrice]').val(result.ticketPrice);
+		$('input[name=orderCode]').val(result.orderCode);
+		$('input[name=orderDate]').val(result.orderDate);
 	}
 	
 	

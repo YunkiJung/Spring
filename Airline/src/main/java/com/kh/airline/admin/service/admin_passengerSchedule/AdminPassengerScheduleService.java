@@ -3,6 +3,7 @@ package com.kh.airline.admin.service.admin_passengerSchedule;
 import java.util.List;
 
 import com.kh.airline.admin.vo.AdminPassengerScheduleVO;
+import com.kh.airline.admin.vo.SalesVO;
 import com.kh.airline.admin.vo.SearchVO;
 
 
@@ -23,5 +24,6 @@ public interface AdminPassengerScheduleService {
 	
 	void insertPassSeat(AdminPassengerScheduleVO adminPassengerScheduleVO);
 	
+	List<SalesVO> salesSumForMonth();
 	
 }

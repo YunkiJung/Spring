@@ -190,7 +190,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script type="text/javascript" src="/resources/admin/js/pass_manage.js"></script>
+	<script type="text/javascript" src="/resources/admin/js/pass_manage.js?ver=3"></script>
 </body>
 </html>

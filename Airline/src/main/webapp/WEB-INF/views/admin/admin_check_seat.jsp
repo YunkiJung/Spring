@@ -81,39 +81,19 @@ background-color: white;
 					<div class="card gradationSeat" style="width: 18rem; color: white;">
 						
 						<div class="card-body">
-							<c:if test="${sessionScope.searchInfo.hasReturn eq 'Y' }">
-								<c:choose>
-									<c:when
-										test="${sessionScope.seatCountDown > sessionScope.searchInfo.count }">
-										<h5 class="card-title">${sessionScope.searchInfo.departurePortCode }
-											- ${sessionScope.searchInfo.arrivalPortCode }</h5>
-										<p class="card-text" id="airScheCode">${sessionScope.departureAirScheCode }</p>
-									</c:when>
-									<c:when
-										test="${sessionScope.seatCountDown <= sessionScope.searchInfo.count }">
-										<h5 class="card-title">${sessionScope.searchInfo.arrivalPortCode }
-											- ${sessionScope.searchInfo.departurePortCode }</h5>
-										<p class="card-text" id="airScheCode">${sessionScope.returnAirScheCode }</p>
-									</c:when>
-								</c:choose>
-							</c:if>
-							<c:if test="${sessionScope.searchInfo.hasReturn eq 'N' }">
-								<h5 class="card-title">${sessionScope.searchInfo.departurePortCode }
-									- ${sessionScope.searchInfo.arrivalPortCode }</h5>
-								<p class="card-text" id="airScheCode">${sessionScope.departureAirScheCode }</p>
-							</c:if>
+							
 						</div>
 						<ul class="list-group list-group-flush">
-							<li class="list-group-item gradationSeat">SEAT : <span
+							<li class="list-group-item gradationSeat">${adminAirScheduleVO.airScheCode }<span
 								id="seatNumScreen"></span>
 								
 						</li>
 						</ul>
 						<div class="card-body">
 						<div class="col-8" id="infoDiv">
-									<input type="hidden" id="airScheCode" name="adminAirScheCode"
-										value="${adminAirScheduleVO.airScheCode }">
 									<form action="/admin/updatePassSeat" method="post" id="formId">
+									<input type="hidden" id="airScheCode" name="airScheCode"
+										value="${adminAirScheduleVO.airScheCode }">
 										passScheCode<br> <input type="text" name="passScheCode"
 											id="passScheCode"><br> memId<br> <input
 											type="text" name="memId" id="memId"><br> passName<br>
@@ -135,10 +115,7 @@ background-color: white;
 											type="text" name="passPhone" id="passPhone3" style=" 0.5rem;"> <input
 											type="hidden" name="passPhone" id="passPhone"><br>
 										passAddr<br> <input type="text" name="passAddr"><br>
-										airScheCode<br> <input type="text"
-											value="${adminAirScheduleVO.airScheCode }"><br>
 										seatCode<br> <input type="text" name="seatCode"><br>
-										<input type="hidden" name="passAddr">
 										<input type="hidden" name="ticketPrice">
 										<input type="hidden" name="orderCode">
 										<input type="hidden" name="orderDate">
@@ -155,6 +132,6 @@ background-color: white;
 		</div>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript"
-		src="/resources/admin/js/check_seat.js?ver=10"></script>
+		src="/resources/admin/js/check_seat.js?ver=12"></script>
 </body>
 </html>

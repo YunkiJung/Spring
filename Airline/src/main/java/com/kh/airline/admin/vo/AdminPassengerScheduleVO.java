@@ -17,13 +17,6 @@ public class AdminPassengerScheduleVO {
 	private String orderCode;
 	private String orderDate;
 	
-	
-	public String getPassportNum() {
-		return passportNum;
-	}
-	public void setPassportNum(String passportNum) {
-		this.passportNum = passportNum;
-	}
 	public String getPassScheCode() {
 		return passScheCode;
 	}
@@ -59,6 +52,12 @@ public class AdminPassengerScheduleVO {
 	}
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
+	}
+	public String getPassportNum() {
+		return passportNum;
+	}
+	public void setPassportNum(String passportNum) {
+		this.passportNum = passportNum;
 	}
 	public String getPassEmail() {
 		return passEmail;
@@ -108,6 +107,9 @@ public class AdminPassengerScheduleVO {
 	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
+	
+	
+	
 
 	
 	

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.airline.admin.vo.AdminPassengerScheduleVO;
+import com.kh.airline.admin.vo.SalesVO;
 import com.kh.airline.admin.vo.SearchVO;
 
 @Service("adminPassengerScheduleService")
@@ -49,8 +50,8 @@ public class AdminPassengerScheduleServiceImpl implements AdminPassengerSchedule
 
 	@Override
 	public void updatePassSeat(AdminPassengerScheduleVO adminPassengerScheduleVO) {
-		sqlSession.update("adminMapper.updatePassSeat", adminPassengerScheduleVO);
 		sqlSession.update("adminMapper.updateSeatNull", adminPassengerScheduleVO);
+		sqlSession.update("adminMapper.updatePassSeat", adminPassengerScheduleVO);
 		sqlSession.update("adminMapper.updateSeatNum", adminPassengerScheduleVO);
 	}
 
@@ -58,6 +59,12 @@ public class AdminPassengerScheduleServiceImpl implements AdminPassengerSchedule
 	@Override
 	public void insertPassSeat(AdminPassengerScheduleVO adminPassengerScheduleVO) {
 		sqlSession.insert("adminMapper.insertPassSeat", adminPassengerScheduleVO);
+	}
+
+
+	@Override
+	public List<SalesVO> salesSumForMonth() {
+		return sqlSession.selectList("adminMapper.salesSumForMonth");
 	}
 
 }

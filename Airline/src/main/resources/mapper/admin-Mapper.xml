@@ -396,6 +396,7 @@
 	<!-- ****** 예매 삭제  -->
 	<delete id="deletePassengerSchedule">
 		DELETE PASS_SCHE_CODE 
+		FROM PASSENGER_SCHEDULE
 		WHERE PASS_SCHE_CODE = #{passScheCode}
 	</delete>
 	
@@ -677,6 +678,16 @@
 	                        WHERE AIR_SCHE_CODE = #{airScheCode})
 	</select>
 	
+	<!-- 좌석 변경 시 SEAT INFO NUll로 수정 -->
+	<update id="updateSeatNull">
+		UPDATE SEAT_INFO
+		SET
+		IS_BOOKED = NULL
+		WHERE IS_BOOKED = #{passEmail}
+		AND SEAT_CODE = (SELECT SEAT_CODE FROM PASSENGER_SCHEDULE WHERE PASS_SCHE_CODE = #{passScheCode})
+		AND AIR_SCHE_CODE = #{airScheCode}
+	</update>
+	
 	<!-- 좌석변경 -->
 	<update id="updatePassSeat">
 		UPDATE PASSENGER_SCHEDULE
@@ -699,13 +710,6 @@
 		WHERE PASS_SCHE_CODE = #{passScheCode}
 	</update>
 	
-	<!-- 좌석 시 SEAT INFO 수정 -->
-	<update id="updateSeatNull">
-		UPDATE SEAT_INFO
-		SET
-		IS_BOOKED = NULL
-		WHERE IS_BOOKED = #{passEmail}
-	</update>
 	<update id="updateSeatNum">
 		UPDATE SEAT_INFO
 		SET
@@ -876,6 +880,32 @@
 		WHERE DEPARTURE_PORT_CODE IN (SELECT NVL(FINAL_ARRIVAL_PORT_CODE, 'ICN') 
 		                                FROM AIRPLANE_V
 		                                WHERE PLANE_CODE = #{planeCode})
+	</select>
+	
+	<resultMap type="com.kh.airline.admin.vo.SalesVO" id="sales">
+		<id 	column="ORDER_DATE" property="orderDate"/>
+		<result column="TOTAL_INCOME" property="totalIncome"/>
+	</resultMap>
+	
+	<select id="salesSumForMonth" resultMap="sales">
+		SELECT TO_CHAR(B.DT, 'YYYY-MM') AS ORDER_DATE
+		 , NVL(SUM(TOTAL_INCOME), 0) AS TOTAL_INCOME
+		FROM ( 
+		            SELECT MAX(TO_CHAR(ORDER_DATE, 'YYYY-MM-DD')) AS ORDER_DATE
+		                , SUM(TICKET_PRICE) -  MAX(USED_POINTS) AS TOTAL_INCOME
+		            
+		            FROM PASSENGER_SCHEDULE
+		            GROUP BY ORDER_CODE
+		   
+		    ) A
+		  , ( SELECT TO_DATE('2022-01-01','YYYY-MM-DD') + LEVEL - 1 AS DT
+		        FROM dual 
+		     CONNECT BY LEVEL &lt;= (TO_DATE('2022-12-31','YYYY-MM-DD') 
+		                        - TO_DATE('2022-01-01','YYYY-MM-DD') + 1)
+		    ) B
+		WHERE B.DT = A.ORDER_DATE(+)
+		GROUP BY TO_CHAR(B.DT, 'YYYY-MM')
+		ORDER BY TO_CHAR(B.DT, 'YYYY-MM')
 	</select>
 	
 </mapper>
