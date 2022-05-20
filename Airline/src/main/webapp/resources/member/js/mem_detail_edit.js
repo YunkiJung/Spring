@@ -13,6 +13,7 @@ function regMemImg () {
         contentType: false,      
         cache: false,    
     	data:data, //필요한 데이터 '데이터이름':값
+    	async: false,
     	success: function(result) {
       		$('#imgChange').attr('src','/resources/member/img/'+ result +'');
     	},

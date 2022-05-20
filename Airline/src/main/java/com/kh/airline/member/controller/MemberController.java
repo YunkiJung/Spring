@@ -2,6 +2,9 @@ package com.kh.airline.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -195,32 +198,40 @@ public class MemberController {
 	public String regMemImg(MemImgVO memImgVO, HttpSession session, MultipartHttpServletRequest multi) {
 			//회원 아이디
 			String memId = ((AirMemberVO)session.getAttribute("loginInfo")).getMemId();
-			//회원 이미지가 있으면 삭게
+			
+			//회원 이미지가 있으면 삭제
 			if(memberService.selectMemImg(memId) != null) {
 				memberService.deleteMemImg(memId);
 			}
+			
 			//이미지 통
 			List<MemImgVO> memImgList = new ArrayList<MemImgVO>();
 			//다음에 들어갈 IMG_CODE 값을 조회
 			int nextMemImgCode = memberService.selectNextMemImgCode();
 			
 			//------------이미지 첨부(파일 업로드)--------------//
-			
 			//첨부파일이 저장될 위치 지정
 			String uploadPath = "D:\\Git\\workspaceSTS\\Airline\\src\\main\\webapp\\resources\\member\\img\\";
 			
+				try {
+					Path path = Paths.get(uploadPath + "1653013864070_부동상 상식사전_상세1.jpg");
+					Files.deleteIfExists(path);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			
 			//name이 "memImg"인 input태그의 파일 정보를 가져 옴. 
 			MultipartFile file = multi.getFile("memImg");
-			
 			//첨부하고자 하는 파일명
 			String originFileName = file.getOriginalFilename();
-
+			
 			MemImgVO vo = new MemImgVO();
 			
 			if(!originFileName.equals("")) {
+				//파일 업로드
 				//첨부할 파일명
 				String attachedFileName = System.currentTimeMillis() + "_" + originFileName;
-				//파일 업로드
+				
 				//매개변수로 경로 및 파일명을 넣어줌
 				try {
 					file.transferTo(new File(uploadPath + attachedFileName));
@@ -229,10 +240,6 @@ public class MemberController {
 					vo.setAttachedMemImgName(attachedFileName);
 					vo.setMemId(memId);
 					memImgList.add(vo);
-					System.out.println(vo.getMemId());
-					System.out.println(vo.getMemImgCode());
-					System.out.println(vo);
-					
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				} catch (IOException e) {

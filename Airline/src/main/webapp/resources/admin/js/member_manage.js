@@ -60,15 +60,50 @@ function selectMember(){
 	modalFooter.innerHTML = '';
 	var str = '';
 	
-	str += '<button type="button" class="btn btn-danger" onclick="deleteMember();">삭제</button>';
-	str += '<button type="button" class="btn btn-primary" onclick="updateMember();">수정</button>';
+	str += '<button type="button" class="btn btn-danger" id="deleteMember" onclick="deleteMember();">삭제</button>';
+	str += '<button type="button" class="btn btn-primary" id="updateMember" onclick="updateMember();">수정</button>';
 	str += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
 	modalFooter.innerHTML += str;
 	
 	}
 	
     infoModal.show();
-      
+    
+    /////////////////////////////////////////////////
+    var formId = document.getElementById('formId');
+	
+		 $("#deleteMember").click(function () {
+			 Swal.fire({
+				 title: '정말 삭제 하시겠습니까?',
+				  text: "다시 되돌릴 수 없습니다.",
+				   icon: 'warning', showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				     cancelButtonColor: '#d33',
+				      confirmButtonText: '승인',
+				       cancelButtonText: '취소' }).then((result) => {
+					 if (result.isConfirmed) {
+							 formId.action = "/admin/deleteMember";
+							formId.submit();
+						}
+					 })
+				 });
+				 
+	$("#updateMember").click(function () {
+			 Swal.fire({
+				 title: '수정 하시겠습니까?',
+				  text: "",
+				   icon: 'question', showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				     cancelButtonColor: '#d33',
+				      confirmButtonText: '승인',
+				       cancelButtonText: '취소' }).then((result) => {
+					 if (result.isConfirmed) {
+							 formId.action = "/admin/updateMember";
+							formId.submit();
+						}
+					 })
+				 });
+    ///////////////////////////////////////////
 	
     },
     error: function(){
@@ -78,32 +113,65 @@ function selectMember(){
 	
 }
 
-function deleteMember(){
-	var formId = document.getElementById('formId')
-	if(confirm('정말 삭제하시겠습니까?')){
-	formId.action = "/admin/deleteMember";
-	formId.submit();
-	}
-	else{
-		return;
-	}
+/*function deleteMember(){
+	var formId = document.getElementById('formId');
 	
-}
+		 $("#deleteMember").click(function () {
+			 Swal.fire({
+				 title: '정말 삭제 하시겠습니까?',
+				  text: "다시 되돌릴 수 없습니다.",
+				   icon: 'warning', showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				     cancelButtonColor: '#d33',
+				      confirmButtonText: '승인',
+				       cancelButtonText: '취소' }).then((result) => {
+					 if (result.isConfirmed) {
+							 formId.action = "/admin/deleteMember";
+							formId.submit();
+						}
+					 })
+				 });
 
-function updateMember(){
-	if(confirm('수정 하시겠습니까?')){
+	//if(confirm('정말 삭제하시겠습니까?')){
+	//formId.action = "/admin/deleteMember";
+	//formId.submit();
+	//}
+	//else{
+	//	return;
+	//}
 	
-	var memPhone = document.getElementById("memPhone");
-	memPhone.value = document.getElementById("memPhone1").value + '-' + document.getElementById("memPhone2").value + '-' + document.getElementById("memPhone3").value;  
-	var formId = document.getElementById('formId')
-	formId.action = "/admin/updateMember";
-	formId.submit();
-	}
-	else{
-		return;
-	}
+}*/
+
+/*function updateMember(){
+	//if(confirm('수정 하시겠습니까?')){
+	//
+	//var memPhone = document.getElementById("memPhone");
+	//memPhone.value = document.getElementById("memPhone1").value + '-' + document.getElementById("memPhone2").value + '-' + document.getElementById("memPhone3").value;  
+	//var formId = document.getElementById('formId')
+	//formId.action = "/admin/updateMember";
+	//formId.submit();
+	//}
+	//else{
+	//	return;
+	//}
 	
-}
+	$("#updateMember").click(function () {
+			 Swal.fire({
+				 title: '수정 하시겠습니까?',
+				  text: "다시 되돌릴 수 없습니다.",
+				   icon: 'warning', showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				     cancelButtonColor: '#d33',
+				      confirmButtonText: '승인',
+				       cancelButtonText: '취소' }).then((result) => {
+					 if (result.isConfirmed) {
+							 formId.action = "/admin/deleteMember";
+							formId.submit();
+						}
+					 })
+				 });
+	
+}*/
 
 /*function insertMember(){
 	

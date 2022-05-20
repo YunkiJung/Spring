@@ -145,7 +145,7 @@
 <!-- 비행 -->
 <div>
 	<div>
-		<h2 class="h2Flight">운한 예정</h2>
+		<h2 class="h2Flight">운항 예정</h2>
 	</div>
 <div style="margin-bottom: 2em; ">
 	<div id="myGpsAirScheduleList"></div>

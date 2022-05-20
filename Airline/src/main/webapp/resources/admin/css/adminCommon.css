@@ -1,0 +1,109 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Patua+One|Open+Sans);
+
+
+tbody tr td {
+  font-family: 'Open Sans', sans-serif;
+}
+#mainContainer{
+	text-align: center;
+}
+
+#searchContainer{
+	text-align: center;
+	padding: 0.5em;
+	background-color: white;
+}
+
+#searchContainer span{
+	font-family: 'Open Sans', sans-serif;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+}
+
+.btnClass{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	color: white;
+}
+
+#listContainer{
+	text-align: center;
+	padding: 0.5em;
+	background-color: white;
+}
+
+#pagingContainer{
+	background-color: white;
+	padding: 0.5em;
+	
+}
+
+tr td{
+	text-align: left;
+}
+
+#groupSpan{
+	background-color: white;
+}
+
+.styled {
+    border-collapse: collapse;
+    margin: 1em 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled thead tr {
+    background-color: #dc3545;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled th,
+.styled td {
+    padding: 12px 15px;
+    font-weight: bold;
+}
+.styled tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled tbody tr:last-of-type {
+    border-bottom: 2px solid #dc3545;
+}
+
+.styled tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+.styled tbody tr:hover {
+	background: black !important;
+	transition: ease 1s;
+	color: white;
+    font-weight: bolder;
+}
+
+.admin.pagination > .active > a, 
+.admin.pagination > .active > span, 
+.admin.pagination > .active > a:hover, 
+.admin.pagination > .active > span:hover, 
+.admin.pagination > .active > a:focus, 
+.admin.pagination > .active > span:focus {
+  background: #dc3545;
+  border-color: #dc3545;
+}
+.admin.pagination > a{
+  color: #dc3545;
+} 
+.page-link {
+	color: black;
+}

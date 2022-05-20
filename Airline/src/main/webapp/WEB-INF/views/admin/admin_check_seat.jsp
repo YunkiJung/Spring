@@ -45,9 +45,6 @@ background-color: white;
 								${sessionScope.searchInfo.arrivalPortCode }
 							</h1>
 						</div>
-						<!-- <div class="exit exit--front fuselage">
-					    
-					  </div> -->
 						<ol class="cabin fuselage" id="cabin">
 							<div class="exit exit--front fuselage">
 								<!-- ROW -->
@@ -69,12 +66,9 @@ background-color: white;
 										<div class="exit exit--back fuselage"></div>
 									</c:if>
 								</c:forEach>
+								</div>
 						</ol>
-						<!-- <div class="exit exit--back fuselage">
-		    
-		  </div> -->
 					</div>
-
 				</div>
 				<div class="col-1"></div>
 				<div class="col-2">
@@ -119,7 +113,6 @@ background-color: white;
 										<input type="hidden" name="ticketPrice">
 										<input type="hidden" name="orderCode">
 										<input type="hidden" name="orderDate">
-										
 										<input type="submit" class="btn btn-primary" value="정보 입력">
 									</form>
 								</div>
@@ -128,7 +121,6 @@ background-color: white;
 					</div>
 				</div>
 			</div>
-
 		</div>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript"

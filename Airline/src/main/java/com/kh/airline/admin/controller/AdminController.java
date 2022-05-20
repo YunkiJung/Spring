@@ -65,7 +65,7 @@ public class AdminController {
 	// 첫 화면 겸 매출 현황
 	@GetMapping("/sales")
 	public String AdminPage(Model model) {
-
+		
 		return "admin/sales";
 	}
 

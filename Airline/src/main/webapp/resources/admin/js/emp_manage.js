@@ -58,8 +58,8 @@ function selectEmp(){
 	modalFooter.innerHTML = '';
 	var str = '';
 	
-	str += '<button type="button" class="btn btn-danger" onclick="deleteEmp();">삭제</button>';
-	str += '<button type="button" class="btn btn-primary" onclick="updateEmp();">수정</button>';
+	str += '<button type="button" class="btn btn-danger" id="deleteEmp">삭제</button>';
+	str += '<button type="button" class="btn btn-primary" id="updateEmp">수정</button>';
 	str += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
 	modalFooter.innerHTML += str;
 	
@@ -67,6 +67,38 @@ function selectEmp(){
 	
 	
     infoModal.show();
+      
+      $("#deleteEmp").click(function () {
+			 Swal.fire({
+				 title: '삭제 하시겠습니까?',
+				  text: "",
+				   icon: 'warning', showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				     cancelButtonColor: '#d33',
+				      confirmButtonText: '승인',
+				       cancelButtonText: '취소' }).then((result) => {
+					 if (result.isConfirmed) {
+							 formId.action = "/admin/deleteEmp";
+							formId.submit();
+						}
+					 })
+				 });
+      $("#updateEmp").click(function () {
+			 Swal.fire({
+				 title: '수정 하시겠습니까?',
+				  text: "",
+				   icon: 'question', showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				     cancelButtonColor: '#d33',
+				      confirmButtonText: '승인',
+				       cancelButtonText: '취소' }).then((result) => {
+					 if (result.isConfirmed) {
+							 formId.action = "/admin/updateEmp";
+							formId.submit();
+						}
+					 })
+				 });
+      
       
 	
     },
@@ -77,7 +109,7 @@ function selectEmp(){
 	
 }
 
-function deleteEmp(){
+/*function deleteEmp(){
 	var formId = document.getElementById('formId')
 	if(confirm('정말 삭제하시겠습니까?')){
 	formId.action = "/admin/deleteEmp";
@@ -103,20 +135,45 @@ function updateEmp(){
 	}
 	
 	
-}
+}*/
 
 function insertEmp(){
 	selectEmp();
-	
 	
 	var modalFooter = document.getElementById('modalFooter');
 	modalFooter.innerHTML = '';
 	var str = '';
 	
-	str += '<button type="button" class="btn btn-primary" onclick="insertEmpInfo();">추가</button>';
+	str += '<button type="button" class="btn btn-primary" id="insertEmpInfo">추가</button>';
 	str += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
 	
 	modalFooter.innerHTML += str;
+	
+	$("#insertEmpInfo").click(function () {
+			 Swal.fire({
+				 title: '추가 하시겠습니까?',
+				  text: "",
+				   icon: 'question', showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				     cancelButtonColor: '#d33',
+				      confirmButtonText: '승인',
+				       cancelButtonText: '취소' }).then((result) => {
+					 if (result.isConfirmed) {
+							 formId.action = "/admin/insertEmpInfo";
+							formId.submit();
+						}
+					 })
+				 });
+				 
+				  $("#insertEmpInfo").click(function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: '실행되었습니다.',
+                    text: '새로운 직원이 추가되었습니다.',
+                })
+                formId.action = "/admin/insertEmpInfo";
+				formId.submit();
+            });
 	
 }
 

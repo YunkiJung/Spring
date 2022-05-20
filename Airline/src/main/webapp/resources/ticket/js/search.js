@@ -139,7 +139,7 @@ function myWeather(){
 						//alert('성공');
 						
 						let gpsTag = document.getElementById('myGpsAirScheduleList');
-						
+							
 						let str = '';
 						
 						for(let i = 0; i < result.length; i++){

@@ -33,7 +33,7 @@
                   </div>
                     <div class="mt-3">
                       <h4>${memDetail.memName }</h4>
-                      <p class="text-muted font-size-sm">${memDetail.memAddr }, ${memDetail.countryCode }</p>
+                      <p class="text-muted font-size-sm">${memDetail.countryCode }</p>
                     </div>
                   </div>
                 </div>
@@ -130,6 +130,6 @@
          </div>
        </div>
       </div>
-   <script type="text/javascript" src="/resources/member/js/mem_detail_edit.js?ver=14"></script>
+   <script type="text/javascript" src="/resources/member/js/mem_detail_edit.js?ver=15"></script>
 </body>
 </html>

@@ -6,32 +6,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="/resources/admin/css/adminCommon.css" rel="stylesheet">
 </head>
 <body>
-	<div class="row">
-		<div class="col-8" id="searchContainer">
+	<div class="row" id="mainContainer">
+		<div class="col-12" id="searchContainer">
 			<form action="/admin/passengerManage" method="get">
-				<table class="table table-light">
-					<tr>
-						<td>예매 코드 <input type="text" class="form-control"
+					<div class="input-group">
+						<span class="input-group-text">예매 코드</span><input type="text" class="form-control"
 							name="passScheCode">
-						</td>
-						<td>비회원 코드 <input type="text" class="form-control"
+						<span class="input-group-text">비회원 코드</span><input type="text" class="form-control"
 							name="passName">
-						</td>
-						<td>회원 아이디 <input type="text" class="form-control"
+						<span class="input-group-text">회원 아이디</span><input type="text" class="form-control"
 							name="memId">
-						</td>
-						<td><input type="submit" class="btn btn-primary" value="검색">
-						</td>
-					</tr>
-
-				</table>
+						<input type="submit" class="btn btn-danger btnClass" value="검색">
+					</div>
 			</form>
 		</div>
 
-		<div class="col-8" id="listContainer">
-			<table class="table table-light">
+		<div class="col-12" id="listContainer">
+			<table class="styled">
 				<thead>
 					<tr>
 						<td>PassCode</td>
@@ -62,35 +56,29 @@
 			</table>
 		</div>
 
-		<div>
-			<div class="row">
-				<!-- <div class="col-3">
-					<input type="button" class="btn btn-primary"
-						onclick="insertPass();" value="예매 내역 추가">
-				</div> -->
-				<div class="col-5">
-					<nav aria-label="...">
-						<ul class="pagination">
+		<div class="row" id="pagingContainer">
+			<div class="col-12">
+				<nav aria-label="...">
+					<ul class="pagination justify-content-center admin">
+						<li
+							class="page-item <c:if test="${!searchVO.prev }">disabled</c:if>">
+							<a class="page-link"
+							href="admin/passengerManage?nowPage=${searchVO.beginPage - 1 }">Previous</a>
+						</li>
+						<c:forEach begin="${searchVO.beginPage }"
+							end="${searchVO.endPage }" var="pageIndex">
 							<li
-								class="page-item <c:if test="${!searchVO.prev }">disabled</c:if>">
-								<a class="page-link"
-								href="admin/passengerManage?nowPage=${searchVO.beginPage - 1 }">Previous</a>
-							</li>
-							<c:forEach begin="${searchVO.beginPage }"
-								end="${searchVO.endPage }" var="pageIndex">
-								<li
-									class="page-item <c:if test="${searchVO.nowPage eq pageIndex }">active</c:if>"><a
-									class="page-link"
-									href="/admin/passengerManage?nowPage=${pageIndex }">${pageIndex}</a></li>
-							</c:forEach>
-							<li
-								class="page-item <c:if test="${!searchVO.next }">disabled</c:if>">
-								<a class="page-link"
-								href="/admin/passengerManage?=${searchVO.endPage + 1 }">Next</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
+								class="page-item <c:if test="${searchVO.nowPage eq pageIndex }">active</c:if>"><a
+								class="page-link"
+								href="/admin/passengerManage?nowPage=${pageIndex }">${pageIndex}</a></li>
+						</c:forEach>
+						<li
+							class="page-item <c:if test="${!searchVO.next }">disabled</c:if>">
+							<a class="page-link"
+							href="/admin/passengerManage?=${searchVO.endPage + 1 }">Next</a>
+						</li>
+					</ul>
+				</nav>
 			</div>
 
 			<div>
@@ -107,8 +95,6 @@
 										aria-label="Close"></button>
 								</div>
 								<div class="modal-body" id='modalBody'>
-									...
-
 									<div>
 										<form action="" method="get" id="formId">
 											<table class="table table-bordered border-secondary">

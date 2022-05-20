@@ -269,6 +269,10 @@
 		WHERE EMP_CODE = #{empCode}
 	</delete>
 	
+	<delete id="deleteEmpImage">
+		DELETE EMP_IMG WHERE EMP_CODE = #{empCode}
+	</delete>
+	
 	
 <!-- 예매 관련 기능 -->
 	 <resultMap type="com.kh.airline.admin.vo.AdminPassengerScheduleVO" id="passengerSchedule">
@@ -395,24 +399,9 @@
 	
 	<!-- ****** 예매 삭제  -->
 	<delete id="deletePassengerSchedule">
-		DELETE PASS_SCHE_CODE 
-		FROM PASSENGER_SCHEDULE
+		DELETE PASSENGER_SCHEDULE
 		WHERE PASS_SCHE_CODE = #{passScheCode}
 	</delete>
-	
-	<!-- 월 별 매출 합계 조회 -->
-	<!-- <select id="selectSalesForMonthList" resultType="int">
-		SELECT SUM(TICKET_PRICE)
-		FROM PASSENGER_SCHEDULE 
-		WHERE 1 = 1
-		<if test="date != null and !date.equals('')">
-		AND SUBSTR(ORDER_DATE, 4, 2) = (
-										SELECT SUBSTR(TO_CHAR(#{date}, 'YYYY-MM-DD'), 6, 2) 
-										FROM DUAL)
-		</if>
-	</select> -->
-	
-	
 	
 <!-- 운항 관련 기능 -->
 	<resultMap type="com.kh.airline.admin.vo.AdminAirScheduleVO" id="airSchedule">
@@ -903,7 +892,7 @@
 		     CONNECT BY LEVEL &lt;= (TO_DATE('2022-12-31','YYYY-MM-DD') 
 		                        - TO_DATE('2022-01-01','YYYY-MM-DD') + 1)
 		    ) B
-		WHERE B.DT = A.ORDER_DATE(+)
+		WHERE TO_CHAR(B.DT, 'YYYY-MM-DD') = A.ORDER_DATE(+)
 		GROUP BY TO_CHAR(B.DT, 'YYYY-MM')
 		ORDER BY TO_CHAR(B.DT, 'YYYY-MM')
 	</select>

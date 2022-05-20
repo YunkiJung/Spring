@@ -38,6 +38,7 @@ public class AdminEmpServiceImpl implements AdminEmpService{
 
 	@Override
 	public void deleteEmp(AdminEmpVO adminEmpVO) {
+		sqlSession.delete("adminMapper.deleteEmpImage", adminEmpVO);
 		sqlSession.delete("adminMapper.deleteEmp", adminEmpVO);
 	}
 

@@ -7,60 +7,31 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    
-    <!-- <link  href="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js" rel="noopener">
-	<link  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" title="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="noopener">
-    <link  href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" title="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" rel="noopener">
-    <link  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" title="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" rel="noopener">
-    <link  href="https://rawgit.com/tempusdominus/bootstrap-4/master/build/js/tempusdominus-bootstrap-4.js" title="https://rawgit.com/tempusdominus/bootstrap-4/master/build/js/tempusdominus-bootstrap-4.js" rel="noopener">
-    <link  href="https://rawgit.com/tempusdominus/bootstrap-4/master/build/css/tempusdominus-bootstrap-4.css" title="https://rawgit.com/tempusdominus/bootstrap-4/master/build/css/tempusdominus-bootstrap-4.css" rel="noopener">
-    <link  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" title="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="noopener"> -->
-    
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-    rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/css/tempus-dominus.css"
-          rel="stylesheet" crossorigin="anonymous"> -->
-              <!-- Popperjs -->
-<!-- Popperjs -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script> -->
-<!-- Tempus Dominus JavaScript -->
-<!-- <script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@v6-alpha1.0.4/dist/js/tempus-dominus.js" crossorigin="anonymous"></script> -->
-
-<!-- Tempus Dominus Styles -->
-<!-- <link href="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@v6-alpha1.0.4/dist/css/tempus-dominus.css" rel="stylesheet" crossorigin="anonymous"> -->
+	<link href="/resources/admin/css/adminCommon.css" rel="stylesheet">
 </head>
 <body>
-
 	<div class="row">
-		<div class="col-8" id="searchContainer" style="text-align: center;">
+		<div class="col-12" id="searchContainer">
 			<form action="/admin/airScheList" method="get">
-				<h2>
-				현재 항공기 코드 : ${searchVO.planeCode }
+				<h2 style="font-weight: bold;">
+				${searchVO.planeCode }
 				</h2>
 				<input type="hidden" name="planeCode" value="${searchVO.planeCode }">
-				<table class="table table-light">
-					<tr>
-						<td>
-							운항 코드 <input type="text" name="airScheCode">
-						</td>
-						<td>
-							경로 코드 <input type="text" name="pathCode">
-						</td>
-						<td>
-							출발일 <input type="date" name="departureDate">
-						</td>
-
-						<td>
-						<input type="submit" class="btn btn-primary" value="검색">
-						</td>
-					</tr>
-
-				</table>
+				<div class="input-group" style="text-align: center; width:100%;">
+						<span class="input-group-text">운항 코드</span>
+						<input class="form-control"type="text" name="airScheCode">
+						<span class="input-group-text">경로 코드</span>
+						<input class="form-control"type="text" name="pathCode">
+						<span class="input-group-text">출발일</span>
+						<input class="form-control"type="date" name="departureDate">
+						<input type="submit" class="btn btn-primary btnClass" value="검색" style="background-color: #dc3545; border: #dc3545;">
+				</div>
+				
 			</form>
 		</div>
 
-		<div class="col-8" id="listContainer">
-			<table class="table table-light">
+		<div class="col-12" id="listContainer">
+			<table class="styled">
 				<thead>
 					<tr>
 						<td>운항 코드</td>
@@ -76,8 +47,6 @@
 				</thead>
 				<tbody>
 				<c:forEach items="${airScheduleList }" var="list">
-					<%-- <tr onclick="selectAirSche('${list.airScheCode}','${list.planeCode}', '${list.arrivalPortCode }');"
-						data-bs-toggle="modal" data-bs-target="#staticBackdrop"> --%>
 					<tr>
 						<td>${list.airScheCode }</td>
 
@@ -94,15 +63,15 @@
 				</tbody>
 			</table>
 
-			<div class="row d-flex align-self-center">
-				<div class="col-1">
-					<input type="button" class="btn btn-primary" value="추가"
-						onclick="insertAirSche('${searchVO.planeCode}');">
+			<div class="row" id="pagingContainer">
+				<div style="position:absolute; width: 10rem;">
+					<input type="button" class="btn btn-primary btnClass" value="추가"
+						onclick="insertAirSche('${searchVO.planeCode}');" style="background-color: #dc3545; border: #dc3545;">
 				</div>
 
-				<div class="col-10">
+				<div class="col-12" style="margin: 0 auto; text-align: center;">
 					<nav aria-label="...">
-						<ul class="pagination">
+						<ul class="pagination justify-content-center admin">
 							<li
 								class="page-item <c:if test="${!searchVO.prev }">disabled</c:if>">
 								<a class="page-link"
@@ -163,62 +132,6 @@
 										</tr>
 										<tr>
 											<td colspan="2">운항 시간<br>
-												
-												<!-- <div class="container">
-												  <div class="row">
-												    <div class="col-sm-6">
-												      <div class="form-group">
-												        <div class="input-group date">
-												          <input id="datetimepicker1" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" data-toggle="datetimepicker"/>
-												        </div>
-												      </div>
-												    </div>
-												  </div>
-												</div> -->
-												
-												<!-- <div
-												     class='input-group'
-												     id='datetimepicker1'
-												     data-td-target-input='nearest'
-												     data-td-target-toggle='nearest'
-												 >
-												   <input
-												     id='datetimepicker1Input'
-												     type='text'
-												     class='form-control'
-												     data-td-target='#datetimepicker1'
-												   />
-												   <span
-												     class='input-group-text'
-												     data-td-target='#datetimepicker1'
-												     data-td-toggle='datetimepicker'
-												   >
-												     <span class='fas fa-calendar'></span>
-												   </span>
-												 </div> -->
-												
-												
-												<!-- <div
-												     class='input-group'
-												     id='datetimepicker1'
-												     data-td-target-input='nearest'
-												     data-td-target-toggle='nearest'
-												 >
-												   <input
-												     id='datetimepicker1Input'
-												     type='text'
-												     class='form-control'
-												     data-td-target='#datetimepicker1'
-												   />
-												   <span
-												     class='input-group-text'
-												     data-td-target='#datetimepicker1'
-												     data-td-toggle='datetimepicker'
-												   >
-												     <span class='fa-solid fa-calendar'></span>
-												   </span>
-												 </div> -->
-												
 												<input type="date" id="datepicker" name="departureDate1">
 												<input type="time" id="timepicker" name="departureDate2">
 												<input type="hidden" name="departureDate" id="departureDate">
@@ -230,33 +143,12 @@
 											<tr>
 											<td colspan="4">PATH_CODE
 											<input type="hidden" name="pathCode">
-											 <!-- <select name="pathCode"> -->
-											<%-- <c:forEach items="${pathList }" var="path">
-											<option value="${path.pathCode }">${path.departurePortName }->${path.arrivalPortName }</option>
-											</c:forEach>
-											</select> --%>
 											출발
 											<input type="text" value="" name="departurePortCode" readonly>
-											<%-- <c:forEach items="${pathList }" var="port">
-											<option value="${port.departurePortCode}"></option>
-											</c:forEach> --%>
-											
 											도착
 											<select name="arrivalPortCode">
-											<%-- <c:forEach items="${pathList }" var="port">
-											<option value="${port.arrivalPortCode}"></option>
-											</c:forEach> --%>
 											</select>
 											</td>
-												<%-- <td>
-												<select name="pathCode" id="pathCode">
-												<c:forEach items="${portList }" var="port">
-												<option value="${port.portCode }" onchange="selectPath();">
-													${port.portName }
-													</option>
-												</c:forEach>
-												</select>
-												</td> --%>
 											</tr>
 									</table>
 							</div>
@@ -274,19 +166,7 @@
 				</div>
 			</div>
 		</div>
-		
-
 	</div>
-    
-    
-    
-
-    
-<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/umd/popper.min.js"
-          crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/js/tempus-dominus.js"
-          crossorigin="anonymous"></script> -->
-          <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script> -->
 	<script type="text/javascript" src="/resources/admin/js/air_schedule_manage.js?ver=18"></script>
 </body>
 </html>

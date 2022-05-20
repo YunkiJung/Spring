@@ -7,8 +7,30 @@
 <meta charset="UTF-8">
 <title><tiles:insertAttribute name="title" /></title>
 <style type="text/css">
+html, body{
+	height: 100%;
+}
 #infoMenu {
 	text-align: right;
+}
+.containerT{
+	height: 100%;
+}
+.pageBodyT{
+	text-align: right;
+	height: 100%;
+	width: 100%;
+}
+.mainBodyT{
+	height: 100%;
+	padding: 0;
+	
+}
+.sideMenuT{
+	background-color: #251d3a;
+	position: fixed;
+	height: 100%;
+	padding: 0 !important;
 }
 </style>
 <!-- bootstrap css -->
@@ -27,19 +49,26 @@
 <!-- BootStrap  -->
 <link rel="stylesheet"
 	href="/resources/common/font/font-awesome-4.7.0/css/font-awesome.min.css">
+	
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid containerT">
 		<div class="row">
 			<div class="col-2">
-				<tiles:insertAttribute name="side" />
-			</div>
-			<div class="col-10">
 				<div class="row">
-					<div class="col-12" id="infoMenu" style="border-bottom: 2px solid #eeeeee;">
+					<div class="col-2 sideMenuT">
+				<tiles:insertAttribute name="side" />
+					</div>
+					<div class="col-12">
+					</div>
+				</div>
+			</div>
+			<div class="col pageBodyT">
+				<div class="row">
+					<div class="col-12" id=" infoMenu" style="border-bottom: 2px solid #eeeeee;">
 						<tiles:insertAttribute name="menu" />
 					</div>
-					<div class="col-12" style="padding-top: 1rem;">
+					<div class="col mainBodyT">
 						<tiles:insertAttribute name="body" />
 					</div>
 				</div>

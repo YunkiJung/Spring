@@ -21,5 +21,13 @@ public class adminInterceptor extends HandlerInterceptorAdapter{
 		public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 			// 상단 메뉴
 			modelAndView.addObject("menuList", adminService.selectAdminMenuList());
+			Object menuCode = request.getSession().getAttribute("adminMenuCode");
+			if(menuCode == null) {
+				request.setAttribute("adminMenuCode", "MENU001");
+			}
+			else {
+				request.setAttribute("adminMenuCode", menuCode);
+			}
+			
 		}
 }

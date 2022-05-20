@@ -14,23 +14,23 @@
           <div class="row gutters-sm" >
             <div class="col-md-4 mb-3">
               <div class="card">
-                <div class="card-body" style="">
+                <div class="card-body">
                 	<c:choose>
                 		<c:when test="${empty selectMemImg}">
 		                  <div class="d-flex flex-column align-items-center text-center">
-		                     <img src="/resources/member/img/profileImg.jpg" id="imgChange" class="rounded-circle" width="150" height="150">
+		                     <img src="/resources/member/img/profileImg.jpg" id="imgChange" class="rounded-circle" width="150" height="150" alt="회원이미지">
 		                    <div class="mt-3">
 		                      <h4>${memDetail.memName }</h4>
-		                      <p class="text-muted font-size-sm">${memDetail.memAddr }, ${memDetail.countryCode }</p>
+		                      <p class="text-muted font-size-sm">${memDetail.countryCode }</p>
 		                    </div>
 		                  </div>
                 		</c:when>
                 		<c:otherwise>
                 			<div class="d-flex flex-column align-items-center text-center">
-		                     <img src="/resources/member/img/${selectMemImg}" id="imgChange" class="rounded-circle" width="150" height="150">
+		                     <img src="/resources/member/img/${selectMemImg}" id="imgChange" class="rounded-circle" width="150" height="150" alt="회원이미지">
 		                    <div class="mt-3">
 		                      <h4>${memDetail.memName }</h4>
-		                      <p class="text-muted font-size-sm">${memDetail.memAddr }, ${memDetail.countryCode }</p>
+		                      <p class="text-muted font-size-sm">${memDetail.countryCode }</p>
 		                    </div>
 		                  </div>
                 		</c:otherwise>
