@@ -24,6 +24,6 @@ public interface AdminPassengerScheduleService {
 	
 	void insertPassSeat(AdminPassengerScheduleVO adminPassengerScheduleVO);
 	
-	List<SalesVO> salesSumForMonth();
+	List<SalesVO> salesSumForMonth(String selectedYear);
 	
 }

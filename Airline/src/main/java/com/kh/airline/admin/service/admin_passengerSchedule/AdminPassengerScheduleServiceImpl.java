@@ -63,8 +63,8 @@ public class AdminPassengerScheduleServiceImpl implements AdminPassengerSchedule
 
 
 	@Override
-	public List<SalesVO> salesSumForMonth() {
-		return sqlSession.selectList("adminMapper.salesSumForMonth");
+	public List<SalesVO> salesSumForMonth(String selectedYear) {
+		return sqlSession.selectList("adminMapper.salesSumForMonth", selectedYear);
 	}
 
 }

@@ -131,6 +131,7 @@
 		AND ARRIVAL_PORT_CODE = #{arrivalPortCode}
 		AND SPARE_SEAT &gt;= #{count}
 		AND TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD') = #{departureDate}
+		AND TO_DATE(TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD HH24:MI:SS') > TO_DATE(TO_CHAR(SYSDATE + 4 / 24, 'YYYY-MM-DD'), 'YYYY-MM-DD HH24:MI:SS')
 	</select>
 	
 	 <select id="selectTripInfo" resultMap="airSchedule">

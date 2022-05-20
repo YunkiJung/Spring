@@ -16,11 +16,6 @@ public class SalesVO {
 	public void setTotalIncome(int totalIncome) {
 		this.totalIncome = totalIncome;
 	}
-	
-	@Override
-	public String toString() {
-		return "SalesVO [orderDate=" + orderDate + ", totalIncome=" + totalIncome + "]";
-	}
 
 	
 	

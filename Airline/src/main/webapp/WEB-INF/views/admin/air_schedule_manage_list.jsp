@@ -75,19 +75,19 @@
 							<li
 								class="page-item <c:if test="${!searchVO.prev }">disabled</c:if>">
 								<a class="page-link"
-								href="admin/airScheList?nowPage=${searchVO.beginPage - 1 }">Previous</a>
+								href="admin/airScheList?nowPage=${searchVO.beginPage - 1 }&planeCode=${searchVO.planeCode}">Previous</a>
 							</li>
 							<c:forEach begin="${searchVO.beginPage }"
 								end="${searchVO.endPage }" var="pageIndex">
 								<li
 									class="page-item <c:if test="${searchVO.nowPage eq pageIndex }">active</c:if>"><a
 									class="page-link"
-									href="/admin/airScheList?nowPage=${pageIndex }">${pageIndex}</a></li>
+									href="/admin/airScheList?nowPage=${pageIndex }&planeCode=${searchVO.planeCode}">${pageIndex}</a></li>
 							</c:forEach>
 							<li
 								class="page-item <c:if test="${!searchVO.next }">disabled</c:if>">
 								<a class="page-link"
-								href="/admin/airScheList?=${searchVO.endPage + 1 }">Next</a>
+								href="/admin/airScheList?nowPage=${searchVO.endPage + 1 }&planeCode=${searchVO.planeCode}">Next</a>
 							</li>
 						</ul>
 					</nav>

@@ -1,6 +1,7 @@
 package com.kh.airline.admin.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -65,6 +66,10 @@ public class AdminController {
 	// 첫 화면 겸 매출 현황
 	@GetMapping("/sales")
 	public String AdminPage(Model model) {
+		String currentDate = getCurrentDateToString();
+		currentDate.substring(0, 4);
+		
+		model.addAttribute("year", currentDate.substring(0, 4));
 		
 		return "admin/sales";
 	}
@@ -72,8 +77,12 @@ public class AdminController {
 	
 	 @ResponseBody
 	 @PostMapping("/salesSumForMonth") 
-	 public List<SalesVO> salesSumForMonth(){
-	 return apsService.salesSumForMonth();
+	 public List<SalesVO> salesSumForMonth(String selectedYear){
+		 
+		 
+		 return apsService.salesSumForMonth(selectedYear);
+		 
+		 
 	 }
 	
 
@@ -247,7 +256,8 @@ public class AdminController {
 	@RequestMapping("/airScheList")
 	public String airScheList(SearchVO searchVO, Model model) {
 		int listCnt = aasService.countAirSchedule(searchVO);
-
+		
+		
 		searchVO.setTotalCnt(listCnt);
 		searchVO.setPageInfo();
 

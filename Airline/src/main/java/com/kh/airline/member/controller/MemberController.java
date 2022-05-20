@@ -198,28 +198,27 @@ public class MemberController {
 	public String regMemImg(MemImgVO memImgVO, HttpSession session, MultipartHttpServletRequest multi) {
 			//회원 아이디
 			String memId = ((AirMemberVO)session.getAttribute("loginInfo")).getMemId();
-			
-			//회원 이미지가 있으면 삭제
-			if(memberService.selectMemImg(memId) != null) {
-				memberService.deleteMemImg(memId);
-			}
-			
+				
 			//이미지 통
 			List<MemImgVO> memImgList = new ArrayList<MemImgVO>();
 			//다음에 들어갈 IMG_CODE 값을 조회
 			int nextMemImgCode = memberService.selectNextMemImgCode();
 			
 			//------------이미지 첨부(파일 업로드)--------------//
+			
 			//첨부파일이 저장될 위치 지정
 			String uploadPath = "D:\\Git\\workspaceSTS\\Airline\\src\\main\\webapp\\resources\\member\\img\\";
 			
-				try {
-					Path path = Paths.get(uploadPath + "1653013864070_부동상 상식사전_상세1.jpg");
+			//회원 이미지가 있으면 삭제
+			if(memberService.selectMemImg(memId) != null) {
+			try {
+					Path path = Paths.get(uploadPath + memberService.selectMemImg(memId));
 					Files.deleteIfExists(path);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-			
+					memberService.deleteMemImg(memId);
+			}
 			//name이 "memImg"인 input태그의 파일 정보를 가져 옴. 
 			MultipartFile file = multi.getFile("memImg");
 			//첨부하고자 하는 파일명

@@ -10,75 +10,133 @@
 	padding: 1rem;
 	background-color: white;
 }
+#mainContainer{
+	margin-top: 25px;
+}
+.btn{
+	width: 20%;
+	line-height: 1;
+}
+.selectorDiv{
+	margin: 0 auto;
+	vertical-align: middle;
+	margin-top: 20px;
+
+}
+#total, #totalH{
+	font-weight: bold;
+}
+.yearTag {
+	font-weight: bold; 
+	font-size: 2em;
+	 padding-bottom: 0;
+}
+.aaa {
+	margin-top: 10px;
+}
+table{
+	border: 1px solid black;
+	border-collapse: collapse;
+	width: 50%;
+}
+table thead tr{
+	background-color: #dc3545;
+}
+tr, td{
+	border: 1px solid black;
+}
 </style>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-	<div class="row justify-content-center" id="mainContainer">
+<input type="hidden" value="${year }" id="current-year">
+	<div class="row justify-content-md-center selectorDiv">
+		<div class="col-4 aaa">
+			<span id="year" class="yearTag">
+				${year }
+			</span>
+			<span class="yearTag">
+				YEAR
+			</span>
+		</div>
+		<div class="col-3" style="text-align: center; margin-top: 10px;">
+			<h2 id="totalH">$<span id="total"></span></h2>
+		</div>
+		<div class="col-4" style="text-align: center; padding-top: 1.5em;">
+			<input type="button" class="btn btn-danger" value="이전" id="prev">
+			<input type="button" class="btn btn-danger" value="다음" id="next" disabled>	
+		</div>
+	</div>
+	<div class="row justify-content-md-center" id="mainContainer">
 		<div class="col-9" style="background-color: #f9fafb;">
 			<canvas id="myChart"></canvas>
-				<script>
-				  const labels = [
-				    'January',
-				    'February',
-				    'March',
-				    'April',
-				    'May',
-				    'June',
-				    'July',
-				    'August',
-				    'September',
-				    'October',
-				    'November',
-				    'December'
-				  ];
-				  
-				  let data1 = [];
-				  
-				  $.ajax({
-					   url: '/admin/salesSumForMonth', //요청경로
-					    type: 'post',
-					    async: false,
-					    data:{}, 
-					    success: function(result) {
-					      for(var i = 0; i < result.length; i++){
-					      data1[i] = result[i].totalIncome;
-					      }
-					    },
-					    error: function(){
-					       alert('실패');
-					    }
-					});
-				  
-				    const data = {
-				    labels: labels,
-				    datasets: [{
-				      label: 'SALES FOR MONTH',
-				      backgroundColor: 'rgb(255, 99, 132)',
-				      borderColor: 'rgb(255, 99, 132)',
-				      data : data1
-				    }]
-				  }; 
-				  const config = {
-				    type: 'line',
-				    data: data,
-				    options: {
-				    	
-				    }
-				  };
-				</script>
-				<script>
-				  const myChart = new Chart(
-				    document.getElementById('myChart'),
-				    config
-				  );
-				</script>
-				</div>
-				
-				<div class="col-3">
-					
-				</div>
-				
-			</div>
+		
+	</div>
+		<div class="col-3">
+		<table class="list">
+			<colgroup>
+				<col width="50%">
+				<col width="*">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>월</th>
+					<th>매출</th>
+				</tr>
+			</thead>
+			<tbody id="list">
+				<tr>
+					<td>1</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>6</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>7</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>8</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>9</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>10</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>11</td>
+					<td class="monthly">0</td>
+				</tr>
+				<tr>
+					<td>12</td>
+					<td class="monthly">0</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		</div>
+<script type="text/javascript" src="/resources/admin/js/sales.js?ver=21"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>			
 </body>
 </html>
