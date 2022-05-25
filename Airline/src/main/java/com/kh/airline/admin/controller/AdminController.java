@@ -17,7 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.airline.admin.service.admin_air_schedule.AdminAirScheduleService;
 import com.kh.airline.admin.service.admin_common.AdminCommonService;
@@ -240,7 +243,7 @@ public class AdminController {
 	// 항공기 목록
 	@GetMapping("/airScheManage")
 	public String airScheManage(SearchVO searchVO, Model model) {
-
+		System.out.println(searchVO.toString());
 		int listCnt = aasService.countAdminPlaneList(searchVO);
 
 		searchVO.setTotalCnt(listCnt);
@@ -254,21 +257,14 @@ public class AdminController {
 
 	// 운항 리스트
 	@RequestMapping("/airScheList")
-	public String airScheList(SearchVO searchVO, Model model) {
+	public String airScheList(RedirectAttributes redirectAttributes,Model model, SearchVO searchVO) {
 		int listCnt = aasService.countAirSchedule(searchVO);
-		
 		
 		searchVO.setTotalCnt(listCnt);
 		searchVO.setPageInfo();
 
 		model.addAttribute("airScheduleList", aasService.selectAirScheduleList(searchVO));
-//		int listCnt = aasService.countAdminAirSchedule(searchVO);
-//		
-//		searchVO.setTotalCnt(listCnt);
-//		searchVO.setPageInfo();
-//		
-//		// 일정 목록
-//		model.addAttribute("airScheduleList", aasService.selectAdminAirScheduleList(searchVO));
+		 redirectAttributes.addFlashAttribute(searchVO);
 
 		// 일반 공항 목록
 		model.addAttribute("portCodeList", adminCommonService.selectAirportList());
@@ -316,23 +312,36 @@ public class AdminController {
 
 	// 운항 추가
 	@PostMapping("/insertAirSche")
-	public String insertAirSche(AdminAirScheduleVO adminAirScheduleVO) {
+	public String insertAirSche(AdminAirScheduleVO adminAirScheduleVO, RedirectAttributes redirectAttributes, SearchVO searchVO) {
 		aasService.insertAirSchedule(adminAirScheduleVO);
-		return "redirect:/admin/airScheManage";
+		redirectAttributes.addAttribute("planeCode", searchVO.getPlaneCode());
+		 
+		return "redirect:/admin/airScheList";
 	}
 
 	// 운항 정보 수정
 	@PostMapping("/updateAirSche")
-	public String updateAirSche(AdminAirScheduleVO adminAirScheduleVO) {
+	public String updateAirSche(AdminAirScheduleVO adminAirScheduleVO, AdminFlightPathVO adminFlightPathVO, RedirectAttributes redirectAttributes, SearchVO searchVO) {
+		System.out.println(searchVO.toString());
+		adminAirScheduleVO.setPathCode(aasService.selectPathCode(adminFlightPathVO));
 		aasService.updateAirSchedule(adminAirScheduleVO);
-		return "redirect:/admin/airScheManage";
+		System.out.println(searchVO.toString());
+		searchVO.setAirScheCode(null);
+		searchVO.setDepartureDate(null);
+		searchVO.setPathCode(null);
+		redirectAttributes.addFlashAttribute(searchVO); 
+		return "redirect:/admin/airScheList";
 	}
 
 	// 운항 정보 삭제
 	@PostMapping("/deleteAirSche")
-	public String deleteAirSche(AdminAirScheduleVO adminAirScheduleVO) {
+	public String deleteAirSche(AdminAirScheduleVO adminAirScheduleVO, RedirectAttributes redirectAttributes, SearchVO searchVO) {
 		aasService.deleteAdminAirSchedule(adminAirScheduleVO);
-		return "redirect:/admin/airScheManage";
+		searchVO.setAirScheCode(null);
+		searchVO.setDepartureDate(null);
+		searchVO.setPathCode(null);
+		redirectAttributes.addFlashAttribute(searchVO);
+		return "redirect:/admin/airScheList";
 	}
 
 	// 좌석 정보 조회

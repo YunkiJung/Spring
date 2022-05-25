@@ -97,8 +97,12 @@ public class MemberController {
 	//아이디 찾기
 	@ResponseBody
 	@PostMapping("/findId")
-	public void findId(AirMemberVO airMemberVO) {
+	public boolean findId(AirMemberVO airMemberVO) {
 		String memId = memberService.selectMemId(airMemberVO);
+		
+		if(memberService.selectMemEmail(memId) == null & memberService.selectMemEmail(memId).equals("")) {
+			return false;
+		};
 		
 		try {
 			//메일보내기
@@ -114,29 +118,41 @@ public class MemberController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return true;
 		
 	}
 	//비밀번호 찾기
 	@ResponseBody
 	@PostMapping("/findPw")
-	public void findPw(AirMemberVO airMemberVO) {
-		String getTempPw = getTempPw();
-		airMemberVO.setMemPw(getTempPw);
-		memberService.updateMemPw(airMemberVO);
-		try {
-			//메일보내기
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper messageHelper;
-			messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-			messageHelper.setFrom("");
-			messageHelper.setTo(airMemberVO.getMemEmail());
-			messageHelper.setSubject("KH Airline 임시 비밀번호 입니다.");
-			messageHelper.setText("임시 비밀번호 :"+ getTempPw);
-			mailSender.send(message);
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public Boolean findPw(AirMemberVO airMemberVO) {
+		String memEmail = memberService.selectMemEmail(airMemberVO.getMemId());
+		String memId = memberService.selectMemId(airMemberVO);
+		
+		  if(memEmail == null & memEmail.equals("")) { 
+			  return false; 
+			  } 
+		  else if(memId == null & memId.equals("")) { 
+			  return false; 
+		  } 
+		  else {
+			  String getTempPw = getTempPw(); airMemberVO.setMemPw(getTempPw);
+			  memberService.updateMemPw(airMemberVO);
+			try {
+				//메일보내기
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper;
+				messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+				messageHelper.setFrom("");
+				messageHelper.setTo(airMemberVO.getMemEmail());
+				messageHelper.setSubject("KH Airline 임시 비밀번호 입니다.");
+				messageHelper.setText("임시 비밀번호 :"+ getTempPw);
+				mailSender.send(message);
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			  return true; 
+		  }
 	}
 	//아이디 중복확인
 	@ResponseBody

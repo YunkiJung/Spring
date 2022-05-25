@@ -264,7 +264,12 @@
 		FROM AIR_MEMBER
 		WHERE MEM_ID=#{memId}
 	</select>
-	
+	<!-- 이메일 조회  -->
+	<select id="selectMemEmail" resultType="String">
+		SELECT MEM_EMAIL
+		FROM AIR_MEMBER
+		WHERE MEM_ID=#{memId}
+	</select>
 </mapper>
 
 

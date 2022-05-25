@@ -10,7 +10,6 @@ public class AdminAirScheduleVO {
 	private int basePrice;
 	private int spareSeat;
 	private String modelCode;
-	
 	private String departurePortCode;
 	private String arrivalPortCode;
 	
@@ -83,6 +82,14 @@ public class AdminAirScheduleVO {
 	public void setArrivalPortCode(String arrivalPortCode) {
 		this.arrivalPortCode = arrivalPortCode;
 	}
+	@Override
+	public String toString() {
+		return "AdminAirScheduleVO [airScheCode=" + airScheCode + ", planeCode=" + planeCode + ", pathCode=" + pathCode
+				+ ", teamCode=" + teamCode + ", departureDate=" + departureDate + ", gateNum=" + gateNum
+				+ ", basePrice=" + basePrice + ", spareSeat=" + spareSeat + ", modelCode=" + modelCode
+				+ ", departurePortCode=" + departurePortCode + ", arrivalPortCode=" + arrivalPortCode + "]";
+	}
+	
 	
 
 }

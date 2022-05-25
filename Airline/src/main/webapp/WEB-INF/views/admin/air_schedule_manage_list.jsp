@@ -16,7 +16,7 @@
 				<h2 style="font-weight: bold;">
 				${searchVO.planeCode }
 				</h2>
-				<input type="hidden" name="planeCode" value="${searchVO.planeCode }">
+				<input type="hidden" id="planeCodeForH" name="planeCode" value="${searchVO.planeCode }">
 				<div class="input-group" style="text-align: center; width:100%;">
 						<span class="input-group-text">운항 코드</span>
 						<input class="form-control"type="text" name="airScheCode">
@@ -113,7 +113,7 @@
 							<div>
 									<table class="table table-bordered border-secondary" id="listTable">
 										<tr>
-											<td>PLANE_CODE <select name="planeCode" >
+											<td>PLANE_CODE <select name="planeCode">
 												<c:forEach items="${planeList}" var="plane">
 													<option value="${plane.planeCode }">${plane.modelName }</option>
 												</c:forEach>
@@ -127,7 +127,7 @@
 											</select>
 											</td>
 											<td>GATE_NUM <input type="text" name="gateNum" id="gateNum"
-												class="form-control" value="">
+												class="form-control" value="" required>
 											</td>
 										</tr>
 										<tr>
@@ -137,7 +137,7 @@
 												<input type="hidden" name="departureDate" id="departureDate">
 											</td>											
 											<td>BASE_PRICE <input type="text" name="basePrice" id="basePrice"
-												class="form-control" value="">
+												class="form-control" value="" required>
 											</td>
 											</tr>
 											<tr>
@@ -154,12 +154,9 @@
 							</div>
 						</div>
 						<div class="modal-footer" id="modalFooter">
-							<button type="button" class="btn btn-danger"
-								onclick="deleteAirSche();">삭제</button>
-							<button type="button" class="btn btn-primary"
-								onclick="updateAirSche();">수정</button>
-							<button type="button" class="btn btn-secondary"
-								data-bs-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-danger" id="deleteAirSche">삭제</button>
+							<button type="submit" class="btn btn-primary" id="updateAirSche">수정</button>
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 						</div>
 						</form>
 					</div>
@@ -167,6 +164,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="/resources/admin/js/air_schedule_manage.js?ver=18"></script>
+	<script type="text/javascript" src="/resources/admin/js/air_schedule_manage.js?ver=27"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </body>
 </html>

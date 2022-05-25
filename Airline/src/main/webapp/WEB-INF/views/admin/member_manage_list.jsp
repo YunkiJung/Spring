@@ -74,16 +74,16 @@
 		<div style="text-align: center;">
 			
 			<div id="modalDiv">
-				<div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="text-align: center;">
 				  <div class="modal-dialog modal-lg">
-				    <div class="modal-content">
+				    <div class="modal-content" style="width: 50em;">
+					<form action="" method="post" id="formId">
 				      <div class="modal-header">
 				        <h5 class="modal-title" id="staticBackdropLabel">회원 정보</h5>
 				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				      </div>
 				      <div class="modal-body" id='modalBody'>
 				        <div>
-							<form action="" method="post" id="formId">
 							<table class="table table-bordered border-secondary">
 							<tr>
 							<td>
@@ -100,15 +100,15 @@
 							</td>
 							<td>
 							GENDER<br>
-							<input type="radio" name="gender" id="male" value="MALE"> 남
+							<input type="radio" name="gender" id="male" value="MALE" checked> 남
 							<input type="radio" name="gender" id="female" value="FEMALE"> 여
 							</td>
 							</tr>
 							<tr>
 							<td>
-							<input type="text" id="memPhone1" value="" class="form-control"  maxlength="3">
-							<input type="text" id="memPhone2" value="" class="form-control"  maxlength="4">
-							<input type="text" id="memPhone3" value="" class="form-control"  maxlength="4">
+							<input type="text" name="memPhone1" id="memPhone1" value="" class="form-control"  maxlength="3">
+							<input type="text" name="memPhone2" id="memPhone2" value="" class="form-control"  maxlength="4">
+							<input type="text" name="memPhone3" id="memPhone3" value="" class="form-control"  maxlength="4">
 							<input type="hidden" name="memPhone" id="memPhone">
 							</td>
 							<td>
@@ -125,13 +125,13 @@
 							</td>
 							<td>
 							EMAIL
-							<input type="email" name="memEmail" class="form-control" value="">
+							<input type="email" name="memEmail" class="form-control" value="" required>
 							</td>
 							</tr>
 							<tr>
 							<td>
 							BIRTH_DATE
-							<input type="date" name="birthDate" class="form-control" value="">
+							<input type="date" name="birthDate" class="form-control" value="" required>
 							</td>
 							<td>
 							POINTS
@@ -143,19 +143,19 @@
 							</td>
 							<td>
 							IS_ADMIN
-							<input type="text" name="isAdmin" class="form-control" value="">
+							<input type="text" name="isAdmin" class="form-control" value="" required>
 							</td>
 							</tr>
 							</table>
-							</form>
 							</div>
 				        
 				      </div>
 				      <div class="modal-footer" id="modalFooter">
-				        <button type="button" class="btn btn-danger" onclick="deleteMember();">삭제</button>
-				        <button type="button" class="btn btn-primary" onclick="updateMember();">수정</button>
+				        <button type="button" class="btn btn-danger" id="deleteMember">삭제</button>
+				        <button type="submit" class="btn btn-primary" id="updateMember">수정</button>
 				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				      </div>
+					</form>
 				    </div>
 				  </div>
 				</div>

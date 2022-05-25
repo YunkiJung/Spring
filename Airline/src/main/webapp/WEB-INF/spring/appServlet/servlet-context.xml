@@ -94,6 +94,7 @@
 			<exclude-mapping path="/admin/checkPassScheForSeat"/>
 			<exclude-mapping path="/admin/setInsertAirSche"/>
 			<exclude-mapping path="/admin/salesSumForMonth"/>
+			<exclude-mapping path="/admin/selectPathCode"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 	</interceptors>

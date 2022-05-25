@@ -269,6 +269,11 @@
 		WHERE EMP_CODE = #{empCode}
 	</delete>
 	
+	<delete id="deleteEmpMember">
+		DELETE AIR_MEMBER
+		WHERE EMP_CODE = #{empCode}
+	</delete>
+	
 	<delete id="deleteEmpImage">
 		DELETE EMP_IMG WHERE EMP_CODE = #{empCode}
 	</delete>
@@ -420,7 +425,7 @@
 	<!-- 운항 수 조회 -->
 	<select id="countAirSchedule" resultType="int">
 		SELECT COUNT(AIR_SCHE_CODE) FROM AIR_SCHEDULE_V WHERE 1 = 1
-		<if test="airScheCode != null and !airScheCode.equals('')">
+		<if test="planeCode != null and !planeCode.equals('')">
 		AND PLANE_CODE = #{planeCode}
 		</if>
 		AND TO_DATE(ARRIVAL_DATE, 'YYYY-MM-DD HH24:MI:SS') &gt; SYSDATE
@@ -534,21 +539,21 @@
 					, SPARE_SEAT
 				FROM AIR_SCHEDULE_V
 				WHERE TO_DATE(ARRIVAL_DATE, 'YYYY-MM-DD hh24:mi:ss') &gt; SYSDATE
+				<if test="airScheCode != null and !airScheCode.equals('')">
+				AND AIR_SCHE_CODE LIKE '%'||#{airScheCode}||'%'
+				</if>
+				<if test="planeCode != null and !planeCode.equals('')">
+				AND PLANE_CODE LIKE '%'||#{planeCode}||'%'
+				</if>
+				<if test="pathCode != null and !pathCode.equals('')">
+				AND PATH_CODE LIKE '%'||#{pathCode}||'%'
+				</if>
+				<if test="departureDate != null and !departureDate.equals('')">
+				AND DEPARTURE_DATE LIKE '%'||#{departureDate}||'%'
+				</if>
 				ORDER BY ARRIVAL_DATE DESC))
 		WHERE 1 = 1
 		AND ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
-		<if test="airScheCode != null and !airScheCode.equals('')">
-		AND AIR_SCHE_CODE LIKE '%'||#{airScheCode}||'%'
-		</if>
-		<if test="planeCode != null and !planeCode.equals('')">
-		AND PLANE_CODE LIKE '%'||#{planeCode}||'%'
-		</if>
-		<if test="pathCode != null and !pathCode.equals('')">
-		AND PATH_CODE LIKE '%'||#{pathCode}||'%'
-		</if>
-		<if test="departureDate != null and !departureDate.equals('')">
-		AND DEPARTURE_DATE LIKE '%'||#{departureDate}||'%'
-		</if>
 		ORDER BY ROW_NUM DESC
 		
 	</select>
@@ -705,6 +710,7 @@
 		SET
 		IS_BOOKED = #{passEmail}
 		WHERE SEAT_CODE = #{seatCode}
+		AND AIR_SCHE_CODE = #{airScheCode}
 	</update>
 
 	
@@ -743,6 +749,10 @@
 			, #{orderDate}
 		)
 	</insert>
+	
+	<delete id="deleteSeatInfo">
+	DELETE SEAT_INFO WHERE AIR_SCHE_CODE = #{airScheCode}
+	</delete>
 	
 	<!-- isBooked Check -->
 	<select id="isBookedCheck" resultType="String">

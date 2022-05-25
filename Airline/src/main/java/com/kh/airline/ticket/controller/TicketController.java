@@ -538,21 +538,29 @@ public class TicketController {
 		session.removeAttribute("passengerScheduleList");
 		session.removeAttribute("seatCountDown");
 		
-		/* 이메일 전송
-		 * String emailAddr;
-		 * 
-		 * emailAddr = passengerScheduleList.get(0).getPassEmail();
-		 * 
-		 * if (member != null) { emailAddr =
-		 * ticketService.selectMemEmail(member.getMemId()); } try { //메일보내기 MimeMessage
-		 * message = mailSender.createMimeMessage(); MimeMessageHelper messageHelper;
-		 * messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-		 * messageHelper.setFrom("jjangsung1405@gmail.com");
-		 * messageHelper.setTo(emailAddr); messageHelper.setSubject("KH Airline 예약번호");
-		 * messageHelper.setText(passengerScheduleList.get(0).getOrderCode());
-		 * mailSender.send(message); } catch (MessagingException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 */
+		// 이메일 전송
+		  String emailAddr;
+		  
+		  emailAddr = passengerScheduleList.get(0).getPassEmail();
+		  
+		  if (member != null) { 
+			  emailAddr = ticketService.selectMemEmail(member.getMemId());
+		  	} 
+		  
+		  try { //메일보내기 MimeMessage
+		  MimeMessage message = mailSender.createMimeMessage();
+		  MimeMessageHelper messageHelper;
+		  messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+		  messageHelper.setFrom("");
+		  messageHelper.setTo(emailAddr); 
+		  messageHelper.setSubject("KH Airline 예약번호");
+		  messageHelper.setText(passengerScheduleList.get(0).getOrderCode());
+		  mailSender.send(message);  
+		  } catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 
 		return "ticket/confirm_order";
 	}
 	

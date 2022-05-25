@@ -41,9 +41,21 @@ table{
 }
 table thead tr{
 	background-color: #dc3545;
+	border: 1px solid black;
+	padding: 0.5rem;
+}
+table tbody td{
+	background-color: #f9fafb;
+	color: #666666;
+	padding: 0.5rem;
 }
 tr, td{
-	border: 1px solid black;
+	border: 1px solid #c9cacb;
+}
+.saleList{
+	width: 100%;
+	height: 102%;
+	margin: 0 auto;
 }
 </style>
 </head>
@@ -71,8 +83,8 @@ tr, td{
 			<canvas id="myChart"></canvas>
 		
 	</div>
-		<div class="col-3">
-		<table class="list">
+		<div class="col-2">
+		<table class="list saleList">
 			<colgroup>
 				<col width="50%">
 				<col width="*">

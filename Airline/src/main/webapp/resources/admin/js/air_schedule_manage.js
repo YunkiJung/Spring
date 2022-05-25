@@ -1,4 +1,80 @@
 
+$(document).ready (function (){
+	$(document).on ("click", '#deleteAirSche', function() {
+	Swal.fire({
+			 title: '삭제 하시겠습니까?',
+			  text: "",
+			   icon: 'warning', showCancelButton: true,
+			    confirmButtonColor: '#3085d6',
+			     cancelButtonColor: '#d33',
+			      confirmButtonText: '승인',
+			       cancelButtonText: '취소' }).then((result) => {
+				 if (result.isConfirmed) {
+						var formId = document.getElementById('formId');
+						formId.action = "/admin/deleteAirSche";
+						formId.submit();
+					}
+			 });
+	});
+});
+
+function changePass(cnt){
+	if(cnt == 4){
+		Swal.fire({
+			 title: '수정 하시겠습니까?',
+			  text: "",
+			   icon: 'warning', showCancelButton: true,
+			    confirmButtonColor: '#3085d6',
+			     cancelButtonColor: '#d33',
+			      confirmButtonText: '승인',
+			       cancelButtonText: '취소' }).then((result) => {
+				 if (result.isConfirmed) {
+						var formId = document.getElementById('formId');
+						document.getElementById('departureDate').value = document.getElementById('datepicker').value + ' ' + document.getElementById('timepicker').value;
+						formId.action = "/admin/updateAirSche";
+						formId.submit();
+					}
+			 });
+	}
+	else{
+		insertAirScheInfo();
+	}
+}
+
+$('#formId').validate({
+   
+	   debug: false,
+	   
+	   rules: {
+		  gateNum: {
+			 required: true
+			},
+		  basePrice: {
+			 required: true
+			}
+	   },
+	   messages: {
+	      gateNum: {
+	         required: "게이트 번호를 입력해주세요.",
+	      },
+	      basePrice: {
+			required: '가격을 입력해주세요',
+		  }
+	   },
+	   errorElement:'div',
+	   errorPlacement: function (error, element){
+	     	error.insertAfter(element);
+	     	
+	     	error.css('color', 'red');
+	     	error.css('font-size', '12px');
+	   },      
+	   
+	   submitHandler: function(form) {
+		changePass($('#modalFooter').children().length);
+	   }
+	});
+    
+
 
 $('#listContainer').find('tr').click(function(){
 	var airScheCode = $(this).find('td:eq(0)').html();
@@ -41,26 +117,29 @@ function selectAirSche(airScheCode, departurePortCode, arrivalPortCode, planeCod
 	modalFooter.innerHTML = '';
 	var str = '';
 	
-	str += '<button type="button" class="btn btn-danger" onclick="deleteAirSche();">삭제</button>';
-	str += '<button type="button" class="btn btn-primary" onclick="updateAirSche();">수정</button>';
+	str += '<button type="button" class="btn btn-danger" id="deleteAirSche">삭제</button>';
+	str += '<button type="submit" class="btn btn-primary" id="updateAirSche">수정</button>';
 	str += '<button type="button" class="btn btn-primary" onclick="selectSeatInfo();">좌석 조회</button>';
 	str += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
 	modalFooter.innerHTML += str;
 	
 	}
 
+    
+    
+    
     infoModal.show();
-      
 	
     },
     error: function(){
        alert('실패');
     }
 });
+
 	
 }
 
-function deleteAirSche(){
+/*function deleteAirSche(){
 	var formId = document.getElementById('formId');
 	if(confirm('정말 삭제하시겠습니까?')){
 	formId.action = "/admin/deleteAirSche";
@@ -70,13 +149,13 @@ function deleteAirSche(){
 		return;
 	}
 	
-}
+}*/
 
 function updateAirSche(){
 	var formId = document.getElementById('formId');
 	if(confirm('정말 수정하시겠습니까?')){
 	formId.action = "/admin/updateAirSche";
-	document.getElementById('departureDate').value = document.getElementById('departureDate1').value + ' ' + document.getElementById('departureDate2').value;
+	document.getElementById('departureDate').value = document.getElementById('datepicker').value + ' ' + document.getElementById('timepicker').value;
 	formId.submit();
 	}
 	else{
@@ -94,7 +173,9 @@ function selectSeatInfo(){
 }
 
 function insertAirSche(planeCode){
+	
 	var infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
+	
 	
 	$.ajax({
    url: '/admin/setInsertAirSche',
@@ -135,11 +216,12 @@ function insertAirSche(planeCode){
 		$('input[name=basePrice]').val('');
 		$('input[name=spareSeat]').val('');
 		
+		
 		var modalFooter = document.getElementById('modalFooter');
 		modalFooter.innerHTML = '';
 		var str = '';
 		
-		str += '<button type="button" class="btn btn-primary" onclick="insertAirScheInfo();">추가</button>';
+		str += '<button type="submit" class="btn btn-primary">추가</button>';
 		str += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
 		
 		modalFooter.innerHTML += str;
@@ -147,6 +229,8 @@ function insertAirSche(planeCode){
 		
 		infoModal.show();
       
+      
+    
       
     },
     error: function(){
@@ -156,22 +240,57 @@ function insertAirSche(planeCode){
 	
 }
 
+$("select[name=location]").change(function(){
+		var departurePortCode = $('input[name=departurePortCode]').val();
+		var arrivalPortCode = $('select[name=arrivalPortCode]').val();
+		
+		$.ajax({
+		   url: '/admin/selectPathCode',
+		    type: 'post',
+		    data:{'departurePortCode':departurePortCode, 'arrivalPortCode':arrivalPortCode}, //필요한 데이터 '데이터이름':값
+		    success: function(result) {
+			$('input[name=pathCode]').val(result);
+		    },
+		    error: function(){
+		       alert('실패');
+		    }
+		});
+});
+		
+
+
 function insertAirScheInfo(){
 	document.getElementById('departureDate').value = document.getElementById('datepicker').value + ' ' + document.getElementById('timepicker').value;
 	
 	var departurePortCode = $('input[name=departurePortCode]').val();
 	var arrivalPortCode = $('select[name=arrivalPortCode]').val();
 	
-	
 	$.ajax({
 	   url: '/admin/selectPathCode',
 	    type: 'post',
 	    data:{'departurePortCode':departurePortCode, 'arrivalPortCode':arrivalPortCode}, //필요한 데이터 '데이터이름':값
 	    success: function(result) {
+		
 		$('input[name=pathCode]').val(result);
-		var formId = document.getElementById('formId');
+		
+		Swal.fire({
+			 title: '추가 하시겠습니까?',
+			  text: "",
+			   icon: 'warning', showCancelButton: true,
+			    confirmButtonColor: '#3085d6',
+			     cancelButtonColor: '#d33',
+			      confirmButtonText: '승인',
+			       cancelButtonText: '취소' }).then((result) => {
+				 if (result.isConfirmed) {
+						var formId = document.getElementById('formId');
+						formId.action = "/admin/insertAirSche";
+						formId.submit();
+					}
+			 });
+		
+		/*var formId = document.getElementById('formId');
 		formId.action = "/admin/insertAirSche";
-		formId.submit();
+		formId.submit();*/
 	    },
 	    error: function(){
 	       alert('실패');
@@ -180,5 +299,5 @@ function insertAirScheInfo(){
 	
 }
 
-	
+
 

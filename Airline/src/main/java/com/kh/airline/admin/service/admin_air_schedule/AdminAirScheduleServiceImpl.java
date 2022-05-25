@@ -35,7 +35,8 @@ public class AdminAirScheduleServiceImpl implements AdminAirScheduleService{
 
 	@Override
 	public void deleteAdminAirSchedule(AdminAirScheduleVO adminAirScheduleVO) {
-		sqlSession.delete("adminMapper.deleteAdminAirSchedule",adminAirScheduleVO);
+		sqlSession.delete("adminMapper.deleteSeatInfo", adminAirScheduleVO);
+		sqlSession.delete("adminMapper.deleteAdminAirSchedule", adminAirScheduleVO);
 	}
 
 	@Override

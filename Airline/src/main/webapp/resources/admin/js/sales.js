@@ -66,7 +66,7 @@ function getData(year){
     datasets: [{
       label: 'SALES',
       backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(220, 53, 69)',
       data : data1
     }]
   }; 
@@ -95,95 +95,6 @@ function getData(year){
 	
 }
 
-/*
-$(function () {
-  
-  const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  
-  
-  let selectedYear = $('#year').html();
-  let data1 = [];
-  alert(selectedYear);
-  $.ajax({
-	   url: '/admin/salesSumForMonth', //요청경로
-	    type: 'post',
-	    async: false,
-	    data:{'selectedYear':selectedYear}, 
-	    success: function(result) {
-	      for(var i = 0; i < result.length; i++){
-	      data1[i] = result[i].totalIncome;
-	      }
-	    },
-	    error: function(){
-	       alert('실패');
-	    }
-	});
-  
-    const data = {
-    labels: labels,
-    datasets: [{
-      label: 'SALES FOR MONTH',
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
-      data : data1
-    }]
-  }; 
-  const config = {
-    type: 'line',
-    data: data,
-    options: {
-    	
-    }
-  };
-  const myChart = new Chart(
-    document.getElementById('myChart'),
-    config
-  );
- });*/
- 
-
-/*
-function resetData(year){
-	
-	let selectedYear = $('#year').html();
-	  if(year != null && year != ''){
-		selectedYear = year;
-		
-		}
-	  let data1 = [];
-	
-	$.ajax({
-	   url: '/admin/salesSumForMonth', //요청경로
-	    type: 'post',
-	    async: false,
-	    data:{'selectedYear':selectedYear}, 
-	    success: function(result) {
-	      for(var i = 0; i < result.length; i++){
-	      data1[i] = result[i].totalIncome;
-	      }
-	    },
-	    error: function(){
-	       alert('실패');
-	    }
-	});
-	
-	myChart.config.data.data = data1;
-	myChart.update();
-	
-}*/
  
 function prev(){
 	let yearTag = document.getElementById('year');

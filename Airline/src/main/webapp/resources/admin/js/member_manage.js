@@ -1,7 +1,100 @@
-/**
- * 
- */
- 
+
+function updateMember() {
+	Swal.fire({
+		 title: '수정 하시겠습니까?',
+		  text: "",
+		   icon: 'question', showCancelButton: true,
+		    confirmButtonColor: '#3085d6',
+		     cancelButtonColor: '#d33',
+		      confirmButtonText: '승인',
+		       cancelButtonText: '취소' }).then((result) => {
+			 if (result.isConfirmed) {
+					var formId = document.getElementById('formId');
+					formId.action = "/admin/updateMember";
+					var memPhone = document.getElementById("memPhone");
+					memPhone.value = document.getElementById("memPhone1").value + '-' + document.getElementById("memPhone2").value + '-' + document.getElementById("memPhone3").value;
+					formId.submit();
+				}
+	});
+}
+
+$('#formId').validate({
+	   debug: false,
+	   
+	   rules: {
+		  memId: {
+			 required: true
+			},
+		  memPw: {
+			 required: true
+			},
+		  memName: {
+			 required: true
+			},
+		  memPhone1: {
+			 required: true
+			},
+		  memPhone2: {
+			 required: true
+			},
+		  memPhone3: {
+			 required: true
+			},
+		  memAddr: {
+			 required: true
+			},
+		  memEmail: {
+			 required: true
+			},
+		  birthDate: {
+			 required: true
+			},
+		  isAdmin: {
+			 required: true
+			}
+	   },
+	   messages: {
+		  memPw: {
+			 required: '패스워드를 입력해주세요'
+			},
+		  memName: {
+			 required: '이름을 입력해주세요'
+			},
+		  memPhone1: {
+			 required: 'ex)010'
+			},
+		  memPhone2: {
+			 required: 'ex)0000'
+			},
+		  memPhone3: {
+			 required: 'ex)0000'
+			},
+		  memAddr: {
+			 required: '주소를 입력해주세요'
+			},
+		  memEmail: {
+			 required: '메일을 입력해주세요'
+			},
+		  birthDate: {
+			 required: '생일을 입력해주세요'
+			},
+		  birthDate: {
+			 required: 'Y/N'
+			}
+	   },
+	   errorElement:'div',
+	   errorPlacement: function (error, element){
+	     	error.insertAfter(element);
+	     	
+	     	error.css('color', 'red');
+	     	error.css('font-size', '12px');
+	   },      
+	   
+	   submitHandler: function(form) {
+	      updateMember();
+	   }
+});
+
  
 function selectMember(){
 	var infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
@@ -53,20 +146,6 @@ function selectMember(){
 		$('input[name=empCode]').val(result.empCode);
 		$('input[name=isAdmin]').val(result.isAdmin);
 	
-	
-
-	if(result.memId != undefined){
-	var modalFooter = document.getElementById('modalFooter');
-	modalFooter.innerHTML = '';
-	var str = '';
-	
-	str += '<button type="button" class="btn btn-danger" id="deleteMember" onclick="deleteMember();">삭제</button>';
-	str += '<button type="button" class="btn btn-primary" id="updateMember" onclick="updateMember();">수정</button>';
-	str += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
-	modalFooter.innerHTML += str;
-	
-	}
-	
     infoModal.show();
     
     /////////////////////////////////////////////////
@@ -88,21 +167,7 @@ function selectMember(){
 					 })
 				 });
 				 
-	$("#updateMember").click(function () {
-			 Swal.fire({
-				 title: '수정 하시겠습니까?',
-				  text: "",
-				   icon: 'question', showCancelButton: true,
-				    confirmButtonColor: '#3085d6',
-				     cancelButtonColor: '#d33',
-				      confirmButtonText: '승인',
-				       cancelButtonText: '취소' }).then((result) => {
-					 if (result.isConfirmed) {
-							 formId.action = "/admin/updateMember";
-							formId.submit();
-						}
-					 })
-				 });
+	
     ///////////////////////////////////////////
 	
     },
@@ -113,83 +178,7 @@ function selectMember(){
 	
 }
 
-/*function deleteMember(){
-	var formId = document.getElementById('formId');
-	
-		 $("#deleteMember").click(function () {
-			 Swal.fire({
-				 title: '정말 삭제 하시겠습니까?',
-				  text: "다시 되돌릴 수 없습니다.",
-				   icon: 'warning', showCancelButton: true,
-				    confirmButtonColor: '#3085d6',
-				     cancelButtonColor: '#d33',
-				      confirmButtonText: '승인',
-				       cancelButtonText: '취소' }).then((result) => {
-					 if (result.isConfirmed) {
-							 formId.action = "/admin/deleteMember";
-							formId.submit();
-						}
-					 })
-				 });
 
-	//if(confirm('정말 삭제하시겠습니까?')){
-	//formId.action = "/admin/deleteMember";
-	//formId.submit();
-	//}
-	//else{
-	//	return;
-	//}
-	
-}*/
-
-/*function updateMember(){
-	//if(confirm('수정 하시겠습니까?')){
-	//
-	//var memPhone = document.getElementById("memPhone");
-	//memPhone.value = document.getElementById("memPhone1").value + '-' + document.getElementById("memPhone2").value + '-' + document.getElementById("memPhone3").value;  
-	//var formId = document.getElementById('formId')
-	//formId.action = "/admin/updateMember";
-	//formId.submit();
-	//}
-	//else{
-	//	return;
-	//}
-	
-	$("#updateMember").click(function () {
-			 Swal.fire({
-				 title: '수정 하시겠습니까?',
-				  text: "다시 되돌릴 수 없습니다.",
-				   icon: 'warning', showCancelButton: true,
-				    confirmButtonColor: '#3085d6',
-				     cancelButtonColor: '#d33',
-				      confirmButtonText: '승인',
-				       cancelButtonText: '취소' }).then((result) => {
-					 if (result.isConfirmed) {
-							 formId.action = "/admin/deleteMember";
-							formId.submit();
-						}
-					 })
-				 });
-	
-}*/
-
-/*function insertMember(){
-	
-	selectMember();	
-	
-	var formId = document.getElementById('formId');
-	formId.action = "/admin/insertMember";
-	
-	var modalFooter = document.getElementById('modalFooter');
-	modalFooter.innerHTML = '';
-	var str = '';
-	
-	str += '<input type="submit" class="btn btn-primary" value="추가"></button>';
-	str += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
-	
-	modalFooter.innerHTML += str;
-}
-	*/
 
 
 

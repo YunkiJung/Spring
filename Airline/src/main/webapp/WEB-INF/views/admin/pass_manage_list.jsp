@@ -89,6 +89,7 @@
 						aria-labelledby="staticBackdropLabel" aria-hidden="true">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
+								<form action="" method="get" id="formId">
 								<div class="modal-header">
 									<h5 class="modal-title" id="staticBackdropLabel">예매 정보</h5>
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -96,7 +97,6 @@
 								</div>
 								<div class="modal-body" id='modalBody'>
 									<div>
-										<form action="" method="get" id="formId">
 											<table class="table table-bordered border-secondary">
 												<tr>
 													<td>PASS_SCHEDULE_CODE <input type="text"
@@ -110,7 +110,7 @@
 														class="form-control" value="">
 													</td>
 													<td>GENDER <br> <input type="radio" name="gender"
-														id="male" value="MALE"> 남 <input type="radio"
+														id="male" value="MALE" checked> 남 <input type="radio"
 														name="gender" id="female" value="FEMALE"> 여
 													</td>
 													<td>BIRTH_DATE <input type="date" name="birthDate"
@@ -128,12 +128,11 @@
 													<td>EMAIL <input type="email" name="passEmail"
 														class="form-control" value="">
 													</td>
-													<td>PHONE <input type="text" id="passPhone1" value=""
-														class="form-control" maxlength="3"> <input
-														type="text" id="passPhone2" value="" class="form-control"
-														maxlength="4"> <input type="text" id="passPhone3"
-														value="" class="form-control" maxlength="4"> <input
-														type="hidden" name="passPhone" id="passPhone">
+													<td>PHONE 
+													<input type="text" name="passPhone1" id="passPhone1" value="" class="form-control" maxlength="3"> 
+													<input type="text" name="passPhone2" id="passPhone2" value="" class="form-control" maxlength="4"> 
+													<input type="text" name="passPhone3" id="passPhone3" value="" class="form-control" maxlength="4"> 
+													<input type="hidden" name="passPhone" id="passPhone">
 													</td>
 													<td>ADDR <input type="text" name="passAddr"
 														class="form-control" value="">
@@ -157,18 +156,15 @@
 													</td>
 												</tr>
 											</table>
-										</form>
 									</div>
 
 								</div>
 								<div class="modal-footer" id="modalFooter">
-									<button type="button" class="btn btn-danger"
-										onclick="deletePass();">삭제</button>
-									<button type="button" class="btn btn-primary"
-										onclick="updatePass();">수정</button>
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-danger" id="deletePass">삭제</button>
+									<button type="submit" class="btn btn-primary" id="updatePass">수정</button>
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 								</div>
+							</form>
 							</div>
 						</div>
 					</div>
@@ -177,5 +173,6 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="/resources/admin/js/pass_manage.js?ver=3"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </body>
 </html>

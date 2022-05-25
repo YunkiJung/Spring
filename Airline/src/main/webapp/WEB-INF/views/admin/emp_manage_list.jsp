@@ -75,15 +75,13 @@
 				<div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				  <div class="modal-dialog modal-lg">
 				    <div class="modal-content">
+							<form action="" method="post" id="formId">
 				      <div class="modal-header">
 				        <h5 class="modal-title" id="staticBackdropLabel">직원 정보</h5>
 				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				      </div>
 				      <div class="modal-body" id='modalBody'>
-				        ...
-				        
 				        <div>
-							<form action="" method="post" id="formId">
 								<table class="table table-bordered border-secondary">
 									<tr>
 										<td>
@@ -97,7 +95,7 @@
 										</td>
 										<td>
 											EMP_NAME
-											<input type="text" name="empName" id="empName" class="form-control" value="">
+											<input type="text" name="empName" id="empName" class="form-control" value="" required>
 										</td>
 										<td>
 											GENDER
@@ -108,9 +106,9 @@
 									<tr>
 										<td>
 											PHONE
-											<input type="text" id="empPhone1" value="" class="form-control"  maxlength="3">
-											<input type="text" id="empPhone2" value="" class="form-control"  maxlength="4">
-											<input type="text" id="empPhone3" value="" class="form-control"  maxlength="4">
+											<input type="text" name="empPhone1" id="empPhone1" value="" class="form-control"  maxlength="3">
+											<input type="text" name="empPhone2" id="empPhone2" value="" class="form-control"  maxlength="4">
+											<input type="text" name="empPhone3" id="empPhone3" value="" class="form-control"  maxlength="4">
 											<input type="hidden" name="empPhone" id="empPhone">
 										</td>
 										<td>
@@ -131,6 +129,7 @@
 											DEPT_CODE
 											<br>
 											<select class="form-select" name="deptCode">
+												<option value=""></option>
 												<c:forEach items="${deptList }" var="dept">
 													<option value="${dept }">${dept }</option>
 												</c:forEach>
@@ -197,15 +196,15 @@
 										</td>
 									</tr>
 								</table>
-							</form>
 							</div>
 				        
 				      </div>
 				      <div class="modal-footer" id="modalFooter">
-				        <button type="button" class="btn btn-danger" onclick="deleteEmp();">삭제</button>
-				        <button type="button" class="btn btn-primary" onclick="updateEmp();">수정</button>
+				        <button type="button" class="btn btn-danger" id="deleteEmp">삭제</button>
+				        <button type="submit" class="btn btn-primary" id="updateEmp">수정</button>
 				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				      </div>
+							</form>
 				    </div>
 				  </div>
 				</div>
@@ -213,7 +212,7 @@
 		</div>
 	</div>
 	<script type="text/javascript"
-		src="/resources/admin/js/emp_manage.js?ver=20"></script>
+		src="/resources/admin/js/emp_manage.js?ver=46"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/resources/admin/css/admin_check_seat.css?ver=5">
+<link rel="stylesheet" href="/resources/admin/css/admin_check_seat.css">
 <style>
 .card{
 	position: fixed;
@@ -85,16 +85,15 @@ background-color: white;
 						</ul>
 						<div class="card-body">
 						<div class="col-8" id="infoDiv">
-									<form action="/admin/updatePassSeat" method="post" id="formId">
-									<input type="hidden" id="airScheCode" name="airScheCode"
-										value="${adminAirScheduleVO.airScheCode }">
-										passScheCode<br> <input type="text" name="passScheCode"
-											id="passScheCode"><br> memId<br> <input
-											type="text" name="memId" id="memId"><br> passName<br>
+									<form action="" method="post" id="formId">
+									<input type="hidden" id="airScheCode" name="airScheCode" value="${adminAirScheduleVO.airScheCode }">
+										passScheCode<br> 
+										<input type="text" name="passScheCode" id="passScheCode"><br> memId<br> 
+										<input type="text" name="memId" id="memId"><br> passName<br>
 										<input type="text" name="passName" id="passName"><br>
-										gender<br> <input type="radio" name="gender" value="MALE"
-											id="male">male <input type="radio" name="gender"
-											value="FEMALE" id="female">female <br> birthDate<br>
+										gender<br> 
+										<input type="radio" name="gender" value="MALE" id="male">male 
+											<input type="radio" name="gender" value="FEMALE" id="female">female <br> birthDate<br>
 										<input type="date" name="birthDate"><br> countryCode<br>
 										<select name="countryCode">
 											<c:forEach items="${countryList }" var="country">
@@ -103,17 +102,16 @@ background-color: white;
 										</select><br> passportNum<br> <input type="text"
 											name="passportNum"><br> passEmail<br> <input
 											type="text" name="passEmail"><br> passPhone<br>
-										<input type="text" name="passPhone" id="passPhone1" style=" 0.5rem;">
-										 <input
-											type="text" name="passPhone" id="passPhone2" style=" 0.5rem;"> <input
-											type="text" name="passPhone" id="passPhone3" style=" 0.5rem;"> <input
-											type="hidden" name="passPhone" id="passPhone"><br>
+										<input type="text" name="passPhone1" id="passPhone1" style=" 0.5rem;"  maxlength="3">
+										<input type="text" name="passPhone2" id="passPhone2" style=" 0.5rem;"  maxlength="4">
+										<input type="text" name="passPhone3" id="passPhone3" style=" 0.5rem;"  maxlength="4"> 
+										  <input type="hidden" name="passPhone" id="passPhone"><br>
 										passAddr<br> <input type="text" name="passAddr"><br>
 										seatCode<br> <input type="text" name="seatCode"><br>
 										<input type="hidden" name="ticketPrice">
 										<input type="hidden" name="orderCode">
 										<input type="hidden" name="orderDate">
-										<input type="submit" class="btn btn-primary" value="정보 입력">
+										<!-- <input type="submit" class="btn btn-primary" value="정보 입력"> -->
 									</form>
 								</div>
 							</div>
@@ -122,8 +120,8 @@ background-color: white;
 				</div>
 			</div>
 		</div>
-	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript"
-		src="/resources/admin/js/check_seat.js?ver=12"></script>
+		src="/resources/admin/js/check_seat.js?ver=13"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </body>
 </html>

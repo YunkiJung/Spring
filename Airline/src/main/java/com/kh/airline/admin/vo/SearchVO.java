@@ -109,6 +109,16 @@ public class SearchVO extends PagingVO{
 	public void setArrivalPortCode(String arrivalPortCode) {
 		this.arrivalPortCode = arrivalPortCode;
 	}
+	@Override
+	public String toString() {
+		return "SearchVO [memId=" + memId + ", empId=" + empId + ", empCode=" + empCode + ", empName=" + empName
+				+ ", deptCode=" + deptCode + ", passScheCode=" + passScheCode + ", passName=" + passName + ", seatCode="
+				+ seatCode + ", airScheCode=" + airScheCode + ", planeCode=" + planeCode + ", modelName=" + modelName
+				+ ", departureDate=" + departureDate + ", pathCode=" + pathCode + ", departurePortCode="
+				+ departurePortCode + ", arrivalPortCode=" + arrivalPortCode + "]";
+	}
+	
+	
 	
 	
 }

@@ -49,6 +49,7 @@
                 document.getElementById("sample6_detailAddress").focus();
             }
         }).open();
+	 $('#sample6_address').next().text('');
     };
 function login(){
 	var memId = document.getElementById('loginMemId').value;
@@ -263,7 +264,9 @@ $.ajax({
     data:{'memEmail' : memEmail}, //필요한 데이터 '데이터이름':값
     success: function(result) {
       //ajax 실행 성공 후 실행할 코드 작성
+      if(result == true){
       alert('아이디를 메일로 발송했습니다');
+		}
     },
     error: function(){
       //ajax 실행 실패 시 실행되는 구간
@@ -281,11 +284,13 @@ $.ajax({
     data:{'memId' : memId, 'memEmail' : memEmail}, //필요한 데이터 '데이터이름':값
     success: function(result) {
       //ajax 실행 성공 후 실행할 코드 작성
-      alert('임시비밀번호를 메일로 발송했습니다');
+      if(result == true){
+		alert('임시비밀번호를 메일로 발송했습니다');
+		}
     },
     error: function(){
       //ajax 실행 실패 시 실행되는 구간
-       alert('이메일 또는 아이디를 다시 확인해 주시기 바랍니다');
+       alert('이메일 또는 아이디를 다시 확인해 주시기 바랍니다.');
     }
 });
 }

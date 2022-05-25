@@ -49,7 +49,8 @@ html, body{
 <!-- BootStrap  -->
 <link rel="stylesheet"
 	href="/resources/common/font/font-awesome-4.7.0/css/font-awesome.min.css">
-	
+<!-- Validation  -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>	
 </head>
 <body>
 	<div class="container-fluid containerT">

@@ -94,9 +94,15 @@ public class AirMemberServiceImpl implements AirMemberService{
 	public List<PassengerScheduleVO> selectPastMyTicket(MyTicketVO myTicketVO) {
 		return sqlSession.selectList("memberMapper.selectPastMyTicket", myTicketVO);
 	}
+	//비밀번호 조회
 	@Override
 	public String selectMemPw(String memId) {
 		return sqlSession.selectOne("memberMapper.selectMemPw", memId);
+	}
+	//이메일조회
+	@Override
+	public String selectMemEmail(String memId) {
+		return sqlSession.selectOne("memberMapper.selectMemEmail", memId);
 	}
 
 }

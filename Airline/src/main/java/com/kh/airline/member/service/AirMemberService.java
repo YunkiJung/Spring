@@ -42,4 +42,6 @@ public interface AirMemberService {
 	List<PassengerScheduleVO> selectPastMyTicket(MyTicketVO myTicketVO);
 	//비밀번호 조회
 	String selectMemPw(String memId);
+	//이메일 조회
+	String selectMemEmail(String memId);
 }
