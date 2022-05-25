@@ -678,8 +678,7 @@
 		UPDATE SEAT_INFO
 		SET
 		IS_BOOKED = NULL
-		WHERE IS_BOOKED = #{passEmail}
-		AND SEAT_CODE = (SELECT SEAT_CODE FROM PASSENGER_SCHEDULE WHERE PASS_SCHE_CODE = #{passScheCode})
+		WHERE SEAT_CODE = (SELECT SEAT_CODE FROM PASSENGER_SCHEDULE WHERE PASS_SCHE_CODE = #{passScheCode})
 		AND AIR_SCHE_CODE = #{airScheCode}
 	</update>
 	
@@ -687,21 +686,11 @@
 	<update id="updatePassSeat">
 		UPDATE PASSENGER_SCHEDULE
 		SET
-		PASS_SCHE_CODE = #{passScheCode}
-		, MEM_ID = #{memId}
-		, PASS_NAME = #{passName}
-		, GENDER = #{gender}
-		, BIRTH_DATE = #{birthDate}
-		, COUNTRY_CODE = #{countryCode}
-		, PASSPORT_NUM = #{passportNum}
+		PASS_NAME = #{passName}
 		, PASS_EMAIL = #{passEmail}
 		, PASS_PHONE = #{passPhone}
 		, PASS_ADDR = #{passAddr}
-		, AIR_SCHE_CODE = #{airScheCode}
 		, SEAT_CODE = #{seatCode}
-		, TICKET_PRICE = #{ticketPrice}
-		, ORDER_CODE = #{orderCode}
-		, ORDER_DATE = #{orderDate}
 		WHERE PASS_SCHE_CODE = #{passScheCode}
 	</update>
 	

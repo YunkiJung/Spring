@@ -111,7 +111,7 @@ background-color: white;
 										<input type="hidden" name="ticketPrice">
 										<input type="hidden" name="orderCode">
 										<input type="hidden" name="orderDate">
-										<!-- <input type="submit" class="btn btn-primary" value="정보 입력"> -->
+										<input type="submit" class="btn btn-primary" value="정보 입력">
 									</form>
 								</div>
 							</div>
